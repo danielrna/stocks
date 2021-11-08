@@ -11,7 +11,9 @@ import {MatCardModule} from "@angular/material/card";
 import {AppComponent} from './app.component';
 import {StockPickerComponent} from './stock-picker/stock-picker.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
+import {HttpClientModule} from "@angular/common/http";
+import {MatTableDataSource} from "@angular/material/table";
 
 const materialModules = [
   MatIconModule,
@@ -20,7 +22,9 @@ const materialModules = [
   MatSelectModule,
   MatInputModule,
   MatCardModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTableDataSource,
+
 ];
 
 @NgModule({
@@ -32,7 +36,10 @@ const materialModules = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule,
+    MatCardModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
