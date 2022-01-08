@@ -16,15 +16,6 @@
   margin: 0 16px;
 }
 
-.toolbar #twitter-logo {
-  height: 40px;
-  margin: 0 8px;
-}
-
-.toolbar #youtube-logo {
-  height: 40px;
-  margin: 0 16px;
-}
 
 .toolbar #twitter-logo:hover,
 .toolbar #youtube-logo:hover {
@@ -39,6 +30,7 @@
 svg.material-icons:not(:last-child) {
   margin-right: 8px;
 }
+
 a,
 a:visited,
 a:hover {
@@ -46,6 +38,15 @@ a:hover {
   text-decoration: none;
 }
 
+
 a:hover {
   color: #125699;
+}
+
+button {
+  min-width: 80px;
+}
+
+.links {
+  width: fit-content;
 }

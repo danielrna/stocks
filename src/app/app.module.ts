@@ -45,7 +45,8 @@ const materialModules = [
     MatCardModule,
     MatSelectModule,
     MatMenuModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
