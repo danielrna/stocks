@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StockPickerComponent } from './stock-picker.component';
+import { CryptoPageComponent } from './crypto-page.component';
 
 describe('StockPickerComponent', () => {
-  let component: StockPickerComponent;
-  let fixture: ComponentFixture<StockPickerComponent>;
+  let component: CryptoPageComponent;
+  let fixture: ComponentFixture<CryptoPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StockPickerComponent ]
+      declarations: [ CryptoPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StockPickerComponent);
+    fixture = TestBed.createComponent(CryptoPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

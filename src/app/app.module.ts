@@ -9,7 +9,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {AppComponent} from './app.component';
-import {StockPickerComponent} from './stock-picker/stock-picker.component';
+import {CryptoPageComponent} from './crypto-page/crypto-page.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -17,6 +17,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { NavbarComponent } from './navbar/navbar.component';
+import { ColocationPageComponent } from './colocation-page/colocation-page.component';
 
 const materialModules = [
   MatIconModule,
@@ -33,9 +34,10 @@ const materialModules = [
 @NgModule({
   declarations: [
     AppComponent,
-    StockPickerComponent,
+    CryptoPageComponent,
     HomeComponent,
     NavbarComponent,
+    ColocationPageComponent,
   ],
   imports: [
     BrowserModule,

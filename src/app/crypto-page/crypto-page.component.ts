@@ -4,11 +4,11 @@ import {Quote} from "../Quote";
 import {Symbol} from "../Symbol";
 
 @Component({
-  selector: 'app-stock-picker',
-  templateUrl: './stock-picker.component.html',
-  styleUrls: ['./stock-picker.component.scss']
+  selector: 'app-crypto-page',
+  templateUrl: './crypto-page.component.html',
+  styleUrls: ['./crypto-page.component.scss']
 })
-export class StockPickerComponent implements OnInit {
+export class CryptoPageComponent implements OnInit {
   selectedQuotes: Quote[] = [];
   symbols: Symbol[] = [];
 
