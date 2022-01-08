@@ -14,6 +14,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatMenuModule} from "@angular/material/menu";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const materialModules = [
   MatIconModule,
@@ -40,6 +42,8 @@ const materialModules = [
     HttpClientModule,
     MatCardModule,
     MatSelectModule,
+    MatMenuModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

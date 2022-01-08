@@ -16,13 +16,19 @@ export class StockPickerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.financeService.getSymbols().subscribe(res => this.symbols = res)
-    console.log(this.symbols)
+    function clean(res: Symbol[]) {
+      return res.filter(it => {
+        if (it.symbol.indexOf(`realtoken`) == -1
+          && !it.name.startsWith(`0.5X `)
+          && !it.name.startsWith(`1X `)
+          && !it.name.startsWith(`3X `)) {
+          return it
+        } else return
+      })
+    }
 
-  }
+    this.financeService.getSymbols().subscribe(res => this.symbols = clean(res))
 
-  private getQuote(ticker: String) {
-    this.financeService.getEODQuote(ticker).subscribe(res => this.selectedQuotes = res.data)
   }
 
 }
