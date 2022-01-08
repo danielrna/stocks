@@ -16,6 +16,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { NavbarComponent } from './navbar/navbar.component';
 
 const materialModules = [
   MatIconModule,
@@ -34,6 +35,7 @@ const materialModules = [
     AppComponent,
     StockPickerComponent,
     HomeComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
