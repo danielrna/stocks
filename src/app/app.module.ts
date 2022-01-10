@@ -13,11 +13,15 @@ import {CryptoPageComponent} from './crypto-page/crypto-page.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from "@angular/common/http";
-import {MatTableDataSource} from "@angular/material/table";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { NavbarComponent } from './navbar/navbar.component';
-import { ColocationPageComponent } from './colocation-page/colocation-page.component';
+import {NavbarComponent} from './navbar/navbar.component';
+import {ColocationPageComponent} from './colocation-page/colocation-page.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {FormsModule} from "@angular/forms";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 const materialModules = [
   MatIconModule,
@@ -48,7 +52,13 @@ const materialModules = [
     MatSelectModule,
     MatMenuModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
+    FormsModule,
+    MatToolbarModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

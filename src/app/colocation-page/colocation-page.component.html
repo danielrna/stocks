@@ -1,1 +1,73 @@
-<p>colocation works!</p>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <!--  top left tile-->
+  <mat-grid-tile>
+    <table>
+      <tr>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre de chambres</mat-label>
+            <input matInput [(ngModel)]="nbroom">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Cout par chambre</mat-label>
+            <input matInput [step]=10 type="number" class="example-right-align" placeholder="0" [(ngModel)]="roomprice">
+            <span matPrefix>€&nbsp;</span>
+          </mat-form-field>
+        </td>
+        <td>
+          Loyer : {{nbroom * roomprice}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Prix achat</mat-label>
+            <input matInput [step]=1000 type="number" class="example-right-align" placeholder="90000"
+                   [(ngModel)]="price">
+            <span matPrefix>€&nbsp;</span>
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>
+              Notaire
+            </mat-label>
+            <input matInput disabled class="example-right-align"
+                   [(ngModel)]="notaire">
+            <span matPrefix>€&nbsp;</span>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+    </table>
+
+
+  </mat-grid-tile>
+
+  <!--  top right tile-->
+  <mat-grid-tile>
+  </mat-grid-tile>
+  <mat-grid-tile>3</mat-grid-tile>
+  <mat-grid-tile>4</mat-grid-tile>
+</mat-grid-list>
+
+
+
+
