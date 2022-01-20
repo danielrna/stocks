@@ -20,7 +20,7 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {ColocationPageComponent} from './colocation-page/colocation-page.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridListModule} from "@angular/material/grid-list";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatToolbarModule} from "@angular/material/toolbar";
 
 const materialModules = [
@@ -58,7 +58,8 @@ const materialModules = [
     MatGridListModule,
     FormsModule,
     MatToolbarModule,
-    MatTableModule
+    MatTableModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
