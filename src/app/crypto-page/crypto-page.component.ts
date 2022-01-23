@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FinanceService} from "../finance.service";
-import {Quote} from "../Quote";
 import {Symbol} from "../Symbol";
 
 @Component({
@@ -9,8 +8,9 @@ import {Symbol} from "../Symbol";
   styleUrls: ['./crypto-page.component.scss']
 })
 export class CryptoPageComponent implements OnInit {
-  selectedQuotes: Quote[] = [];
   symbols: Symbol[] = [];
+  filteredSymbols: Symbol[] = [];
+  filter: string = "";
 
   constructor(private financeService: FinanceService) {
   }
@@ -27,8 +27,20 @@ export class CryptoPageComponent implements OnInit {
       })
     }
 
-    this.financeService.getSymbols().subscribe(res => this.symbols = clean(res))
+    this.financeService.getSymbols().subscribe(res =>
+      (this.symbols = clean(res)) && (this.filteredSymbols = this.symbols)
+    )
+
 
   }
+
+  setFilteredSymbols() {
+
+    this.filteredSymbols = this.symbols.filter(value => {
+      return value.name.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1
+        || value.symbol.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1
+    })
+  }
+
 
 }
