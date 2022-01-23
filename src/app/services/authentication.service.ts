@@ -22,10 +22,10 @@ export class AuthenticationService {
     this.angularFireAuth
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
-        console.log('You are Successfully signed up!', res);
+        this.toastService.showToast("Signup successful", ['success', 'notification'])
       })
-      .catch(error => {
-        console.log('Something is wrong:', error.message);
+      .catch(err => {
+        this.toastService.showToast("Signup failed : " + err.message, ['error', 'notification'])
       });
   }
 
