@@ -22,6 +22,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {environment} from "src/environments/environment";
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import { LoginPageComponent } from './login-page/login-page.component';
 
 const materialModules = [
   MatIconModule,
@@ -42,6 +46,7 @@ const materialModules = [
     HomeComponent,
     NavbarComponent,
     ColocationPageComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,9 @@ const materialModules = [
     FormsModule,
     MatToolbarModule,
     MatTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
