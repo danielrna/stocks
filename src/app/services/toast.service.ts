@@ -10,12 +10,12 @@ export class ToastService {
   constructor(private _snackBar: MatSnackBar) {
   }
 
-  showToast(message: string, panelClass : string) {
+  showToast(message: string, panelClass: string[]) {
     this._snackBar.openFromComponent(SnackbarComponent, {
       data: {
         message: message,
-        type : panelClass
       },
+      panelClass : panelClass,
       duration: 5000
     })
 

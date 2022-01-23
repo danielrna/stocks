@@ -34,10 +34,10 @@ export class AuthenticationService {
     this.angularFireAuth
       .signInWithEmailAndPassword(email, password)
       .then(res => {
-        this.toastService.showToast("Login successful", "success")
+        this.toastService.showToast("Login successful", ['success', 'notification'])
       })
       .catch(err => {
-        this.toastService.showToast("Authentication failed : "+ err.message, "error")
+        this.toastService.showToast("Authentication failed : " + err.message, ['error', 'notification'])
       });
   }
 
