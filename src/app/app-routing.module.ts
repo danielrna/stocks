@@ -4,12 +4,14 @@ import {CryptoPageComponent} from "./components/crypto-page/crypto-page.componen
 import {HomeComponent} from "./components/home/home.component";
 import {ColocationPageComponent} from "./components/colocation-page/colocation-page.component";
 import {LoginPageComponent} from "./components/login-page/login-page.component";
+import {SignupPageComponent} from "./components/signup-page/signup-page.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
   {path: 'colocation', component: ColocationPageComponent},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginPageComponent},
+  {path: 'signup', component: SignupPageComponent},
 
 ];
 

@@ -28,6 +28,7 @@ import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {LoginPageComponent} from './components/login-page/login-page.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { SignupPageComponent } from './components/signup-page/signup-page.component';
 
 const materialModules = [
   MatIconModule,
@@ -50,6 +51,7 @@ const materialModules = [
     ColocationPageComponent,
     LoginPageComponent,
     SnackbarComponent,
+    SignupPageComponent,
   ],
   imports: [
     BrowserModule,

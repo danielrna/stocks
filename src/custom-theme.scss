@@ -7,14 +7,9 @@
 /**
   Override deeppurple-amber styles
  */
-$light-yellow: rgba(255, 253, 143, 0.24);
 $light-green: rgba(162, 255, 143, 0.24);
 $light-red: rgba(255, 143, 143, 0.24);
 
-.mat-card {
-  position: absolute !important;
-  top: 0 !important;;
-}
 
 snack-bar-container.success {
   background-color:$light-green;
