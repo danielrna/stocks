@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {QuoteResponse} from "../Quote";
-import {MessageService} from "./message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Symbol} from "../Symbol";
 
@@ -18,8 +17,7 @@ export class FinanceService {
     withCredentials: false
   };
 
-  constructor(private http: HttpClient,
-              private messageService: MessageService) {
+  constructor(private http: HttpClient) {
   }
 
   getEODQuote(ticker: String): Observable<QuoteResponse> {
@@ -36,7 +34,7 @@ export class FinanceService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`WorkflowService: ${message}`);
+
   }
 
   /**

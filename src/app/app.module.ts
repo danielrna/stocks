@@ -26,6 +26,7 @@ import {environment} from "src/environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {LoginPageComponent} from './components/login-page/login-page.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 
 const materialModules = [
   MatIconModule,
@@ -47,6 +48,7 @@ const materialModules = [
     NavbarComponent,
     ColocationPageComponent,
     LoginPageComponent,
+    SnackbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ const materialModules = [
     MatTableModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

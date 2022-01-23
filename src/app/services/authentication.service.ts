@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat";
+import {ToastService} from "./toast.service";
 import User = firebase.User;
 
 @Injectable({
@@ -11,7 +12,7 @@ export class AuthenticationService {
 
   userData: Observable<User | null | undefined>;
 
-  constructor(private angularFireAuth: AngularFireAuth) {
+  constructor(private angularFireAuth: AngularFireAuth, private toastService: ToastService) {
     this.userData = angularFireAuth.authState;
 
   }
@@ -33,10 +34,10 @@ export class AuthenticationService {
     this.angularFireAuth
       .signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log("You're in !");
+        this.toastService.showToast("Login successful", "success")
       })
       .catch(err => {
-        console.log('Something went wrong:', err.message);
+        this.toastService.showToast("Authentication failed : "+ err.message, "error")
       });
   }
 
