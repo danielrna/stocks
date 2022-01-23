@@ -16,6 +16,7 @@ export class ColocationPageComponent implements OnInit {
   apport: number = 10000;
   tauxCredit: number = 1.5;
   dureeCredit: number = 25;
+
   copro: number = 0;
   impots: number = 10;
   tf: number = 1500;
@@ -28,6 +29,7 @@ export class ColocationPageComponent implements OnInit {
   gestion: number = 0;
   totalEmprunte: number = 0;
   tfMensuelle: number = 0;
+  totalDepenses: any;
 
   ngOnInit(): void {
     this.calculateAllFields()
@@ -40,6 +42,7 @@ export class ColocationPageComponent implements OnInit {
     this.setMensualiteCredit();
     this.setTfMensuelle()
     this.setNotaireAncien()
+    this.setTotalDepenses()
   }
 
   setTfMensuelle() {
@@ -66,50 +69,31 @@ export class ColocationPageComponent implements OnInit {
     this.mensualiteCredit = this.PMT()
   }
 
-  PMT(): number {
+  PMT() {
+    let rate = this.tauxCredit / 100 / 12
+    console.log("rate=" + rate)
+    let nperiod = this.dureeCredit * 12
+    console.log("nperiod=" + nperiod)
     let pv = this.totalEmprunte
-    let i = (1 + this.tauxCredit / 100) ^ (1 / 12)
-    let n = this.dureeCredit * 12
-    let pmt = (pv) * (i) / (1 - (Math.pow(1 + i, -n)));
-    console.log(pmt)
+    console.log("pv=" + pv)
 
-    return pmt
-  }
-
-  PMTold(): number {
-
-    /*
-     * ir   - interest rate per month
-     * np   - number of periods (months)
-     * pv   - present value
-     * fv   - future value
-     * type - when the payments are due:
-     *        0: end of the period, e.g. end of month (default)
-     *        1: beginning of period
-     */
-    let pmt;
-    let pvif;
-    let ir = this.tauxCredit / 100;
-    let np = this.dureeCredit * 12;
-    let pv = this.totalEmprunte;
     let fv = 0;
-    let type = 0;
+    let type = 1;
 
-    fv || (fv = 0);
-    type || (type = 0);
+    if (rate == 0) return -(pv + fv) / nperiod;
 
-    if (ir === 0)
-      return -(pv + fv) / np;
+    const pvif = Math.pow(1 + rate, nperiod);
+    let pmt = rate / (pvif - 1) * -(pv * pvif + fv);
 
-    pvif = Math.pow(1 + ir, np);
-    pmt = -ir * (pv * pvif + fv) / (pvif - 1);
+    if (type == 1) {
+      pmt /= (1 + rate);
+    }
 
-    if (type === 1)
-      pmt /= (1 + ir);
-
-    console.log(pmt)
-    return pmt;
+    return Math.round(-pmt);
   }
 
 
+  private setTotalDepenses() {
+    this.totalDepenses = this.copro + this.impots + this.tf + this.pno + this.autre + this.cfe + this.entretien + this.mensualiteCredit
+  }
 }

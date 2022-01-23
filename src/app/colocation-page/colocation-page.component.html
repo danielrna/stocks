@@ -1,9 +1,7 @@
 <div style="margin-inline: 300px">
-
-  <mat-card>
-    <table>
-      <tr>
-
+  <mat-grid-list cols="5" rowHeight="800px" gutterSize="0px">
+    <mat-grid-tile>
+      <mat-card class="card-container">
         <mat-card-title>Typologie Immo</mat-card-title>
         <mat-form-field appearance="outline">
           <mat-label>Nombre de chambres</mat-label>
@@ -18,21 +16,11 @@
 
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>
-            Loyer mensuel
-          </mat-label>
-          <input matInput disabled class="example-right-align"
-                 [(ngModel)]="monthlyRent">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
             Taxe Foncière
           </mat-label>
           <input matInput class="example-right-align" [(ngModel)]="tf" (ngModelChange)="calculateAllFields()">
           <span matPrefix>€&nbsp;</span>
         </mat-form-field>
-      </tr>
-      <tr>
 
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Travaux</mat-label>
@@ -56,7 +44,7 @@
                  [(ngModel)]="price" (ngModelChange)="calculateAllFields()">
           <span matPrefix>€&nbsp;</span>
         </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
+        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
           <mat-label>
             Notaire
           </mat-label>
@@ -64,130 +52,153 @@
                  [(ngModel)]="notaire">
           <span matPrefix>€&nbsp;</span>
         </mat-form-field>
-      </tr>
-    </table>
-  </mat-card>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-title>Credit</mat-card-title>
 
-  <mat-card>
-    <mat-card-title>Credit</mat-card-title>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Durée</mat-label>
+          <input matInput [step]=1000 type="number" class="example-right-align"
+                 placeholder="90000"
+                 [(ngModel)]="dureeCredit" (ngModelChange)="calculateAllFields()">
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Taux</mat-label>
+          <input matInput [step]=0.1 class="example-right-align" placeholder="90000"
+                 [(ngModel)]="tauxCredit" (ngModelChange)="calculateAllFields()">
+          <span matPrefix>%&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always" class="entree-field">
+          <mat-label>Apport</mat-label>
+          <input matInput [step]=1000 type="number" class="example-right-align"
+                 placeholder="10000"
+                 [(ngModel)]="apport" (ngModelChange)="calculateAllFields()">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
 
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Durée</mat-label>
-      <input matInput [step]=1000 type="number" class="example-right-align"
-             placeholder="90000"
-             [(ngModel)]="dureeCredit" (ngModelChange)="calculateAllFields()">
-    </mat-form-field>
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Taux</mat-label>
-      <input matInput [step]=0.1 class="example-right-align" placeholder="90000"
-             [(ngModel)]="tauxCredit" (ngModelChange)="calculateAllFields()">
-      <span matPrefix>%&nbsp;</span>
-    </mat-form-field>
-    <mat-form-field appearance="outline" floatLabel="always" class="entree-field">
-      <mat-label>Apport</mat-label>
-      <input matInput [step]=1000 type="number" class="example-right-align"
-             placeholder="10000"
-             [(ngModel)]="apport" (ngModelChange)="calculateAllFields()">
-      <span matPrefix>€&nbsp;</span>
-    </mat-form-field>
+        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+          <mat-label>
+            Total emprunté
+          </mat-label>
+          <input matInput disabled class="example-right-align"
+                 [(ngModel)]="totalEmprunte">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
 
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>
-        Total emprunté
-      </mat-label>
-      <input matInput disabled class="example-right-align"
-             [(ngModel)]="totalEmprunte">
-      <span matPrefix>€&nbsp;</span>
-    </mat-form-field>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-title>Dépenses</mat-card-title>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            Copro
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="copro">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            Impots
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="impots">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
 
-  </mat-card>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            travaux
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="travaux">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            entretien
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="entretien">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            CFE
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="cfe">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            Gestion du bien
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="gestion">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            autre
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="autre">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            PNO
+          </mat-label>
+          <input matInput class="example-right-align"
+                 [(ngModel)]="pno">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+          <mat-label>
+            Credit
+          </mat-label>
+          <input disabled matInput class="example-right-align"
+                 [ngModel]="mensualiteCredit"
+          >
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+          <mat-label>
+            Taxe Foncière mensuelle
+          </mat-label>
+          <input disabled matInput class="example-right-align" [ngModel]="tfMensuelle"/>
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-title>Résultat</mat-card-title>
+        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+          <mat-label>
+            Dépenses totales
+          </mat-label>
+          <input disabled matInput class="example-right-align" [ngModel]="totalDepenses"/>
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+          <mat-label>
+            Loyer mensuel
+          </mat-label>
+          <input matInput disabled class="example-right-align"
+                 [(ngModel)]="monthlyRent">
+          <span matPrefix>€&nbsp;</span>
+        </mat-form-field>
 
-  <mat-card>
-    <mat-card-title>Dépenses</mat-card-title>
-    <tr>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          Copro
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="copro">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          Impots
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="impots">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
+      </mat-card>
 
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          travaux
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="travaux">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          entretien
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="entretien">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          CFE
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="cfe">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          Gestion du bien
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="gestion">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          autre
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="autre">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          PNO
-        </mat-label>
-        <input matInput class="example-right-align"
-               [(ngModel)]="pno">
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          Credit
-        </mat-label>
-        <input disabled matInput class="example-right-align"
-               [ngModel]="mensualiteCredit"
-        >
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label>
-          Taxe Foncière mensuelle
-        </mat-label>
-        <input disabled matInput class="example-right-align" [ngModel]="tfMensuelle"/>
-        <span matPrefix>€&nbsp;</span>
-      </mat-form-field>
-    </tr>
-  </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>4</mat-grid-tile>
+  </mat-grid-list>
 
 
 </div>
