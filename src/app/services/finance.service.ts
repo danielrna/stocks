@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {QuoteResponse} from "./Quote";
+import {QuoteResponse} from "../Quote";
 import {MessageService} from "./message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Symbol} from "./Symbol";
+import {Symbol} from "../Symbol";
 
 @Injectable({
   providedIn: 'root'

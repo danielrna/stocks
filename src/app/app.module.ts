@@ -9,15 +9,15 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {AppComponent} from './app.component';
-import {CryptoPageComponent} from './crypto-page/crypto-page.component';
+import {CryptoPageComponent} from './components/crypto-page/crypto-page.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {HomeComponent} from './home/home.component';
+import {HomeComponent} from './components/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NavbarComponent} from './navbar/navbar.component';
-import {ColocationPageComponent} from './colocation-page/colocation-page.component';
+import {NavbarComponent} from './components/navbar/navbar.component';
+import {ColocationPageComponent} from './components/colocation-page/colocation-page.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -25,7 +25,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {environment} from "src/environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
-import { LoginPageComponent } from './login-page/login-page.component';
+import {LoginPageComponent} from './components/login-page/login-page.component';
 
 const materialModules = [
   MatIconModule,

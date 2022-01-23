@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FinanceService} from "../finance.service";
-import {Symbol} from "../Symbol";
+import {FinanceService} from "../../services/finance.service";
+import {Symbol} from "../../Symbol";
 
 @Component({
   selector: 'app-crypto-page',
