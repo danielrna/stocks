@@ -1,19 +1,30 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import firebase from "firebase/compat";
 import {ToastService} from "./toast.service";
-import User = firebase.User;
+import {Router} from "@angular/router";
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
+import {User} from "./model/User";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  userData: Observable<User | null | undefined>;
+  userData: any;
 
-  constructor(private angularFireAuth: AngularFireAuth, private toastService: ToastService) {
-    this.userData = angularFireAuth.authState;
+  constructor(private angularFireAuth: AngularFireAuth, private toastService: ToastService, private router: Router, private afs: AngularFirestore,) {
+    this.angularFireAuth.authState.subscribe(user => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        let localUser = localStorage.getItem('user')
+        localUser ? JSON.parse(localUser) : null;
+      } else {
+        localStorage.removeItem('user');
+        let localUser = localStorage.getItem('user')
+        localUser ? JSON.parse(localUser) : null;
+      }
+    })
 
   }
 
@@ -22,7 +33,12 @@ export class AuthenticationService {
     this.angularFireAuth
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
-        this.toastService.showToast("Signup successful", ['success', 'notification'])
+        this.sendVerificationMail().then(value => {
+          console.log("value=" + value)
+          // this.setUserData(value.user);
+        });
+
+        this.toastService.showToast("Signup successful. Check your emails.", ['success', 'notification'])
       })
       .catch(err => {
         this.toastService.showToast("Signup failed : " + err.message, ['error', 'notification'])
@@ -44,8 +60,32 @@ export class AuthenticationService {
   /* Sign out */
   signOut() {
     this.angularFireAuth
-      .signOut().then(r => console.log("You're out !"));
+      .signOut().then(r =>
+      this.router.navigate(["login"])
+        .then(r => window.location.reload())
+    );
   }
 
+  setUserData(user: User) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userData: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified
+    }
+    return userRef.set(userData, {
+      merge: true
+    })
+  }
+
+  sendVerificationMail() {
+    return this.angularFireAuth.currentUser.then(user => {
+      user?.sendEmailVerification()
+    }).then(() => {
+      this.router.navigate(['verify-email-address']).then(r => console.log(r));
+    })
+  }
 
 }
