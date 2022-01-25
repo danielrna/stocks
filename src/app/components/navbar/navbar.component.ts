@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
+import firebase from "firebase/compat";
+import User = firebase.User;
 
 @Component({
   selector: 'app-navbar',
@@ -16,5 +18,11 @@ export class NavbarComponent implements OnInit {
 
   signOut() {
     this.authenticationService.signOut()
+  }
+
+  getUser() : User {
+    let user = this.authenticationService.userData
+    console.log("user=" + JSON.stringify(user))
+    return user
   }
 }

@@ -4,6 +4,10 @@ import {ToastService} from "./toast.service";
 import {Router} from "@angular/router";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import {User} from "./model/User";
+import firebase from "firebase/compat/app";
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import AuthProvider = firebase.auth.AuthProvider;
+import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 
 @Injectable({
   providedIn: 'root'
@@ -88,4 +92,21 @@ export class AuthenticationService {
     })
   }
 
+  fbAuth() {
+    return this.AuthLogin(new FacebookAuthProvider());
+  }
+
+  googleAuth() {
+    return this.AuthLogin(new GoogleAuthProvider());
+  }
+
+  // Auth logic to run auth providers
+  AuthLogin(provider: AuthProvider) {
+    return this.angularFireAuth.signInWithPopup(provider)
+      .then((result) => {
+        console.log('You have been successfully logged in!')
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
 }

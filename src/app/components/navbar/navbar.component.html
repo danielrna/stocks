@@ -5,13 +5,14 @@
     alt="Angular Logo"
     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
   />
-  <div class="site-title">
-
+  <div class="site-title" routerLink="/home">
     <span>CleverInvest</span>
   </div>
-    <div class="spacer"></div>
+  <div class="spacer"></div>
+
 
   <div class="menus">
+
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon style="color: white">apartment</mat-icon>
       <mat-icon style="color: white">arrow_drop_down</mat-icon>
@@ -33,16 +34,13 @@
       <button mat-menu-item>Stocks</button>
     </mat-menu>
 
-    <button routerLink="/home" mat-icon-button>
-      <mat-icon style="color: white">home</mat-icon>
-      <span>Accueil</span>
-    </button>
+
     <!--    user connected-->
     <button [matMenuTriggerFor]="menu3" routerLink="/dashboard" mat-icon-button
-            *ngIf="authenticationService.userData as user ; else loggedOut">
+            *ngIf="getUser() as user ; else loggedOut">
       <mat-icon style="color: white">face</mat-icon>
       <mat-icon style="color: white">arrow_drop_down</mat-icon>
-      <span>Bienvenue {{user}}</span>
+      <span>Bienvenue {{user.email  }}</span>
     </button>
     <mat-menu #menu3="matMenu">
       <button mat-menu-item>
