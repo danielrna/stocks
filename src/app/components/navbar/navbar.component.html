@@ -36,14 +36,14 @@
 
 
     <!--    user connected-->
-    <button [matMenuTriggerFor]="menu3" routerLink="/dashboard" mat-icon-button
+    <button [matMenuTriggerFor]="menu3" mat-icon-button
             *ngIf="getUser() as user ; else loggedOut">
       <mat-icon style="color: white">face</mat-icon>
       <mat-icon style="color: white">arrow_drop_down</mat-icon>
       <span>Bienvenue {{user.email  }}</span>
     </button>
     <mat-menu #menu3="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item routerLink="/dashboard" >
         <mat-icon>personnal</mat-icon>
         <span>Mon compte</span>
       </button>

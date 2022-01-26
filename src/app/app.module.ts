@@ -29,6 +29,7 @@ import {LoginPageComponent} from './components/login-page/login-page.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
+import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 
 const materialModules = [
   MatIconModule,
@@ -52,6 +53,7 @@ const materialModules = [
     LoginPageComponent,
     SnackbarComponent,
     SignupPageComponent,
+    DashboardPageComponent,
   ],
   imports: [
     BrowserModule,
