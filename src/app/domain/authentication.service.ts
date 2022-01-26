@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {ToastService} from "./toast.service";
 import {Router} from "@angular/router";
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
-import {User} from "./model/User";
+import {DomainUser} from "./model/DomainUser";
 import firebase from "firebase/compat/app";
+import {UserRepository} from "../data/user.respository";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthenticationService {
 
   userData: any;
 
-  constructor(private angularFireAuth: AngularFireAuth, private toastService: ToastService, private router: Router, private afs: AngularFirestore,) {
+  constructor(private angularFireAuth: AngularFireAuth, private toastService: ToastService, private router: Router, private userRepository: UserRepository) {
     this.angularFireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -36,12 +37,11 @@ export class AuthenticationService {
   signUp(email: string, password: string) {
     this.angularFireAuth
       .createUserWithEmailAndPassword(email, password)
-      .then(res => {
+      .then((result: UserCredential) => {
         this.sendVerificationMail().then(value => {
-          console.log("value=" + value)
-          // this.setUserData(value.user);
+          let domainUser = AuthenticationService.toDomain(result.user!!);
+          this.userRepository.saveUser(domainUser).then()
         });
-
         this.toastService.showToast("Signup successful. Check your emails.", ['success', 'notification'])
       })
       .catch(err => {
@@ -70,25 +70,11 @@ export class AuthenticationService {
     );
   }
 
-  setUserData(user: User) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified
-    }
-    return userRef.set(userData, {
-      merge: true
-    })
-  }
-
   sendVerificationMail() {
-    return this.angularFireAuth.currentUser.then(user => {
+    return this.angularFireAuth.currentUser.then((user) => {
       user?.sendEmailVerification()
     }).then(() => {
-      this.router.navigate(['verify-email-address']).then(r => console.log(r));
+      this.router.navigate(['verify-email-address'])
     })
   }
 
@@ -108,5 +94,19 @@ export class AuthenticationService {
       }).catch((error) => {
         console.log(error)
       })
+  }
+
+  private static toDomain(user: firebase.User): DomainUser {
+    if (!user.email) {
+      throw Error("User has no email");
+    } else {
+      return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || "",
+        photoURL: user.photoURL || "",
+        emailVerified: user.emailVerified
+      }
+    }
   }
 }

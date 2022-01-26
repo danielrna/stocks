@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FinanceService} from "../../services/finance.service";
+import {FinanceService} from "../../domain/finance.service";
 import {Symbol} from "../../Symbol";
 
 @Component({

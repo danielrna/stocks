@@ -1,4 +1,4 @@
-export interface User {
+export interface DomainUser {
    uid: string;
    email: string;
    displayName: string;
