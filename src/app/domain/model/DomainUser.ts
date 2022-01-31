@@ -4,4 +4,6 @@ export interface DomainUser {
    displayName: string;
    photoURL: string;
    emailVerified: boolean;
+   firstName: boolean;
+   lastName: boolean;
 }

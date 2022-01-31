@@ -37,13 +37,13 @@
 
     <!--    user connected-->
     <button [matMenuTriggerFor]="menu3" mat-icon-button
-            *ngIf="getUser() as user ; else loggedOut">
-      <mat-icon style="color: white">face</mat-icon>
+            *ngIf="user; else loggedOut">
+      <img class="profile-pic" [attr.src]="user.photoURL"/>
       <mat-icon style="color: white">arrow_drop_down</mat-icon>
       <span>Bienvenue {{user.email  }}</span>
     </button>
     <mat-menu #menu3="matMenu">
-      <button mat-menu-item routerLink="/dashboard" >
+      <button mat-menu-item routerLink="/dashboard">
         <mat-icon>personnal</mat-icon>
         <span>Mon compte</span>
       </button>

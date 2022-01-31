@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../domain/authentication.service";
 import firebase from "firebase/compat";
-import User = firebase.User;
+import {DomainUser} from "../../domain/model/DomainUser";
 
 @Component({
   selector: 'app-navbar',
@@ -9,18 +9,20 @@ import User = firebase.User;
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  user: DomainUser = <DomainUser>{};
 
   constructor(public authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
+    this.authenticationService.getCurrentUser().subscribe(value => {
+      if(value) this.user = value
+    })
   }
 
   signOut() {
     this.authenticationService.signOut()
   }
 
-  getUser(): User {
-    return this.authenticationService.userData
-  }
+
 }
