@@ -1,0 +1,46 @@
+<div style="margin-inline: 300px">
+  <mat-card *ngIf="user" class="card-container" >
+    <div class="dashboard-data-container">
+      <div class="dashboard-data-column">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input disabled matInput [(ngModel)]="user.email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput [(ngModel)]="user.firstName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prenom</mat-label>
+          <input matInput [(ngModel)]="user.lastName">
+        </mat-form-field>
+        <p>
+          {{user.emailVerified}}
+        </p>
+
+      </div>
+      <div class="dashboard-data-column">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input disabled matInput [(ngModel)]="user.email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput [(ngModel)]="user.firstName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prenom</mat-label>
+          <input matInput [(ngModel)]="user.lastName">
+        </mat-form-field>
+        <p>
+          {{user.emailVerified}}
+        </p>
+
+      </div>
+    </div>
+
+
+  </mat-card>
+</div>
