@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {DomainUser} from "../domain/model/DomainUser";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
@@ -20,14 +22,16 @@ export class UserRepository {
     })
   }
 
-  getUser(uid: string): Promise<DomainUser> {
-    return this.afs.collection("users").doc(uid).get().toPromise().then(user => {
-      if (!user) {
-        throw Error("User not found")
-      } else {
-        return UserRepository.toDomain(user)
-      }
-    })
+  getUser(uid: string): Observable<DomainUser> {
+    return this.afs.collection("users").doc(uid).snapshotChanges().pipe(
+      map(snap => {
+        if (!snap.payload) {
+          throw Error("User not found")
+        } else {
+          return UserRepository.toDomain(snap.payload)
+        }
+      }))
+
   }
 
   private static toDomain(user: DocumentSnapshot<unknown>) {

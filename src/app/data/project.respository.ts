@@ -2,8 +2,9 @@ import {Injectable} from "@angular/core";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
 import {DomainProject} from "../domain/model/DomainProject";
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
   {
@@ -22,16 +23,18 @@ export class ProjectRespository {
   }
 
 
-  getProjectsByOwnerId(ownerId: string): Promise<DomainProject[]> {
+  getProjectsByOwnerId(ownerId: string): Observable<DomainProject[]> {
     let collection = this.afs.collection('projects', ref => {
       return ref.where('ownerId', '==', ownerId)
-    }).ref
-
-    return collection.get().then(qs => {
-      return qs.docs.map(qds => {
-        return ProjectRespository.toDomain(qds.get("projects"))
-      })
     })
+
+    return collection.snapshotChanges().pipe(
+      map(values => {
+        return values.map(value => {
+          let snap = value.payload.doc.get("projects")
+          return ProjectRespository.toDomain(snap)
+        })
+      }))
   }
 
 

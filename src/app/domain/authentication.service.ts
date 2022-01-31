@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {DomainUser} from "./model/DomainUser";
 import firebase from "firebase/compat/app";
 import {UserRepository} from "../data/user.respository";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
@@ -92,13 +94,13 @@ export class AuthenticationService {
       })
   }
 
-  isLoggedIn(): boolean {
-    let user = localStorage.getItem('user')
-    return user !== null && (JSON.parse(user) as DomainUser).emailVerified;
-  }
 
-  getUser(): firebase.User {
-    return this.userData
+  getCurrentUser(): Observable<DomainUser | null> {
+    return this.angularFireAuth.user.pipe(map(value => {
+      if (value) {
+        return AuthenticationService.toDomain(value)
+      } else return null
+    }))
   }
 
   setUserData(user: firebase.User) {
