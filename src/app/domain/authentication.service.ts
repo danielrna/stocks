@@ -15,22 +15,17 @@ import UserCredential = firebase.auth.UserCredential;
 })
 export class AuthenticationService {
 
-  userData: any;
+  userData: firebase.User = {} as firebase.User;
 
   constructor(private angularFireAuth: AngularFireAuth, private toastService: ToastService, private router: Router, private userRepository: UserRepository) {
     this.angularFireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        let localUser = localStorage.getItem('user')
-        localUser ? JSON.parse(localUser) : null;
       } else {
         localStorage.removeItem('user');
-        let localUser = localStorage.getItem('user')
-        localUser ? JSON.parse(localUser) : null;
       }
     })
-
   }
 
   /* Sign up */
@@ -39,8 +34,7 @@ export class AuthenticationService {
       .createUserWithEmailAndPassword(email, password)
       .then((result: UserCredential) => {
         this.sendVerificationMail().then(value => {
-          let domainUser = AuthenticationService.toDomain(result.user!!);
-          this.userRepository.saveUser(domainUser).then()
+          this.setUserData(result.user!!)
         });
         this.toastService.showToast("Signup successful. Check your emails.", ['success', 'notification'])
       })
@@ -55,6 +49,7 @@ export class AuthenticationService {
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         this.toastService.showToast("Login successful", ['success', 'notification'])
+        this.setUserData(res.user!!)
       })
       .catch(err => {
         this.toastService.showToast("Authentication failed : " + err.message, ['error', 'notification'])
@@ -91,9 +86,23 @@ export class AuthenticationService {
     return this.angularFireAuth.signInWithPopup(provider)
       .then((result) => {
         console.log('You have been successfully logged in!')
+        this.setUserData(result.user!!)
       }).catch((error) => {
         console.log(error)
       })
+  }
+
+  isLoggedIn(): boolean {
+    let user = localStorage.getItem('user')
+    return user !== null && (JSON.parse(user) as DomainUser).emailVerified;
+  }
+
+  getUser(): firebase.User {
+    return this.userData
+  }
+
+  setUserData(user: firebase.User) {
+    this.userRepository.saveUser(AuthenticationService.toDomain(user)).then()
   }
 
   private static toDomain(user: firebase.User): DomainUser {
@@ -106,7 +115,8 @@ export class AuthenticationService {
         displayName: user.displayName || "",
         photoURL: user.photoURL || "",
         emailVerified: user.emailVerified
-      }
+      } as DomainUser
     }
   }
+
 }

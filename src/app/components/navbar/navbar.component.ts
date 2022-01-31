@@ -20,9 +20,7 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.signOut()
   }
 
-  getUser() : User {
-    let user = this.authenticationService.userData
-    console.log("user=" + JSON.stringify(user))
-    return user
+  getUser(): User {
+    return this.authenticationService.userData
   }
 }
