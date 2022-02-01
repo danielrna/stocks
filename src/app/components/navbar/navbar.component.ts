@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../domain/authentication.service";
-import firebase from "firebase/compat";
 import {DomainUser} from "../../domain/model/DomainUser";
 
 @Component({
@@ -9,14 +8,14 @@ import {DomainUser} from "../../domain/model/DomainUser";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  user: DomainUser = <DomainUser>{};
+  user: DomainUser | null | undefined;
 
   constructor(public authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.authenticationService.getCurrentUser().subscribe(value => {
-      if(value) this.user = value
+      this.user = value
     })
   }
 

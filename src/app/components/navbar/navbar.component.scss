@@ -1,4 +1,3 @@
-
 .toolbar {
   position: absolute;
   top: 0;
@@ -24,9 +23,8 @@
 }
 
 .spacer {
-  flex: 1;
+  flex: 0.9;
 }
-
 
 svg.material-icons:not(:last-child) {
   margin-right: 8px;
@@ -38,7 +36,6 @@ a:hover {
   color: #1976d2;
   text-decoration: none;
 }
-
 
 a:hover {
   color: #125699;

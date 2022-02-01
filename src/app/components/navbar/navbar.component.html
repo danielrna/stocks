@@ -36,11 +36,11 @@
 
 
     <!--    user connected-->
-    <button [matMenuTriggerFor]="menu3" mat-icon-button
-            *ngIf="user; else loggedOut">
+
+    <button *ngIf="user; else loggedOut" [matMenuTriggerFor]="menu3" mat-icon-button>
       <img class="profile-pic" [attr.src]="user.photoURL"/>
       <mat-icon style="color: white">arrow_drop_down</mat-icon>
-      <span>Bienvenue {{user.email  }}</span>
+      <span>Connecté</span>
     </button>
     <mat-menu #menu3="matMenu">
       <button mat-menu-item routerLink="/dashboard">
