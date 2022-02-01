@@ -1,12 +1,15 @@
-<div style="margin-inline: 300px">
-  <mat-card *ngIf="user" class="card-container" >
+<div style="margin-inline: 300px"  *ngIf="user"  class="card-container">
     <div class="dashboard-data-container">
-      <div class="dashboard-data-column">
-
+      <mat-card class="dashboard-data-column">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input disabled matInput [(ngModel)]="user.email">
         </mat-form-field>
+        <div *ngIf="!user.emailVerified">
+          <mat-label>Email non validé
+            <mat-icon>close</mat-icon>
+          </mat-label>
+        </div>
         <mat-form-field appearance="outline">
           <mat-label>Nom</mat-label>
           <input matInput [(ngModel)]="user.firstName">
@@ -15,32 +18,21 @@
           <mat-label>Prenom</mat-label>
           <input matInput [(ngModel)]="user.lastName">
         </mat-form-field>
-        <p>
-          {{user.emailVerified}}
-        </p>
 
-      </div>
-      <div class="dashboard-data-column">
+      </mat-card>
+      <mat-card class="dashboard-projects-column" >
+        <mat-list>
+          <div mat-subheader>Projets</div>
+          <mat-list-item *ngFor="let project of user.projects">
+            <mat-icon mat-list-icon>folder</mat-icon>
+            <div mat-line>{{project.name}}</div>
+            <div mat-line> {{project.updated}} </div>
+          </mat-list-item>
+        </mat-list>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input disabled matInput [(ngModel)]="user.email">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Nom</mat-label>
-          <input matInput [(ngModel)]="user.firstName">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Prenom</mat-label>
-          <input matInput [(ngModel)]="user.lastName">
-        </mat-form-field>
-        <p>
-          {{user.emailVerified}}
-        </p>
 
-      </div>
+      </mat-card>
     </div>
 
 
-  </mat-card>
 </div>

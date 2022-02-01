@@ -9,6 +9,7 @@ import {DomainUser} from "../../domain/model/DomainUser";
 })
 export class NavbarComponent implements OnInit {
   user: DomainUser | null | undefined;
+  defaultPhotoUrl: string = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
   constructor(public authenticationService: AuthenticationService) {
   }

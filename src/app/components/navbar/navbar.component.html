@@ -38,7 +38,7 @@
     <!--    user connected-->
 
     <button *ngIf="user; else loggedOut" [matMenuTriggerFor]="menu3" mat-icon-button>
-      <img class="profile-pic" [attr.src]="user.photoURL"/>
+      <img class="profile-pic" [attr.src]="user.photoURL || defaultPhotoUrl"/>
       <mat-icon style="color: white">arrow_drop_down</mat-icon>
       <span>Connecté</span>
     </button>

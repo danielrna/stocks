@@ -30,6 +30,7 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
+import {MatListModule} from "@angular/material/list";
 
 const materialModules = [
   MatIconModule,
@@ -75,7 +76,8 @@ const materialModules = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     MatSnackBarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

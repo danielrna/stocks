@@ -42,8 +42,9 @@ export class ProjectRespository {
     return {
       uid: project.get("uid"),
       type: project.get("type"),
+      name: project.get("name"),
       ownerUid: project.get("ownerUid"),
-      properties: project.get("properties"),
+      updated: project.get("updated"),
     } as DomainProject;
   }
 }
