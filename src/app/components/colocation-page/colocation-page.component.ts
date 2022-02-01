@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ProjectService} from "../../domain/project.service";
+import {Project} from "../../domain/model/Project";
+import {ProjectInputs} from "../../domain/model/ProjectInputs";
 
 @Component({
   selector: 'app-colocation',
@@ -6,24 +9,32 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./colocation-page.component.scss']
 })
 export class ColocationPageComponent implements OnInit {
-  //input
-  nbroom: number = 3;
-  roomPrice: number = 300;
-  price: number = 90000;
-  travaux: number = 0;
-  apport: number = 10000;
-  tauxCredit: number = 1.5;
-  dureeCredit: number = 25;
-  meubles: number = 10000;
-  copro: number = 0;
-  impots: number = 10;
-  tf: number = 1500;
-  pno: number = 30;
-  autre: number = 0;
-  cfe: number = 30;
-  entretien: number = 0;
+  constructor(private projectService: ProjectService) {
+  }
 
+  ngOnInit(): void {
+    this.calculateAllFields()
+  }
 
+  project: Project = <Project>{
+    inputs: <ProjectInputs>{
+      nbChambre: 3,
+      prixChambre: 300,
+      prix: 90000,
+      travaux: 0,
+      apport: 10000,
+      tauxCredit: 1,
+      dureeCredit: 25,
+      meubles: 10000,
+      copro: 0,
+      impots: 10,
+      tf: 1500,
+      pno: 30,
+      autre: 0,
+      cfe: 30,
+      entretien: 0,
+    }
+  }
   //calculated
   monthlyExpenses: any;
   notaire: number = 0;
@@ -34,26 +45,36 @@ export class ColocationPageComponent implements OnInit {
   gestion: number = 0;
   mensualiteCredit: number = this.PMT();
 
-  ngOnInit(): void {
-    this.calculateAllFields()
-  }
-
   calculateAllFields() {
 
-    this.tfMensuelle = this.tf / 12;
-    this.monthlyRent = this.nbroom * this.roomPrice
+    this.tfMensuelle = this.project.inputs.tf / 12;
+    this.monthlyRent = this.project.inputs.nbChambre * this.project.inputs.prixChambre
     this.gestion = Math.round(0.08 * this.monthlyRent);
-    this.notaire = 0.08 * this.price
-    this.totalEmprunte = this.travaux + this.meubles + this.price + this.notaire - this.apport;
+    this.notaire = 0.08 * this.project.inputs.prix
+
+    this.totalEmprunte = this.project.inputs.travaux
+      + this.notaire
+      + this.project.inputs.meubles
+      + this.project.inputs.prix
+      - this.project.inputs.apport;
     this.mensualiteCredit = this.PMT()
-    this.monthlyExpenses = this.copro + this.impots + this.tfMensuelle + this.pno + this.autre + this.cfe + this.entretien + this.mensualiteCredit + this.gestion
+
+    this.monthlyExpenses = this.project.inputs.copro
+      + this.project.inputs.impots
+      + this.project.inputs.pno
+      + this.project.inputs.autre
+      + this.tfMensuelle
+      + this.project.inputs.cfe
+      + this.project.inputs.entretien
+      + this.mensualiteCredit
+      + this.gestion
     this.cashflow = this.monthlyRent - this.monthlyExpenses
   }
 
 
   PMT() {
-    let rate = this.tauxCredit / 100 / 12
-    let nperiod = this.dureeCredit * 12
+    let rate = this.project.inputs.tauxCredit / 100 / 12
+    let nperiod = this.project.inputs.dureeCredit * 12
     let pv = this.totalEmprunte
     let fv = 0;
     let type = 1;

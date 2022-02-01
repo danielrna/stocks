@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ProjectRespository} from "../data/project.respository";
-import {DomainProject} from "./model/DomainProject";
+import {Project} from "./model/Project";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -11,7 +11,12 @@ export class ProjectService {
   constructor(private projectRespository: ProjectRespository) {
   }
 
-  getProjectsByOwnerId(id: string): Observable<DomainProject[]> {
+  saveProject(project: Project){
+    return this.projectRespository.saveProject(project)
+
+  }
+
+  getProjectsByOwnerId(id: string): Observable<Project[]> {
     return this.projectRespository.getProjectsByOwnerId(id)
   }
 }

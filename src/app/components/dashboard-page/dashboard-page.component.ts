@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../domain/user.service";
 import {AuthenticationService} from "../../domain/authentication.service";
-import {DomainFullUser} from "../../domain/model/DomainFullUser";
+import {FullUser} from "../../domain/model/FullUser";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class DashboardPageComponent implements OnInit {
 
-  user: DomainFullUser = <DomainFullUser>{};
+  user: FullUser = <FullUser>{};
 
   constructor(public authService: AuthenticationService, public userService: UserService, private router: Router) {
 
