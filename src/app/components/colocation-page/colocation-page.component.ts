@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../../domain/project.service";
-import {Project} from "../../domain/model/Project";
+import {Project, ProjectType} from "../../domain/model/Project";
 import {ProjectInputs} from "../../domain/model/ProjectInputs";
+import {AuthenticationService} from "../../domain/authentication.service";
 
 @Component({
   selector: 'app-colocation',
@@ -9,14 +10,22 @@ import {ProjectInputs} from "../../domain/model/ProjectInputs";
   styleUrls: ['./colocation-page.component.scss']
 })
 export class ColocationPageComponent implements OnInit {
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: ProjectService, private authService: AuthenticationService) {
+    this.authService.getCurrentUser().subscribe(value => {
+      if (value) this.project.ownerUid = value.uid
+    })
   }
 
   ngOnInit(): void {
     this.calculateAllFields()
   }
 
-  project: Project = <Project>{
+  project: Project = {
+    id: null,
+    type: ProjectType.COLOC,
+    ownerUid: "",
+    updated: new Date(),
+    name: "Nouveau Projet",
     inputs: <ProjectInputs>{
       nbChambre: 3,
       prixChambre: 300,
@@ -35,6 +44,7 @@ export class ColocationPageComponent implements OnInit {
       entretien: 0,
     }
   }
+
   //calculated
   monthlyExpenses: any;
   notaire: number = 0;
@@ -99,5 +109,10 @@ export class ColocationPageComponent implements OnInit {
     return "light-" + color + "-input"
   }
 
+  saveProject() {
+    this.projectService.createProject(this.project).then(id => {
+      this.project.id = id
+    })
+  }
 
 }

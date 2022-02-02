@@ -2,10 +2,14 @@ import {ProjectInputs} from "./ProjectInputs";
 
 
 export interface Project {
-  uid: string;
-  type: string;
+  id: string | null;
+  type: ProjectType;
   ownerUid: string;
   updated: Date;
   name: string;
   inputs: ProjectInputs
+}
+
+export enum ProjectType {
+  COLOC, LCD
 }

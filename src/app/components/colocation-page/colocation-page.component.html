@@ -1,4 +1,8 @@
 <div style="margin-inline: 300px">
+  <mat-form-field appearance="outline">
+    <mat-label>Projet</mat-label>
+    <input matInput [(ngModel)]=this.project.name>
+  </mat-form-field>
   <mat-grid-list cols="4" rowHeight="800px" gutterSize="0px">
 
     <mat-grid-tile>
@@ -194,7 +198,10 @@
                  [(ngModel)]="cashflow">
           <span matPrefix>€&nbsp;</span>
         </mat-form-field>
-
+        <button mat-raised-button (click)="saveProject()">
+          <mat-icon style="color: black">save</mat-icon>
+          <span >Sauvegarde</span>
+        </button>
       </mat-card>
 
     </mat-grid-tile>
