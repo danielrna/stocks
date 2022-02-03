@@ -3,6 +3,7 @@ import {UserService} from "../../domain/user.service";
 import {AuthenticationService} from "../../domain/authentication.service";
 import {FullUser} from "../../domain/model/FullUser";
 import {Router} from "@angular/router";
+import {ProjectService} from "../../domain/project.service";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -13,7 +14,7 @@ export class DashboardPageComponent implements OnInit {
 
   user: FullUser = <FullUser>{};
 
-  constructor(public authService: AuthenticationService, public userService: UserService, private router: Router) {
+  constructor(public authService: AuthenticationService, public userService: UserService, public projectService: ProjectService, private router: Router) {
 
   }
 

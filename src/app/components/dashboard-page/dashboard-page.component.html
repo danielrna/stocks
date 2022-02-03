@@ -1,38 +1,42 @@
-<div style="margin-inline: 300px"  *ngIf="user"  class="card-container">
-    <div class="dashboard-data-container">
-      <mat-card class="dashboard-data-column">
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input disabled matInput [(ngModel)]="user.email">
-        </mat-form-field>
-        <div *ngIf="!user.emailVerified">
-          <mat-label>Email non validé
-            <mat-icon>close</mat-icon>
-          </mat-label>
-        </div>
-        <mat-form-field appearance="outline">
-          <mat-label>Nom</mat-label>
-          <input matInput [(ngModel)]="user.firstName">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Prenom</mat-label>
-          <input matInput [(ngModel)]="user.lastName">
-        </mat-form-field>
+<div style="margin-inline: 300px" *ngIf="user" class="card-container">
+  <div class="dashboard-data-container">
+    <mat-card class="dashboard-data-column">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input disabled matInput [(ngModel)]="user.email">
+      </mat-form-field>
+      <div *ngIf="!user.emailVerified">
+        <mat-label>Email non validé
+          <mat-icon>close</mat-icon>
+        </mat-label>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input matInput [(ngModel)]="user.firstName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Prenom</mat-label>
+        <input matInput [(ngModel)]="user.lastName">
+      </mat-form-field>
 
-      </mat-card>
-      <mat-card class="dashboard-projects-column" >
-        <mat-list>
-          <div mat-subheader>Projets</div>
-          <mat-list-item *ngFor="let project of user.projects">
-            <mat-icon mat-list-icon>folder</mat-icon>
-            <div mat-line>{{project.name}}</div>
-            <div mat-line> {{project.updated}} </div>
-          </mat-list-item>
-        </mat-list>
+    </mat-card>
+    <mat-card class="dashboard-projects-column">
+      <mat-list>
+        <div mat-subheader>Projets</div>
+        <mat-list-item *ngFor="let project of user.projects">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>{{project.name}}</div>
+          <div mat-line> {{project.updated}}
+            <button (click)="projectService.deleteProject(project.id!!)">
+              <mat-icon mat-list-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
 
 
-      </mat-card>
-    </div>
+    </mat-card>
+  </div>
 
 
 </div>

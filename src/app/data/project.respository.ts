@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
 import {Project} from "../domain/model/Project";
-import {ProjectInputs} from "../domain/model/ProjectInputs";
 import {Observable} from "rxjs";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
@@ -20,6 +19,11 @@ export class ProjectRespository {
     return projectRef.add({...project}).then(added => {
       return added.id
     });
+
+  }
+
+  deleteProject(id: string): Promise<void> {
+    return this.afs.collection("projects").ref.doc(id).delete()
 
   }
 
@@ -45,12 +49,12 @@ export class ProjectRespository {
 
   private toDomainProject(project: DocumentSnapshot<unknown>): Project {
     return {
-      id: project.get("uid"),
+      id: project.id,
       type: project.get("type"),
       name: project.get("name"),
       ownerUid: project.get("ownerUid"),
       updated: project.get("updated"),
-      inputs:project.get("inputs"),
+      inputs: project.get("inputs"),
     } as Project;
   }
 }

@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../domain/authentication.service";
 })
 export class ColocationPageComponent implements OnInit {
   constructor(private projectService: ProjectService, private authService: AuthenticationService) {
+
     this.authService.getCurrentUser().subscribe(value => {
       if (value) this.project.ownerUid = value.uid
     })
