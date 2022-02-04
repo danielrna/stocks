@@ -22,6 +22,14 @@ export class ProjectRespository {
 
   }
 
+  updateProject(project: Project): Promise<void> {
+    return this.afs.collection("projects").doc(project.id!!)
+      .update({...project}).then(a => {
+        console.log(project)
+      })
+
+  }
+
   deleteProject(id: string): Promise<void> {
     return this.afs.collection("projects").ref.doc(id).delete()
 
@@ -56,5 +64,13 @@ export class ProjectRespository {
       updated: project.get("updated"),
       inputs: project.get("inputs"),
     } as Project;
+  }
+
+  getProjectsById(id: string): Promise<Project> {
+    return this.afs.collection('projects').ref
+      .doc(id).get().then(value => {
+        return this.toDomainProject(value)
+      })
+
   }
 }

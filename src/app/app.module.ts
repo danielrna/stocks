@@ -26,11 +26,12 @@ import {environment} from "src/environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {LoginPageComponent} from './components/login-page/login-page.component';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import {SnackbarComponent} from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import { SignupPageComponent } from './components/signup-page/signup-page.component';
-import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
+import {SignupPageComponent} from './components/signup-page/signup-page.component';
+import {DashboardPageComponent} from './components/dashboard-page/dashboard-page.component';
 import {MatListModule} from "@angular/material/list";
+import {ColocationProjectComponent} from './components/colocation-project/colocation-project.component';
 
 const materialModules = [
   MatIconModule,
@@ -51,10 +52,12 @@ const materialModules = [
     HomeComponent,
     NavbarComponent,
     ColocationPageComponent,
+    ColocationPageComponent,
     LoginPageComponent,
     SnackbarComponent,
     SignupPageComponent,
     DashboardPageComponent,
+    ColocationProjectComponent,
   ],
   imports: [
     BrowserModule,

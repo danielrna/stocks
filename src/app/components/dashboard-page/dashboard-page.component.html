@@ -30,6 +30,9 @@
             <button (click)="projectService.deleteProject(project.id!!)">
               <mat-icon mat-list-icon>delete</mat-icon>
             </button>
+            <button (click)="goToProject(project.id!!)">
+              <mat-icon mat-list-icon>edit</mat-icon>
+            </button>
           </div>
         </mat-list-item>
       </mat-list>

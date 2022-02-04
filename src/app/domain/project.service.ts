@@ -12,21 +12,33 @@ export class ProjectService {
   constructor(private projectRespository: ProjectRespository, private toast: ToastService) {
   }
 
-  createProject(project: Project): Promise<string> {
-    return this.projectRespository.createProject(project).then(value => {
+  createOrUpdateProject(project: Project): Promise<string | void> {
+    let promise;
+    if (project.id != null) {
+      promise = this.projectRespository.updateProject(project).then(value => {
+      })
+    } else {
+      promise = this.projectRespository.createProject(project).then(value => {
+        return value
+      })
+    }
+    return promise.then(value => {
       this.toast.showToast("Project Saved", ["success"])
-      return value
     })
 
   }
 
   deleteProject(id: string) {
-    return this.projectRespository.deleteProject(id).then(()=>{
+    return this.projectRespository.deleteProject(id).then(() => {
       this.toast.showToast("Project Deleted", ["success"])
     })
   }
 
   getProjectsByOwnerId(id: string): Observable<Project[]> {
     return this.projectRespository.getProjectsByOwnerId(id)
+  }
+
+  getProjectsById(id: string): Promise<Project> {
+    return this.projectRespository.getProjectsById(id)
   }
 }

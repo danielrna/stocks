@@ -6,10 +6,12 @@ import {ColocationPageComponent} from "./components/colocation-page/colocation-p
 import {LoginPageComponent} from "./components/login-page/login-page.component";
 import {SignupPageComponent} from "./components/signup-page/signup-page.component";
 import {DashboardPageComponent} from "./components/dashboard-page/dashboard-page.component";
+import {ColocationProjectComponent} from "./components/colocation-project/colocation-project.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
   {path: 'colocation', component: ColocationPageComponent},
+  {path: 'colocation/:id', component: ColocationProjectComponent},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'signup', component: SignupPageComponent},

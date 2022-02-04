@@ -29,4 +29,8 @@ export class DashboardPageComponent implements OnInit {
     })
   }
 
+  goToProject(id: string) {
+    this.router.navigate(['/colocation', id]).then(r => {
+    })
+  }
 }
