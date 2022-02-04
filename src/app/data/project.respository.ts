@@ -4,13 +4,14 @@ import firebase from "firebase/compat";
 import {Project} from "../domain/model/Project";
 import {Observable} from "rxjs";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {IProjectRepository} from "./iproject.repository";
 
 @Injectable(
   {
     providedIn: 'root'
   }
 )
-export class ProjectRespository {
+export class ProjectRespository implements IProjectRepository{
   constructor(private afs: AngularFirestore) {
   }
 

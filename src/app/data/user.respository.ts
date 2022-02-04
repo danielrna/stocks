@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/f
 import firebase from "firebase/compat";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {IUserRepository} from "./iuser.repository";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
@@ -11,11 +12,11 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
     providedIn: 'root'
   }
 )
-export class UserRepository {
+export class UserRepository implements IUserRepository {
   constructor(private afs: AngularFirestore) {
   }
 
-  saveUser(user: DomainUser) {
+  saveUser(user: DomainUser): Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     return userRef.set(user, {
       merge: true
