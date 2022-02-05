@@ -1,210 +1,230 @@
-<div style="margin-inline: 300px">
+<div style="margin-inline: 300px" xmlns="http://www.w3.org/1999/html">
   <mat-form-field appearance="outline">
     <mat-label>Projet</mat-label>
     <input matInput [(ngModel)]=this.project.name>
   </mat-form-field>
   <mat-grid-list cols="4" rowHeight="800px" gutterSize="0px">
 
-    <mat-grid-tile>
-      <mat-card class="card-container">
-        <mat-card-title>Typologie Immo</mat-card-title>
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre de chambres</mat-label>
-          <input matInput [(ngModel)]=this.project.inputs.nbChambre (ngModelChange)="calculateAllFields()">
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Cout par chambre</mat-label>
-          <input matInput [step]=10 type="number" class="example-right-align"
-                 placeholder="0" [(ngModel)]="this.project.inputs.prixChambre" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
+    <div class="card-container">
+      <mat-card-title>Typologie Immo</mat-card-title>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de chambres</mat-label>
+        <input matInput [(ngModel)]=this.project.inputs.nbChambre (ngModelChange)="calculateAllFields()">
+        <mat-icon matSuffix>king_bed</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Cout par chambre</mat-label>
+        <input matInput [step]=10 type="number" class="example-right-align"
+               placeholder="0" [(ngModel)]="this.project.inputs.prixChambre" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            Taxe Foncière
-          </mat-label>
-          <input matInput class="example-right-align" [(ngModel)]="this.project.inputs.tf"
-                 (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Taxe Foncière
+        </mat-label>
+        <input matInput class="example-right-align" [(ngModel)]="this.project.inputs.tf"
+               (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Travaux</mat-label>
-          <input matInput [step]=1000 type="number" class="example-right-align"
-                 placeholder="0"
-                 [(ngModel)]="this.project.inputs.travaux" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            Meubles
-          </mat-label>
-          <input matInput class="example-right-align"
-                 [(ngModel)]=this.project.inputs.meubles (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Prix achat</mat-label>
-          <input matInput [step]=1000 type="number" class="example-right-align"
-                 placeholder="90000"
-                 [(ngModel)]="this.project.inputs.prix" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-          <mat-label>
-            Notaire
-          </mat-label>
-          <input matInput disabled class="example-right-align"
-                 [(ngModel)]="notaire">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card>
-        <mat-card-title>Credit</mat-card-title>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Travaux</mat-label>
+        <input matInput class="example-right-align"
+               placeholder="0"
+               [(ngModel)]="this.project.inputs.travaux" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>construction</mat-icon>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Durée</mat-label>
-          <input matInput [step]=1000 type="number" class="example-right-align"
-                 placeholder="90000"
-                 [(ngModel)]="this.project.inputs.dureeCredit" (ngModelChange)="calculateAllFields()">
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Taux</mat-label>
-          <input matInput [step]=0.1 class="example-right-align" placeholder="90000"
-                 [(ngModel)]="this.project.inputs.tauxCredit" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>%&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always" class="entree-field">
-          <mat-label>Apport</mat-label>
-          <input matInput [step]=1000 type="number" class="example-right-align"
-                 placeholder="10000"
-                 [(ngModel)]="this.project.inputs.apport" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-          <mat-label>
-            Total emprunté
-          </mat-label>
-          <input matInput disabled class="example-right-align"
-                 [(ngModel)]="totalEmprunte">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-          <mat-label>
-            Credit
-          </mat-label>
-          <input disabled matInput class="example-right-align"
-                 [ngModel]="mensualiteCredit"
-          >
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Meubles
+        </mat-label>
+        <input matInput class="example-right-align"
+               [(ngModel)]=this.project.inputs.meubles (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>chair</mat-icon>
 
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card>
-        <mat-card-title>Dépenses</mat-card-title>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            Copro
-          </mat-label>
-          <input matInput class="example-right-align" type="number"
-                 [(ngModel)]="this.project.inputs.copro" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            Impots
-          </mat-label>
-          <input matInput class="example-right-align" type="number"
-                 [(ngModel)]="this.project.inputs.impots" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Prix achat</mat-label>
+        <input matInput class="example-right-align"
+               placeholder="90000"
+               [(ngModel)]="this.project.inputs.prix" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>home</mat-icon>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            entretien
-          </mat-label>
-          <input matInput class="example-right-align" type="number"
-                 [(ngModel)]="this.project.inputs.entretien" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            CFE
-          </mat-label>
-          <input matInput class="example-right-align" type="number"
-                 [(ngModel)]="this.project.inputs.cfe" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-          <mat-label>
-            Gestion du bien 8%
-          </mat-label>
-          <input disabled matInput class="example-right-align" type="number"
-                 [(ngModel)]="gestion">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            autre
-          </mat-label>
-          <input matInput class="example-right-align" type="number"
-                 [(ngModel)]="this.project.inputs.autre" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            PNO
-          </mat-label>
-          <input matInput class="example-right-align" type="number"
-                 [(ngModel)]="this.project.inputs.pno" (ngModelChange)="calculateAllFields()">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always" >
-          <mat-label>
-            Taxe Foncière mensuelle
-          </mat-label>
-          <input disabled matInput class="example-right-align" [ngModel]="tfMensuelle"  type="number"/>
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card>
-        <mat-card-title>Résultat</mat-card-title>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-          <mat-label>
-            Dépenses totales
-          </mat-label>
-          <input disabled matInput class="example-right-align" [ngModel]="monthlyExpenses"/>
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-          <mat-label>
-            Loyer mensuel
-          </mat-label>
-          <input matInput disabled class="example-right-align"
-                 [(ngModel)]="monthlyRent">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field [ngClass]="getCashflowClassName()" appearance="outline" floatLabel="always">
-          <mat-label>
-            Cashflow
-          </mat-label>
-          <input matInput disabled class="example-right-align"
-                 [(ngModel)]="cashflow">
-          <span matPrefix>€&nbsp;</span>
-        </mat-form-field>
-        <button mat-raised-button (click)="saveProject()">
-          <mat-icon style="color: black">save</mat-icon>
-          <span >Mettre à jour</span>
-        </button>
-      </mat-card>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Notaire
+        </mat-label>
+        <input matInput disabled class="example-right-align"
+               [(ngModel)]="notaire">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>gavel</mat-icon>
 
-    </mat-grid-tile>
+      </mat-form-field>
+    </div>
+    <div class="card-container">
+      <mat-card-title>Crédit</mat-card-title>
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Durée</mat-label>
+        <input matInput [step]=1000 type="number" class="example-right-align"
+               placeholder="90000"
+               [(ngModel)]="this.project.inputs.dureeCredit" (ngModelChange)="calculateAllFields()">
+        <mat-icon matSuffix>schedule</mat-icon>
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Taux</mat-label>
+        <input matInput [step]=0.1 class="example-right-align" placeholder="90000"
+               [(ngModel)]="this.project.inputs.tauxCredit" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>%&nbsp;</span>
+        <mat-icon matSuffix>percent</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="entree-field">
+        <mat-label>Apport</mat-label>
+        <input matInput class="example-right-align"
+               [(ngModel)]="this.project.inputs.apport" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>volunteer_activism</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Total emprunté
+        </mat-label>
+        <input matInput disabled class="example-right-align"
+               [(ngModel)]="totalEmprunte">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Crédit
+        </mat-label>
+        <input disabled matInput class="example-right-align"
+               [ngModel]="mensualiteCredit"
+        >
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+
+    </div>
+    <div class="card-container">
+      <mat-card-title>Dépenses</mat-card-title>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Copro
+        </mat-label>
+        <input matInput class="example-right-align" type="number"
+               [(ngModel)]="this.project.inputs.copro" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Impots
+        </mat-label>
+        <input matInput class="example-right-align" type="number"
+               [(ngModel)]="this.project.inputs.impots" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          entretien
+        </mat-label>
+        <input matInput class="example-right-align" type="number"
+               [(ngModel)]="this.project.inputs.entretien" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          CFE
+        </mat-label>
+        <input matInput class="example-right-align" type="number"
+               [(ngModel)]="this.project.inputs.cfe" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Gestion du bien 8%
+        </mat-label>
+        <input disabled matInput class="example-right-align" type="number"
+               [(ngModel)]="gestion">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          autre
+        </mat-label>
+        <input matInput class="example-right-align" type="number"
+               [(ngModel)]="this.project.inputs.autre" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          PNO
+        </mat-label>
+        <input matInput class="example-right-align" type="number"
+               [(ngModel)]="this.project.inputs.pno" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Taxe Foncière mensuelle
+        </mat-label>
+        <input disabled matInput class="example-right-align" [ngModel]="tfMensuelle" type="number"/>
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+    </div>
+    <div class="card-container">
+      <mat-card-title>Résultat</mat-card-title>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Dépenses totales
+        </mat-label>
+        <input disabled matInput class="example-right-align" [ngModel]="monthlyExpenses"/>
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Loyer mensuel
+        </mat-label>
+        <input matInput disabled class="example-right-align"
+               [(ngModel)]="monthlyRent">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field [ngClass]="getCashflowClassName()" appearance="outline" floatLabel="always">
+        <mat-label>
+          Cashflow
+        </mat-label>
+        <input matInput disabled class="example-right-align"
+               [(ngModel)]="cashflow">
+        <span matPrefix>€&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Rendement Brut
+        </mat-label>
+        <input matInput disabled class="example-right-align" type=""
+               [(ngModel)]="rendementBrut">
+        <span matPrefix>%&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Rendement Net
+        </mat-label>
+        <input matInput disabled class="example-right-align"
+               [(ngModel)]="rendementNet">
+        <span matPrefix>%&nbsp;</span>
+      </mat-form-field>
+      <button mat-raised-button (click)="saveProject()">
+        <mat-icon style="color: black">save</mat-icon>
+        <span>Mettre à jour</span>
+      </button>
+    </div>
+
 
   </mat-grid-list>
 </div>

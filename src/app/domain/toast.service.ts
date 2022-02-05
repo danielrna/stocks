@@ -16,7 +16,7 @@ export class ToastService {
         message: message,
       },
       panelClass : panelClass,
-      duration: 5000
+      duration: 1000
     })
 
   }

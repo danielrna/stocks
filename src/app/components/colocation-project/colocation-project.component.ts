@@ -11,6 +11,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./colocation-project.component.scss']
 })
 export class ColocationProjectComponent implements OnInit {
+
   constructor(private projectService: ProjectService, private authService: AuthenticationService, private route: ActivatedRoute) {
     this.authService.getCurrentUser().subscribe(user => {
       if (user) {
@@ -59,39 +60,44 @@ export class ColocationProjectComponent implements OnInit {
   }
 
   //calculated
-  monthlyExpenses: any;
-  notaire: number = 0;
-  tfMensuelle: number = 0;
-  monthlyRent: number = 0;
-  totalEmprunte: number = 0;
-  cashflow: number = 0;
-  gestion: number = 0;
-  mensualiteCredit: number = this.PMT();
+  monthlyExpenses: any
+  notaire: number = 0
+  tfMensuelle: number = 0
+  monthlyRent: number = 0
+  totalEmprunte: number = 0
+  cashflow: number = 0
+  gestion: number = 0
+  mensualiteCredit: number = this.PMT()
+  rendementBrut: number = 0
+  rendementNet: number = 0
 
   calculateAllFields() {
 
-    this.tfMensuelle = this.project.inputs.tf / 12;
-    this.monthlyRent = this.project.inputs.nbChambre * this.project.inputs.prixChambre
+    let inputs = this.project.inputs;
+    this.tfMensuelle = inputs.tf / 12;
+    this.monthlyRent = inputs.nbChambre * inputs.prixChambre
     this.gestion = Math.round(0.08 * this.monthlyRent);
-    this.notaire = 0.08 * this.project.inputs.prix
+    this.notaire = 0.08 * inputs.prix
 
-    this.totalEmprunte = this.project.inputs.travaux
+    this.totalEmprunte = inputs.travaux
       + this.notaire
-      + this.project.inputs.meubles
-      + this.project.inputs.prix
-      - this.project.inputs.apport;
+      + inputs.meubles
+      + inputs.prix
+      - inputs.apport;
     this.mensualiteCredit = this.PMT()
 
-    this.monthlyExpenses = this.project.inputs.copro
-      + this.project.inputs.impots
-      + this.project.inputs.pno
-      + this.project.inputs.autre
+    this.monthlyExpenses = inputs.copro
+      + inputs.impots
+      + inputs.pno
+      + inputs.autre
       + this.tfMensuelle
-      + this.project.inputs.cfe
-      + this.project.inputs.entretien
+      + inputs.cfe
+      + inputs.entretien
       + this.mensualiteCredit
       + this.gestion
     this.cashflow = this.monthlyRent - this.monthlyExpenses
+    this.rendementBrut = Math.round(this.monthlyRent * 12 / inputs.prix * 100)
+    this.rendementNet = Math.round((this.cashflow + this.mensualiteCredit) * 12 / this.totalEmprunte * 100)
   }
 
 

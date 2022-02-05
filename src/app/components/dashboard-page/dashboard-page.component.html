@@ -1,29 +1,31 @@
-<div style="margin-inline: 300px" *ngIf="user" class="card-container">
+<div style="margin-inline: 300px" *ngIf="fullUser" class="card-container">
   <div class="dashboard-data-container">
     <mat-card class="dashboard-data-column">
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input disabled matInput [(ngModel)]="user.email">
+        <input disabled matInput [(ngModel)]="fullUser.email">
       </mat-form-field>
-      <div *ngIf="!user.emailVerified">
+      <div *ngIf="!fullUser.emailVerified">
         <mat-label>Email non validé
           <mat-icon>close</mat-icon>
         </mat-label>
       </div>
       <mat-form-field appearance="outline">
         <mat-label>Nom</mat-label>
-        <input matInput [(ngModel)]="user.firstName">
+        <input matInput [(ngModel)]="fullUser.firstName">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Prenom</mat-label>
-        <input matInput [(ngModel)]="user.lastName">
+        <input matInput [(ngModel)]="fullUser.lastName">
       </mat-form-field>
-
+      <button (click)="updateUser()">
+        <mat-icon mat-list-icon>save</mat-icon>
+      </button>
     </mat-card>
     <mat-card class="dashboard-projects-column">
       <mat-list>
         <div mat-subheader>Projets</div>
-        <mat-list-item *ngFor="let project of user.projects">
+        <mat-list-item *ngFor="let project of fullUser.projects">
           <mat-icon mat-list-icon>folder</mat-icon>
           <div mat-line>{{project.name}}</div>
           <div mat-line> {{project.updated}}

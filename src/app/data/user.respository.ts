@@ -42,6 +42,8 @@ export class UserRepository implements IUserRepository {
       displayName: user.get("displayName"),
       photoURL: user.get("photoURL"),
       emailVerified: user.get("emailVerified"),
+      firstName: user.get("firstName"),
+      lastName: user.get("lastName"),
     } as DomainUser;
   }
 }

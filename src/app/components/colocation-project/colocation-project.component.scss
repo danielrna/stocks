@@ -2,10 +2,7 @@ $light-yellow: rgba(255, 253, 143, 0.24);
 $light-green: rgba(162, 255, 143, 0.24);
 $light-red: rgba(255, 143, 143, 0.24);
 
-.mat-card {
-  position: absolute !important;
-  top: 0 !important;;
-}
+
 
 .light-yellow-input {
   ::ng-deep .mat-form-field-flex {
@@ -23,4 +20,12 @@ $light-red: rgba(255, 143, 143, 0.24);
   ::ng-deep .mat-form-field-flex {
     background-color: $light-red;
   }
+}
+.card-container {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+  width: 25%;
+  display: inline-table;
+
 }
