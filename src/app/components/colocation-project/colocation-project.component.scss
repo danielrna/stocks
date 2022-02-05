@@ -15,6 +15,10 @@ $light-red: rgba(255, 143, 143, 0.24);
     background-color: $light-green;
   }
 }
+.mat-input-element:disabled{
+  //color: black;
+  font-weight: bold;
+}
 
 .light-red-input {
   ::ng-deep .mat-form-field-flex {

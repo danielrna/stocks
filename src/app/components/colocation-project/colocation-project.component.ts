@@ -24,6 +24,8 @@ export class ColocationProjectComponent implements OnInit {
       if (projectId && projectId != "new") {
         this.projectService.getProjectsById(projectId).then(value => {
           this.project = value
+          this.calculateAllFields()
+
         })
       }
 
