@@ -74,4 +74,24 @@ export class ProjectRespository implements IProjectRepository{
       })
 
   }
+
+  clear() :Observable<Project[]>{
+    return new Observable(subscriber => {
+      const snapUnsub = this.afs.collection('projects').ref
+        .where('id', '==', null).onSnapshot(next => {
+          subscriber.next(
+            next.docs
+              .map(value => {
+                console.log()
+                  return this.toDomainProject(value)
+                }
+              )
+          );
+        });
+      subscriber.add(() => {
+        snapUnsub();
+      });
+    });
+
+  }
 }

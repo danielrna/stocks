@@ -5,7 +5,7 @@ export interface Project {
   id: string | null;
   type: ProjectType;
   ownerUid: string;
-  updated: Date;
+  updated: number;
   name: string;
   inputs: ProjectInputs
 }

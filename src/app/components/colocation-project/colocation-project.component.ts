@@ -40,7 +40,7 @@ export class ColocationProjectComponent implements OnInit {
     id: null,
     type: ProjectType.COLOC,
     ownerUid: "",
-    updated: new Date(),
+    updated: Date.now(),
     name: "Nouveau Projet",
     inputs: <ProjectInputs>{
       nbChambre: 3,
@@ -131,6 +131,7 @@ export class ColocationProjectComponent implements OnInit {
   }
 
   saveProject() {
+    this.project.updated = Date.now()
     this.projectService.createOrUpdateProject(this.project)
   }
 

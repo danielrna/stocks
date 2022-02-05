@@ -41,4 +41,12 @@ export class ProjectService {
   getProjectsById(id: string): Promise<Project> {
     return this.projectRespository.getProjectsById(id)
   }
+
+  clearProjects() {
+    this.projectRespository.clear().subscribe(value => {
+      value.forEach(value1 => {
+        this.projectRespository.deleteProject(value1.id!!).then(r =>{} )
+      })
+    })
+  }
 }

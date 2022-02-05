@@ -7,6 +7,7 @@ import {ProjectService} from "../../domain/project.service";
 import {DomainUser} from "../../domain/model/DomainUser";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -18,7 +19,12 @@ export class DashboardPageComponent implements OnInit {
   fullUser: FullUser = <FullUser>{};
 
   constructor(
-    public authService: AuthenticationService, public userService: UserService, public projectService: ProjectService, private router: Router, public dialog: MatDialog) {
+    public authService: AuthenticationService,
+    public userService: UserService,
+    public projectService: ProjectService,
+    private router: Router,
+    public dialog: MatDialog,
+    public datePipe: DatePipe) {
 
   }
 
@@ -42,7 +48,8 @@ export class DashboardPageComponent implements OnInit {
     let dialogref = this.dialog.open(ConfirmDialogComponent)
     dialogref.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        this.projectService.deleteProject(id).then(r => {})
+        this.projectService.deleteProject(id).then(r => {
+        })
       }
     });
   }
