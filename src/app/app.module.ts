@@ -32,6 +32,8 @@ import {SignupPageComponent} from './components/signup-page/signup-page.componen
 import {DashboardPageComponent} from './components/dashboard-page/dashboard-page.component';
 import {MatListModule} from "@angular/material/list";
 import {ColocationProjectComponent} from './components/colocation-project/colocation-project.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const materialModules = [
   MatIconModule,
@@ -58,6 +60,7 @@ const materialModules = [
     SignupPageComponent,
     DashboardPageComponent,
     ColocationProjectComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +83,8 @@ const materialModules = [
     AngularFirestoreModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

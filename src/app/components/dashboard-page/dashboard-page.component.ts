@@ -5,6 +5,8 @@ import {FullUser} from "../../domain/model/FullUser";
 import {Router} from "@angular/router";
 import {ProjectService} from "../../domain/project.service";
 import {DomainUser} from "../../domain/model/DomainUser";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -15,7 +17,8 @@ export class DashboardPageComponent implements OnInit {
 
   fullUser: FullUser = <FullUser>{};
 
-  constructor(public authService: AuthenticationService, public userService: UserService, public projectService: ProjectService, private router: Router) {
+  constructor(
+    public authService: AuthenticationService, public userService: UserService, public projectService: ProjectService, private router: Router, public dialog: MatDialog) {
 
   }
 
@@ -33,6 +36,15 @@ export class DashboardPageComponent implements OnInit {
   updateUser() {
     this.userService.saveUser(this.fullUser as DomainUser).then(r => {
     })
+  }
+
+  deleteProject(id: string) {
+    let dialogref = this.dialog.open(ConfirmDialogComponent)
+    dialogref.afterClosed().subscribe(deleteConfirmed => {
+      if (deleteConfirmed) {
+        this.projectService.deleteProject(id).then(r => {})
+      }
+    });
   }
 
   goToProject(id: string) {

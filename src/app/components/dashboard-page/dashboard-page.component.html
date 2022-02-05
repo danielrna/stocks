@@ -1,6 +1,7 @@
 <div style="margin-inline: 300px" *ngIf="fullUser" class="card-container">
   <div class="dashboard-data-container">
     <mat-card class="dashboard-data-column">
+      <mat-card-title>Infos personnelles</mat-card-title>
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input disabled matInput [(ngModel)]="fullUser.email">
@@ -23,13 +24,14 @@
       </button>
     </mat-card>
     <mat-card class="dashboard-projects-column">
+      <mat-card-title>Mes projets</mat-card-title>
+
       <mat-list>
-        <div mat-subheader>Projets</div>
         <mat-list-item *ngFor="let project of fullUser.projects">
           <mat-icon mat-list-icon>folder</mat-icon>
           <div mat-line>{{project.name}}</div>
           <div mat-line> {{project.updated}}
-            <button (click)="projectService.deleteProject(project.id!!)">
+            <button (click)="deleteProject(project.id!!)">
               <mat-icon mat-list-icon>delete</mat-icon>
             </button>
             <button (click)="goToProject(project.id!!)">
