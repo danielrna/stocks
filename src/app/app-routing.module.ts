@@ -9,6 +9,7 @@ import {DashboardComponent} from "./components/account/dashboard/dashboard.compo
 import {ColocationProjectComponent} from "./components/colocation-project/colocation-project.component";
 import {PersonalDataComponent} from "./components/account/personal-data/personal-data.component";
 import {AccountPageComponent} from "./components/account/account-page/account-page.component";
+import {InvestProfileComponent} from "./components/account/invest-profile/invest-profile.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
@@ -25,6 +26,9 @@ const routes: Routes = [
       }, {
         path: 'personalData',
         component: PersonalDataComponent
+      }, {
+        path: 'investProfile',
+        component: InvestProfileComponent
       }]
   }
 ];

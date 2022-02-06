@@ -38,6 +38,7 @@ import {LeftMenuComponent} from './components/account/left-menu/left-menu.compon
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AccountPageComponent} from './components/account/account-page/account-page.component';
 import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
+import { InvestProfileComponent } from './components/account/invest-profile/invest-profile.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import {DashboardComponent} from "./components/account/dashboard/dashboard.compo
     PersonalDataComponent,
     LeftMenuComponent,
     AccountPageComponent,
+    InvestProfileComponent,
   ],
   imports: [
     BrowserModule,

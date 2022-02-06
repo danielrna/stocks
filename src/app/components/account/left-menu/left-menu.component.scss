@@ -1,4 +1,8 @@
 
 .left-menu {
-  display: table-caption;
+  display: grid;
+}
+
+.active{
+  background-color: #e7e5e5;
 }
