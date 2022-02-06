@@ -2,21 +2,47 @@
   <div class="dashboard-data-container">
     <mat-card>
       <mat-card-title>Bonjour {{fullUser.firstName}}, voici vos projets</mat-card-title>
+      <table mat-table [dataSource]="this.fullUser.projects" class="mat-elevation-z8">
 
-      <mat-list>
-        <mat-list-item *ngFor="let project of fullUser.projects">
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>{{project.name}}</div>
-          <div mat-line> {{ project.updated ? this.datePipe.transform(project.updated, 'dd-MM-yyyy') : "" }}
-            <button mat-raised-button (click)="goToProject(project.id!!)">
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type </th>
+          <td mat-cell *matCellDef="let element"> {{getName(element.type)}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="updated">
+          <th mat-header-cell *matHeaderCellDef>Updated </th>
+          <td mat-cell *matCellDef="let element"> {{ element.updated ? this.datePipe.transform(element.updated, 'dd-MM-yyyy') : ""}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button (click)="goToProject(element.id!!)">
               <mat-icon mat-list-icon>edit</mat-icon>
             </button>
-            <button mat-raised-button (click)="deleteProject(project.id!!)">
+            <button mat-raised-button (click)="deleteProject(element.id!!)">
               <mat-icon mat-list-icon>delete</mat-icon>
-            </button>
-          </div>invest
-        </mat-list-item>
-      </mat-list>
+            </button></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
     </mat-card>
   </div>
 </div>

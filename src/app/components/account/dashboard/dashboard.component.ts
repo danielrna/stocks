@@ -8,7 +8,7 @@ import {DomainUser} from "../../../domain/model/DomainUser";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.component";
 import {DatePipe} from "@angular/common";
-
+import {ProjectType} from "../../../domain/model/Project";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
 
   fullUser: FullUser = <FullUser>{};
   showFiller: any;
+  displayedColumns: string[] = ['name', 'type', 'updated','actions'];
 
   constructor(
     public auth: AuthenticationService,
@@ -54,5 +55,9 @@ export class DashboardComponent implements OnInit {
   goToProject(id: string) {
     this.router.navigate(['/colocation', id]).then(r => {
     })
+  }
+
+  getName(type:number) {
+    return ProjectType[type]
   }
 }

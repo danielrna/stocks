@@ -12,15 +12,12 @@ export class ProjectService {
   constructor(private projectRespository: ProjectRespository, private toast: ToastService) {
   }
 
-  createOrUpdateProject(project: Project): Promise<string | void> {
+  createOrUpdateProject(project: Project): Promise<void> {
     let promise;
     if (project.id != null) {
-      promise = this.projectRespository.updateProject(project).then(value => {
-      })
+      promise = this.projectRespository.updateProject(project)
     } else {
-      promise = this.projectRespository.createProject(project).then(value => {
-        return value
-      })
+      promise = this.projectRespository.createProject(project)
     }
     return promise.then(value => {
       this.toast.showToast("Project Saved", ["success"])
