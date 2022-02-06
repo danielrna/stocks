@@ -7,10 +7,10 @@ import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-invest-profile',
-  templateUrl: './invest-profile.component.html',
-  styleUrls: ['./invest-profile.component.scss']
+  templateUrl: './incomes.component.html',
+  styleUrls: ['./incomes.component.scss']
 })
-export class InvestProfileComponent implements OnInit {
+export class IncomesComponent implements OnInit {
 
   fullUser: FullUser = <FullUser>{};
 

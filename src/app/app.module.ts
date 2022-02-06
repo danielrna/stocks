@@ -37,8 +37,8 @@ import {PersonalDataComponent} from "./components/account/personal-data/personal
 import {LeftMenuComponent} from './components/account/left-menu/left-menu.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AccountPageComponent} from './components/account/account-page/account-page.component';
-import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
-import { InvestProfileComponent } from './components/account/invest-profile/invest-profile.component';
+import {ProjectsComponent} from "./components/account/projects/projects.component";
+import { IncomesComponent } from './components/account/incomes/incomes.component';
 
 
 @NgModule({
@@ -52,13 +52,13 @@ import { InvestProfileComponent } from './components/account/invest-profile/inve
     LoginPageComponent,
     SnackbarComponent,
     SignupPageComponent,
-    DashboardComponent,
+    ProjectsComponent,
     ColocationProjectComponent,
     ConfirmDialogComponent,
     PersonalDataComponent,
     LeftMenuComponent,
     AccountPageComponent,
-    InvestProfileComponent,
+    IncomesComponent,
   ],
   imports: [
     BrowserModule,
