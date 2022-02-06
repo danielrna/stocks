@@ -1,0 +1,23 @@
+<div style="margin-inline: 300px" *ngIf="fullUser">
+  <div class="dashboard-data-container">
+    <mat-card class="dashboard-projects-column">
+      <mat-card-title>Bonjour {{fullUser.firstName}}</mat-card-title>
+
+      <mat-list>
+        <mat-list-item *ngFor="let project of fullUser.projects">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>{{project.name}}</div>
+          <div mat-line> {{ project.updated ? this.datePipe.transform(project.updated, 'dd-MM-yyyy') : "" }}
+            <button mat-raised-button (click)="deleteProject(project.id!!)">
+              <mat-icon mat-list-icon>delete</mat-icon>
+            </button>
+            <button mat-raised-button (click)="goToProject(project.id!!)">
+              <mat-icon mat-list-icon>edit</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+</div>
+

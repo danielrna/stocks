@@ -1,0 +1,17 @@
+<mat-drawer-container autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened=true>
+    <app-left-menu></app-left-menu>
+  </mat-drawer>
+  <button type="button" mat-button (click)="drawer.toggle()">
+    <mat-icon *ngIf="!this.drawer.opened; else closed">chevron_right</mat-icon>
+    <ng-template #closed>
+      <mat-icon>chevron_left</mat-icon>
+    </ng-template>
+  </button>
+
+  <div>
+
+    <router-outlet ></router-outlet>
+
+  </div>
+</mat-drawer-container>

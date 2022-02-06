@@ -1,0 +1,27 @@
+<div style="margin-inline: 300px" *ngIf="fullUser">
+  <div class="dashboard-data-container">
+    <mat-card class="dashboard-data-column">
+      <mat-card-title>Infos personnelles</mat-card-title>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input disabled matInput [(ngModel)]="fullUser.email">
+      </mat-form-field>
+      <div *ngIf="!fullUser.emailVerified">
+        <mat-label>Email non validé
+          <mat-icon>close</mat-icon>
+        </mat-label>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Prénom</mat-label>
+        <input matInput [(ngModel)]="fullUser.firstName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input matInput [(ngModel)]="fullUser.lastName">
+      </mat-form-field>
+      <button mat-raised-button (click)="updateUser()">
+        <mat-icon mat-list-icon>save</mat-icon>
+      </button>
+    </mat-card>
+  </div>
+</div>

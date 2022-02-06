@@ -10,10 +10,9 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {AppComponent} from './app.component';
 import {CryptoPageComponent} from './components/crypto-page/crypto-page.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HomeComponent} from './components/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
-import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatTableModule} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavbarComponent} from './components/navbar/navbar.component';
@@ -29,24 +28,17 @@ import {LoginPageComponent} from './components/login-page/login-page.component';
 import {SnackbarComponent} from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {SignupPageComponent} from './components/signup-page/signup-page.component';
-import {DashboardPageComponent} from './components/dashboard-page/dashboard-page.component';
 import {MatListModule} from "@angular/material/list";
 import {ColocationProjectComponent} from './components/colocation-project/colocation-project.component';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {DatePipe} from "@angular/common";
+import {PersonalDataComponent} from "./components/account/personal-data/personal-data.component";
+import {LeftMenuComponent} from './components/account/left-menu/left-menu.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {AccountPageComponent} from './components/account/account-page/account-page.component';
+import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
 
-const materialModules = [
-  MatIconModule,
-  MatSnackBarModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatInputModule,
-  MatCardModule,
-  MatProgressSpinnerModule,
-  MatTableDataSource,
-
-];
 
 @NgModule({
   declarations: [
@@ -59,9 +51,12 @@ const materialModules = [
     LoginPageComponent,
     SnackbarComponent,
     SignupPageComponent,
-    DashboardPageComponent,
+    DashboardComponent,
     ColocationProjectComponent,
     ConfirmDialogComponent,
+    PersonalDataComponent,
+    LeftMenuComponent,
+    AccountPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,9 +80,10 @@ const materialModules = [
     MatSnackBarModule,
     MatAutocompleteModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSidenavModule
   ],
-  providers: [DatePipe  ],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {
