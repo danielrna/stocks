@@ -51,7 +51,7 @@ export class AuthenticationService {
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         this.setUserData(res.user!!)
-        this.router.navigate(["/account/projects"])
+        this.router.navigate(["/account/dashboard"])
           .then(r => this.toastService.showToast("Login successful", ['success', 'notification'])
           )
       })

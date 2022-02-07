@@ -38,7 +38,9 @@ import {LeftMenuComponent} from './components/account/left-menu/left-menu.compon
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AccountPageComponent} from './components/account/account-page/account-page.component';
 import {ProjectsComponent} from "./components/account/projects/projects.component";
-import { IncomesComponent } from './components/account/incomes/incomes.component';
+import {IncomesComponent} from './components/account/incomes/incomes.component';
+import {DashboardComponent} from './components/account/dashboard/dashboard.component';
+import {LayoutModule} from '@angular/cdk/layout';
 
 
 @NgModule({
@@ -59,6 +61,7 @@ import { IncomesComponent } from './components/account/incomes/incomes.component
     LeftMenuComponent,
     AccountPageComponent,
     IncomesComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,8 @@ import { IncomesComponent } from './components/account/incomes/incomes.component
     MatAutocompleteModule,
     MatListModule,
     MatDialogModule,
-    MatSidenavModule
+    MatSidenavModule,
+    LayoutModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

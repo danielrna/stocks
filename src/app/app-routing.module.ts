@@ -10,6 +10,7 @@ import {ColocationProjectComponent} from "./components/colocation-project/coloca
 import {PersonalDataComponent} from "./components/account/personal-data/personal-data.component";
 import {AccountPageComponent} from "./components/account/account-page/account-page.component";
 import {IncomesComponent} from "./components/account/incomes/incomes.component";
+import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
@@ -23,6 +24,9 @@ const routes: Routes = [
       {
         path: 'projects',
         component: ProjectsComponent
+      }, {
+        path: 'dashboard',
+        component: DashboardComponent
       }, {
         path: 'personalData',
         component: PersonalDataComponent
