@@ -50,8 +50,10 @@ export class AuthenticationService {
     this.angularFireAuth
       .signInWithEmailAndPassword(email, password)
       .then(res => {
-        this.toastService.showToast("Login successful", ['success', 'notification'])
         this.setUserData(res.user!!)
+        this.router.navigate(["/account/projects"])
+          .then(r => this.toastService.showToast("Login successful", ['success', 'notification'])
+          )
       })
       .catch(err => {
         this.toastService.showToast("Authentication failed : " + err.message, ['error', 'notification'])
