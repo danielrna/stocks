@@ -1,6 +1,8 @@
 
 .left-menu {
-  display: grid;
+  display: flex;
+  height: 1000px;
+  flex-direction: column;
 }
 
 .active{

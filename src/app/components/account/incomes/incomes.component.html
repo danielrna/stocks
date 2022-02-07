@@ -1,11 +1,80 @@
-<div *ngIf="fullUser">
+<div *ngIf="incomes">
   <div class="dashboard-data-container">
     <mat-card>
-      <mat-card-title>Votre profil investisseur</mat-card-title>
-      <button mat-raised-button mat-button>
+      <mat-card-title>Vos revenus</mat-card-title>
+      <button mat-raised-button mat-button (click)="this.creationMode = true">
         <mat-icon>add</mat-icon>
         <span>Ajouter un revenu</span>
+
       </button>
+      <button *ngIf="creationMode" mat-raised-button mat-button (click)="this.creationMode = false">
+        <mat-icon>remove</mat-icon>
+        <span></span>
+      </button>
+      <div class="table-and-creation-wrapper">
+        <div *ngIf="creationMode" class="revenu-creation-mode">
+          <mat-form-field appearance="outline">
+            <mat-label>Nom du revenu</mat-label>
+            <input matInput placeholder="Salaire Air-France" [(ngModel)]="newIcome.name">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Rente mensuelle</mat-label>
+            <input matInput placeholder="2400" [(ngModel)]="newIcome.value">
+            <span mat-prefix>€</span>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Type</mat-label>
+            <mat-select [(value)]="this.newIcome.type">
+              <mat-option *ngFor="let type of incomeTypesKeys" [value]="type">
+                {{incomeTypes[type]}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button (click)="saveNewIncome()">
+            <mat-icon mat-list-icon>save</mat-icon>
+          </button>
+        </div>
+
+        <table mat-table [dataSource]="this.incomes" class="mat-elevation-z8" *ngIf="this.incomes">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nom</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let element"> {{incomeTypes[element.type]}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+
+            <th mat-header-cell *matHeaderCellDef>Revenu mensuel</th>
+            <td mat-cell *matCellDef="let element"> {{element.value}} €</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button (click)="deleteIncome(element.id!!)">
+                <mat-icon mat-list-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
 
     </mat-card>
   </div>

@@ -1,3 +1,4 @@
+//@use '@angular/material' as mat;
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -29,3 +30,17 @@ snack-bar-container.error {
   color: black;
 
 }
+//
+//$angular-dark-theme: mat.define-dark-theme(
+//    (
+//      color: (
+//        primary: mat.$dark-primary-text,
+//        accent: mat.$dark-secondary-text,
+//        warn: mat.$dark-focused,
+//      ),
+//    )
+//);
+//
+//.darkMode {
+//  @include mat.all-component-colors($angular-dark-theme);
+//}

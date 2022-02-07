@@ -3,8 +3,10 @@ export interface Income {
   type: IncomeType;
   name: string;
   value: number;
+  ownerId: string;
 }
 
-enum IncomeType {
-  IMMO, SALARY
+export enum IncomeType {
+  Immobilier ,
+  Salaire
 }

@@ -40,7 +40,7 @@ export class IncomeRespository implements IIncomeRepository {
   getIncomesByOwnerId(ownerId: string): Observable<Income[]> {
     return new Observable(subscriber => {
       const snapUnsub = this.afs.collection('incomes').ref
-        .where('ownerUid', '==', ownerId).onSnapshot(next => {
+        .where('ownerId', '==', ownerId).onSnapshot(next => {
           subscriber.next(
             next.docs
               .map(value => {
@@ -62,6 +62,7 @@ export class IncomeRespository implements IIncomeRepository {
       type: income.get("type"),
       name: income.get("name"),
       value: income.get("value"),
+      ownerId: income.get("ownerId"),
     } as Income;
   }
 

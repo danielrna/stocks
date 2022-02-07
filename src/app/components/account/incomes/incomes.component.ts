@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FullUser} from "../../../domain/model/FullUser";
 import {AuthenticationService} from "../../../domain/authentication.service";
-import {UserService} from "../../../domain/user.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
+import {Income, IncomeType} from "../../../domain/model/Income";
+import {IncomeService} from "../../../domain/income.service";
 
 @Component({
   selector: 'app-invest-profile',
@@ -12,25 +12,49 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class IncomesComponent implements OnInit {
 
-  fullUser: FullUser = <FullUser>{};
+  incomes: Income[] = [];
+  displayedColumns = ["name", "type", "value", "actions"];
+
+  incomeTypes = IncomeType;
+  incomeTypesKeys: number[] = Object.keys(IncomeType).filter(f => !isNaN(Number(f))).map(value => {
+    return parseInt(value)
+  });
+  creationMode: boolean = false;
+  newIcome: Income = {
+    type: IncomeType.Immobilier,
+    name: "Nouveau revenu",
+    value: 2500
+  } as Income;
 
   constructor(
     public auth: AuthenticationService,
-    public userService: UserService,
+    public incomeService: IncomeService,
     private router: Router,
     public dialog: MatDialog) {
+    console.log(this.incomeTypes)
   }
 
 
   ngOnInit(): void {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
-        this.userService.getFullUser(user.uid).subscribe(fullUser => {
-          this.fullUser = fullUser
+        this.newIcome.ownerId = user.uid
+        this.incomeService.getIncomesByOwnerId(user.uid).subscribe(incomes => {
+          this.incomes = incomes
         })
       } else this.router.navigate(["login"]).then(r => {
       })
     })
   }
 
+  saveNewIncome() {
+    this.incomeService.createOrUpdateIncome(this.newIcome).then(() => {
+      this.creationMode = false
+    })
+  }
+
+  deleteIncome(id: string) {
+    this.incomeService.deleteIncome(id).then(() => {
+    })
+  }
 }
