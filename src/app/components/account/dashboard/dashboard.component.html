@@ -13,7 +13,12 @@
     <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols"
                    [rowspan]="( cardLayout | async )?.chart?.rows">
       <app-card title="Revenu">
-        <app-doughnut-chart *ngIf="this.incomes" [userIncomes]="this.incomes"></app-doughnut-chart>
+        <app-doughnut-chart *ngIf="this.incomes | async as incomes"
+                            [doughnutChartLabels]="incomeLabels"
+                            [pricedKeys]="incomeKeys"
+                            [pricedList]="incomes">
+
+        </app-doughnut-chart>
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile *ngFor="let i of [6, 7, 8]" [colspan]="( cardLayout | async )?.chart?.cols"

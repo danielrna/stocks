@@ -4,14 +4,18 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {AuthenticationService} from "../../../domain/authentication.service";
 import {IncomeService} from "../../../domain/income.service";
 import {Router} from "@angular/router";
-
+import {Observable} from "rxjs";
+import {getIncomeTypeKeys, getIncomeTypeValues} from "../../../domain/model/Income";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  incomes: any;
+
+  incomes: Observable<any[]> = new Observable;
+  incomeLabels = getIncomeTypeValues()
+  incomeKeys = getIncomeTypeKeys()
 
   constructor(
     private breakpointObserver: BreakpointObserver,

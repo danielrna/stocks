@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChartData, ChartType} from 'chart.js';
-import {getIncomeTypeKeys, getIncomeTypeValues, Income} from "../../../../../domain/model/Income";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-doughnut-chart',
@@ -10,31 +8,41 @@ import {Observable} from "rxjs";
 })
 export class DoughnutChartComponent implements OnInit {
   @Input()
-  userIncomes: Observable<Income[]> = new Observable;
-  map = new Map();
+  pricedList: any[] = []; //object can be Income for example
+  @Input()
+  public pricedKeys: number[] = []
+
+  map = new Map(); //
+
+  // Doughnut
+  @Input()
+  public doughnutChartLabels: string[] = []
+
+
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: []
+  };
+  public doughnutChartType: ChartType = 'doughnut';
+
   chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
   }
 
-  // Doughnut
-  public doughnutChartLabels: string[] = getIncomeTypeValues()
-
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
-    datasets: []
-  };
-  public doughnutChartType: ChartType = 'doughnut';
-
   ngOnInit(): void {
-    getIncomeTypeKeys().forEach(key => this.map.set(key, 0))
-    this.userIncomes.subscribe(incomes => {
-      incomes.forEach(income => {
-        let sum = this.map.get(income.type) + income.value
-        this.map.set(income.type, sum)
-      })
-      this.doughnutChartData.datasets.push({data: Array.from(this.map.values())})
+    this.pricedKeys.forEach(key => {
+      this.map.set(key, 0)
     })
+
+    this.pricedList.forEach(pricedObject => {
+      let currentPrice = this.map.get(pricedObject.type)
+      let sum = currentPrice + pricedObject.value
+      this.map.set(pricedObject.type, sum)
+    })
+    this.doughnutChartData.datasets.push({data: Array.from(this.map.values())})
+    this.doughnutChartData.labels = this.doughnutChartLabels
+
   }
 
 
