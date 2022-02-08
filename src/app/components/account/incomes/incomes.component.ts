@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../domain/authentication.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {Income, IncomeType} from "../../../domain/model/Income";
+import {getIncomeTypeKeys, Income, IncomeType} from "../../../domain/model/Income";
 import {IncomeService} from "../../../domain/income.service";
 
 @Component({
@@ -16,9 +16,8 @@ export class IncomesComponent implements OnInit {
   displayedColumns = ["name", "type", "value", "actions"];
 
   incomeTypes = IncomeType;
-  incomeTypesKeys: number[] = Object.keys(IncomeType).filter(f => !isNaN(Number(f))).map(value => {
-    return parseInt(value)
-  });
+  incomeTypesKeys: number[] = getIncomeTypeKeys();
+
   creationMode: boolean = false;
   newIcome: Income = {
     type: IncomeType.Immobilier,

@@ -7,6 +7,20 @@ export interface Income {
 }
 
 export enum IncomeType {
-  Immobilier ,
+  Immobilier,
   Salaire
+}
+
+export function getIncomeTypeKeys() {
+  return Object.keys(IncomeType).filter(f => {
+    return !isNaN(Number(f))
+  }).map(value => {
+    return parseInt(value)
+  })
+}
+
+export function getIncomeTypeValues() {
+  return Object.keys(IncomeType).filter(f => {
+    return isNaN(Number(f))
+  })
 }

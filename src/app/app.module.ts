@@ -41,7 +41,9 @@ import {ProjectsComponent} from "./components/account/projects/projects.componen
 import {IncomesComponent} from './components/account/incomes/incomes.component';
 import {DashboardComponent} from './components/account/dashboard/dashboard.component';
 import {LayoutModule} from '@angular/cdk/layout';
-
+import {DashCardComponent} from './components/account/dashboard/dashcard/dash-card.component';
+import {DoughnutChartComponent} from './components/account/dashboard/charts/doughnut-chart/doughnut-chart.component';
+import {NgChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import {LayoutModule} from '@angular/cdk/layout';
     AccountPageComponent,
     IncomesComponent,
     DashboardComponent,
+    DashCardComponent,
+    DoughnutChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +91,9 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatListModule,
     MatDialogModule,
     MatSidenavModule,
-    LayoutModule
+    LayoutModule,
+    NgChartsModule
+
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

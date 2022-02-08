@@ -1,16 +1,19 @@
 <div *ngIf="incomes">
   <div class="dashboard-data-container">
     <mat-card>
+      <div class="sticky-buttons">
       <mat-card-title>Vos revenus</mat-card-title>
-      <button mat-raised-button mat-button (click)="this.creationMode = true">
-        <mat-icon>add</mat-icon>
-        <span>Ajouter un revenu</span>
 
-      </button>
-      <button *ngIf="creationMode" mat-raised-button mat-button (click)="this.creationMode = false">
-        <mat-icon>remove</mat-icon>
-        <span></span>
-      </button>
+        <button mat-raised-button mat-button (click)="this.creationMode = true">
+          <mat-icon>add</mat-icon>
+          <span>Ajouter un revenu</span>
+
+        </button>
+        <button *ngIf="creationMode" mat-raised-button mat-button (click)="this.creationMode = false">
+          <mat-icon>remove</mat-icon>
+          <span></span>
+        </button>
+      </div>
       <div class="table-and-creation-wrapper">
         <div *ngIf="creationMode" class="revenu-creation-mode">
           <mat-form-field appearance="outline">
@@ -19,7 +22,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Rente mensuelle</mat-label>
-            <input matInput placeholder="2400" [(ngModel)]="newIcome.value">
+            <input matInput type="number" placeholder="2400" [(ngModel)]="newIcome.value">
             <span mat-prefix>€</span>
           </mat-form-field>
           <mat-form-field appearance="outline">
