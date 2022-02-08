@@ -36,6 +36,10 @@ export class IncomeService {
     return this.incomeRespository.getIncomesByOwnerId(id)
   }
 
+  getNotSalaryIncomesByOwnerId(id: string): Observable<Income[]> {
+    return this.incomeRespository.getNotSalaryIncomesByOwnerId(id)
+  }
+
   getIncomesById(id: string): Promise<Income> {
     return this.incomeRespository.getIncomesById(id)
   }

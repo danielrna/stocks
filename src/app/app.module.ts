@@ -44,6 +44,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {DashCardComponent} from './components/account/dashboard/dashcard/dash-card.component';
 import {DoughnutChartComponent} from './components/account/dashboard/charts/doughnut-chart/doughnut-chart.component';
 import {NgChartsModule} from 'ng2-charts';
+import { DebtsComponent } from './components/account/debts/debts.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {NgChartsModule} from 'ng2-charts';
     DashboardComponent,
     DashCardComponent,
     DoughnutChartComponent,
+    DebtsComponent,
   ],
   imports: [
     BrowserModule,

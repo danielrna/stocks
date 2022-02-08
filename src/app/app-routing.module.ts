@@ -11,6 +11,7 @@ import {PersonalDataComponent} from "./components/account/personal-data/personal
 import {AccountPageComponent} from "./components/account/account-page/account-page.component";
 import {IncomesComponent} from "./components/account/incomes/incomes.component";
 import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
+import {DebtsComponent} from "./components/account/debts/debts.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
@@ -33,6 +34,9 @@ const routes: Routes = [
       }, {
         path: 'incomes',
         component: IncomesComponent
+      }, {
+        path: 'debts',
+        component: DebtsComponent
       }]
   }
 ];

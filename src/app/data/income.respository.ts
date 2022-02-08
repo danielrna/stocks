@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
-import {Income} from "../domain/model/Income";
+import {Income, IncomeType} from "../domain/model/Income";
 import {Observable} from "rxjs";
 import {IIncomeRepository} from "./iincome.repository";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
@@ -74,6 +74,27 @@ export class IncomeRespository implements IIncomeRepository {
 
   }
 
+  getNotSalaryIncomesByOwnerId(id: string): Observable<Income[]> {
+    return new Observable(subscriber => {
+      const snapUnsub = this.afs.collection('incomes').ref
+        .where('ownerId', '==', id)
+        .where('type', '!=', IncomeType.Salaire)
+        .onSnapshot(next => {
+          subscriber.next(
+            next.docs
+              .map(value => {
+                  return this.toDomainIncome(value)
+                }
+              )
+          );
+        });
+      subscriber.add(() => {
+        snapUnsub();
+      });
+    });
+
+  }
+
   clear(): Observable<Income[]> {
     return new Observable(subscriber => {
       const snapUnsub = this.afs.collection('incomes').ref
@@ -93,4 +114,5 @@ export class IncomeRespository implements IIncomeRepository {
     });
 
   }
+
 }
