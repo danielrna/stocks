@@ -8,7 +8,8 @@ export interface Income {
 
 export enum IncomeType {
   Immobilier,
-  Salaire
+  Salaire,
+  Autre
 }
 
 export function getIncomeTypeKeys() {

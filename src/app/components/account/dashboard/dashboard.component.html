@@ -12,7 +12,7 @@
     Charts
     <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols"
                    [rowspan]="( cardLayout | async )?.chart?.rows">
-      <app-card title="Card 5">
+      <app-card title="Revenu">
         <app-doughnut-chart *ngIf="this.incomes" [userIncomes]="this.incomes"></app-doughnut-chart>
       </app-card>
     </mat-grid-tile>
