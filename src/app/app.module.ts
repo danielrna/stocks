@@ -16,7 +16,6 @@ import {MatTableModule} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavbarComponent} from './components/navbar/navbar.component';
-import {ColocationPageComponent} from './components/colocation-page/colocation-page.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -53,8 +52,6 @@ import {NewProjectPageComponent} from './components/new-project-page/new-project
     CryptoPageComponent,
     HomeComponent,
     NavbarComponent,
-    ColocationPageComponent,
-    ColocationPageComponent,
     LoginPageComponent,
     SnackbarComponent,
     SignupPageComponent,

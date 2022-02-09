@@ -11,5 +11,7 @@ export interface Project {
 }
 
 export enum ProjectType {
-  Colocation, LCD
+  Colocation,
+  LCD,
+  IDR,
 }

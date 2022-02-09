@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
-import {Project} from "../domain/model/Project";
+import {Project, ProjectType} from "../domain/model/Project";
 import {Observable} from "rxjs";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import {IProjectRepository} from "./iproject.repository";
@@ -59,7 +59,7 @@ export class ProjectRespository implements IProjectRepository{
   private toDomainProject(project: DocumentSnapshot<unknown>): Project {
     return {
       id: project.id,
-      type: project.get("type"),
+      type: project.get("type") as ProjectType,
       name: project.get("name"),
       ownerUid: project.get("ownerUid"),
       updated: project.get("updated"),

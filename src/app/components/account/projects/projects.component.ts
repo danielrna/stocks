@@ -14,10 +14,10 @@ import {Project, ProjectType} from "../../../domain/model/Project";
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
-
   projects: Project[] = [];
   showFiller: any;
   displayedColumns: string[] = ['name', 'type', 'updated', 'actions'];
+  toApiProjectType = toApiProjectType
 
   constructor(
     public auth: AuthenticationService,
@@ -56,14 +56,17 @@ export class ProjectsComponent implements OnInit {
     })
   }
 
-  getName(type: number): string {
-    switch (type) {
-      case ProjectType.Colocation:
-        return "Colocation"
-      case ProjectType.LCD:
-        return "Location courte durée"
-      default:
-        return "Inconnu"
-    }
+}
+
+export function toApiProjectType(type: ProjectType): string {
+  switch (type) {
+    case ProjectType.Colocation:
+      return "Colocation"
+    case ProjectType.LCD:
+      return "Location courte durée"
+    case ProjectType.IDR:
+      return "Immeuble de rapport"
+    default:
+      return "Inconnu"
   }
 }
