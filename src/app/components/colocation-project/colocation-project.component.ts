@@ -38,7 +38,7 @@ export class ColocationProjectComponent implements OnInit {
 
   project: Project = {
     id: null,
-    type: ProjectType.COLOC,
+    type: ProjectType.Colocation,
     ownerUid: "",
     updated: Date.now(),
     name: "Nouveau Projet",

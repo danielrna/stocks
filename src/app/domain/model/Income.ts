@@ -12,6 +12,7 @@ export enum IncomeType {
   Autre
 }
 
+
 export function getIncomeTypeKeys() {
   return Object.keys(IncomeType).filter(f => {
     return !isNaN(Number(f))

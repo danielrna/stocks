@@ -12,6 +12,7 @@ import {AccountPageComponent} from "./components/account/account-page/account-pa
 import {IncomesComponent} from "./components/account/incomes/incomes.component";
 import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
 import {DebtsComponent} from "./components/account/debts/debts.component";
+import {NewProjectPageComponent} from "./components/new-project-page/new-project-page.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'signup', component: SignupPageComponent},
+  {path: 'newProject', component: NewProjectPageComponent},
   {
     path: 'account', component: AccountPageComponent, children: [
       {

@@ -58,7 +58,7 @@ export class ProjectsComponent implements OnInit {
 
   getName(type: number): string {
     switch (type) {
-      case ProjectType.COLOC:
+      case ProjectType.Colocation:
         return "Colocation"
       case ProjectType.LCD:
         return "Location courte durée"

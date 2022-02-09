@@ -1,0 +1,21 @@
+<div style="text-align: center;margin-bottom: 60px">
+
+  <h1>Choisir un type de projet</h1>
+</div>
+<div class="project-cards-container">
+  <mat-card *ngFor="let card of projectCards" [routerLink]="card.route" class="example-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{card.type}}
+      </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image
+         [src]="card.img"
+         alt="">
+    <mat-card-content>
+      <p>
+        {{card.text}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
