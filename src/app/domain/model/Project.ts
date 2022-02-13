@@ -7,7 +7,7 @@ export interface Project {
   ownerUid: string;
   updated: number;
   name: string;
-  inputs: ProjectInputs
+  inputs: ProjectInputs,
 }
 
 export enum ProjectType {

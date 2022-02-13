@@ -3,7 +3,7 @@ import {ProjectService} from "../../domain/project.service";
 import {Project, ProjectType} from "../../domain/model/Project";
 import {ProjectInputs} from "../../domain/model/ProjectInputs";
 import {AuthenticationService} from "../../domain/authentication.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-colocation-project',
@@ -12,7 +12,8 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ColocationProjectComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, private authService: AuthenticationService, private route: ActivatedRoute) {
+  constructor(private projectService: ProjectService,
+              private authService: AuthenticationService, private route: ActivatedRoute, private router: Router) {
     this.authService.getCurrentUser().subscribe(user => {
       if (user) {
         this.project.ownerUid = user.uid
@@ -58,6 +59,7 @@ export class ColocationProjectComponent implements OnInit {
       autre: 0,
       cfe: 30,
       entretien: 0,
+      chasse: 0
     }
   }
 
@@ -85,6 +87,7 @@ export class ColocationProjectComponent implements OnInit {
       + this.notaire
       + inputs.meubles
       + inputs.prix
+      + inputs.chasse
       - inputs.apport;
     this.mensualiteCredit = this.PMT()
 
@@ -97,6 +100,8 @@ export class ColocationProjectComponent implements OnInit {
       + inputs.entretien
       + this.mensualiteCredit
       + this.gestion
+
+
     this.cashflow = this.monthlyRent - this.monthlyExpenses
     this.rendementBrut = Math.round(this.monthlyRent * 12 / inputs.prix * 100)
     this.rendementNet = Math.round((this.cashflow + this.mensualiteCredit) * 12 / this.totalEmprunte * 100)
@@ -132,7 +137,8 @@ export class ColocationProjectComponent implements OnInit {
 
   saveProject() {
     this.project.updated = Date.now()
-    this.projectService.createOrUpdateProject(this.project)
+    this.projectService.createOrUpdateProject(this.project).then(value =>
+      this.router.navigate(["/colocation/"+value]))
   }
 
 

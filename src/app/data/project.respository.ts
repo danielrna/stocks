@@ -3,15 +3,15 @@ import {AngularFirestore} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
 import {Project, ProjectType} from "../domain/model/Project";
 import {Observable} from "rxjs";
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import {IProjectRepository} from "./iproject.repository";
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
   {
     providedIn: 'root'
   }
 )
-export class ProjectRespository implements IProjectRepository{
+export class ProjectRespository implements IProjectRepository {
   constructor(private afs: AngularFirestore) {
   }
 
@@ -23,12 +23,15 @@ export class ProjectRespository implements IProjectRepository{
 
   }
 
-  updateProject(project: Project): Promise<void> {
-    return this.afs.collection("projects").doc(project.id!!)
-      .update({...project}).then(a => {
-        console.log(project)
-      })
-
+  updateProject(project: Project): Promise<string> {
+    if (project.id == null) {
+      throw Error("Id cannopt be null for update")
+    } else {
+      return this.afs.collection("projects").doc(project.id!!)
+        .update({...project}).then(a => {
+          return project.id!!
+        })
+    }
   }
 
   deleteProject(id: string): Promise<void> {
@@ -75,14 +78,14 @@ export class ProjectRespository implements IProjectRepository{
 
   }
 
-  clear() :Observable<Project[]>{
+  clear(): Observable<Project[]> {
     return new Observable(subscriber => {
       const snapUnsub = this.afs.collection('projects').ref
         .where('id', '==', null).onSnapshot(next => {
           subscriber.next(
             next.docs
               .map(value => {
-                console.log()
+                  console.log()
                   return this.toDomainProject(value)
                 }
               )

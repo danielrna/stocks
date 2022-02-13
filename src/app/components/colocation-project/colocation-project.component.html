@@ -17,7 +17,7 @@
         <input matInput type="number" [step]=10  class="example-right-align"
                placeholder="0" [(ngModel)]="this.project.inputs.prixChambre" (ngModelChange)="calculateAllFields()">
         <span matPrefix>€&nbsp;</span>
-        <mat-icon matSuffix>rent</mat-icon>
+        <mat-icon matSuffix>bedroom_parent</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline" floatLabel="always">
@@ -67,6 +67,16 @@
                [(ngModel)]="notaire">
         <span matPrefix>€&nbsp;</span>
         <mat-icon matSuffix>gavel</mat-icon>
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Chasse
+        </mat-label>
+        <input matInput type="number" class="example-right-align"
+               [(ngModel)]="project.inputs.chasse" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>search</mat-icon>
 
       </mat-form-field>
     </div>

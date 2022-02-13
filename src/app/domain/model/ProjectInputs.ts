@@ -13,5 +13,6 @@ export interface ProjectInputs {
   pno: number
   autre: number
   cfe: number
-  entretien: number
+  entretien: number,
+  chasse: number
 }

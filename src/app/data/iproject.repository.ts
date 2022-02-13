@@ -5,7 +5,7 @@ export interface IProjectRepository {
 
   createProject(project: Project): Promise<string>
 
-  updateProject(project: Project): Promise<void>
+  updateProject(project: Project): Promise<string>
 
   deleteProject(id: string): Promise<void>
 
