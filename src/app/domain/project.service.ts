@@ -13,6 +13,7 @@ export class ProjectService {
   }
 
   createOrUpdateProject(project: Project): Promise<string> {
+    project.updated = Date.now()
     let promise;
     if (project.id != null) {
       promise = this.projectRespository.updateProject(project)

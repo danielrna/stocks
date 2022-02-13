@@ -45,6 +45,7 @@ import {DoughnutChartComponent} from './components/account/dashboard/charts/doug
 import {NgChartsModule} from 'ng2-charts';
 import {DebtsComponent} from './components/account/debts/debts.component';
 import {NewProjectPageComponent} from './components/new-project-page/new-project-page.component';
+import { ChargesComponent } from './components/account/charges/charges.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {NewProjectPageComponent} from './components/new-project-page/new-project
     DoughnutChartComponent,
     DebtsComponent,
     NewProjectPageComponent,
+    ChargesComponent,
   ],
   imports: [
     BrowserModule,

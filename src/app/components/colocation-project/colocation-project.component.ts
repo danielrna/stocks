@@ -12,32 +12,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ColocationProjectComponent implements OnInit {
 
-  constructor(private projectService: ProjectService,
-              private authService: AuthenticationService, private route: ActivatedRoute, private router: Router) {
-    this.authService.getCurrentUser().subscribe(user => {
-      if (user) {
-        this.project.ownerUid = user.uid
-      }
-    })
-
-    this.route.pathFromRoot[1].url.subscribe(segment => {
-      let projectId = segment[1].path
-      if (projectId && projectId != "new") {
-        this.projectService.getProjectsById(projectId).then(value => {
-          this.project = value
-          this.calculateAllFields()
-
-        })
-      }
-
-    });
-  }
-
-  ngOnInit(): void {
-    this.calculateAllFields()
-  }
-
-  project: Project = {
+  project: Project = <Project>{
     id: null,
     type: ProjectType.Colocation,
     ownerUid: "",
@@ -74,6 +49,36 @@ export class ColocationProjectComponent implements OnInit {
   mensualiteCredit: number = this.PMT()
   rendementBrut: number = 0
   rendementNet: number = 0
+
+
+  ngOnInit(): void {
+    this.calculateAllFields()
+  }
+
+  constructor(private projectService: ProjectService,
+              private authService: AuthenticationService, private route: ActivatedRoute, private router: Router) {
+    this.authService.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.project.ownerUid = user.uid
+      }
+    })
+
+    this.route.pathFromRoot[1].url.subscribe(segment => {
+      let projectId = segment[1].path
+      this.loadProject(projectId);
+
+    });
+  }
+
+  private loadProject(projectId: string) {
+    if (projectId && projectId != "new") {
+      this.projectService.getProjectsById(projectId).then(value => {
+        this.project = value
+        this.calculateAllFields()
+      })
+    }
+  }
+
 
   calculateAllFields() {
 
@@ -136,9 +141,8 @@ export class ColocationProjectComponent implements OnInit {
   }
 
   saveProject() {
-    this.project.updated = Date.now()
     this.projectService.createOrUpdateProject(this.project).then(value =>
-      this.router.navigate(["/colocation/"+value]))
+      this.router.navigate(["/colocation/" + value]))
   }
 
 
