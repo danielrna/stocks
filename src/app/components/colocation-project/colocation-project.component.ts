@@ -34,7 +34,8 @@ export class ColocationProjectComponent implements OnInit {
       autre: 0,
       cfe: 30,
       entretien: 0,
-      chasse: 0
+      chasse: 0,
+      vacance: 1.5,
     }
   }
 
@@ -84,7 +85,7 @@ export class ColocationProjectComponent implements OnInit {
 
     let inputs = this.project.inputs;
     this.tfMensuelle = inputs.tf / 12;
-    this.monthlyRent = inputs.nbChambre * inputs.prixChambre
+    this.monthlyRent = (inputs.nbChambre * inputs.prixChambre) * (12 - inputs.vacance) / 12
     this.gestion = Math.round(0.08 * this.monthlyRent);
     this.notaire = 0.08 * inputs.prix
 

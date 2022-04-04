@@ -14,7 +14,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Loyer par chambre</mat-label>
-        <input matInput type="number" [step]=10  class="example-right-align"
+        <input matInput type="number" [step]=10 class="example-right-align"
                placeholder="0" [(ngModel)]="this.project.inputs.prixChambre" (ngModelChange)="calculateAllFields()">
         <span matPrefix>€&nbsp;</span>
         <mat-icon matSuffix>bedroom_parent</mat-icon>
@@ -76,6 +76,16 @@
         <input matInput type="number" class="example-right-align"
                [(ngModel)]="project.inputs.chasse" (ngModelChange)="calculateAllFields()">
         <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>search</mat-icon>
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          Vacance locative
+        </mat-label>
+        <input matInput type="number" class="example-right-align"
+               [(ngModel)]="project.inputs.vacance" (ngModelChange)="calculateAllFields()">
+        <span matPrefix>mois&nbsp;</span>
         <mat-icon matSuffix>search</mat-icon>
 
       </mat-form-field>
@@ -167,16 +177,6 @@
         <mat-icon matSuffix>business</mat-icon>
 
       </mat-form-field>
-      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
-        <mat-label>
-          Gestion du bien 8%
-        </mat-label>
-        <input disabled matInput class="example-right-align" type="number"
-               [(ngModel)]="gestion">
-        <span matPrefix>€&nbsp;</span>
-        <mat-icon matSuffix>support_agent</mat-icon>
-
-      </mat-form-field>
       <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>
           autre
@@ -200,6 +200,16 @@
         <input disabled matInput class="example-right-align" [ngModel]="tfMensuelle" type="number"/>
         <span matPrefix>€&nbsp;</span>
         <mat-icon matSuffix>money_off</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="light-yellow-input" appearance="outline" floatLabel="always">
+        <mat-label>
+          Gestion du bien 8%
+        </mat-label>
+        <input disabled matInput class="example-right-align" type="number"
+               [(ngModel)]="gestion">
+        <span matPrefix>€&nbsp;</span>
+        <mat-icon matSuffix>support_agent</mat-icon>
+
       </mat-form-field>
     </div>
     <div class="card-container">
@@ -227,7 +237,7 @@
                [(ngModel)]="cashflow">
         <span matPrefix>€&nbsp;</span>
       </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always"  class="light-yellow-input">
+      <mat-form-field appearance="outline" floatLabel="always" class="light-yellow-input">
         <mat-label>
           Rendement Brut
         </mat-label>
@@ -235,12 +245,12 @@
                [(ngModel)]="rendementBrut">
         <span matPrefix>%&nbsp;</span>
       </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always"  class="light-yellow-input">
+      <mat-form-field appearance="outline" floatLabel="always" class="light-yellow-input">
         <mat-label>
           Rendement Net
         </mat-label>
         <input matInput type="number" disabled class="example-right-align"
-               [(ngModel)]="rendementNet" >
+               [(ngModel)]="rendementNet">
         <span matPrefix>%&nbsp;</span>
       </mat-form-field>
       <button mat-raised-button (click)="saveProject()">

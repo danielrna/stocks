@@ -14,5 +14,6 @@ export interface ProjectInputs {
   autre: number
   cfe: number
   entretien: number,
-  chasse: number
+  chasse: number,
+  vacance: number
 }
