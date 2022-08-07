@@ -1,0 +1,11 @@
+<div *ngIf="doughnutChartData.datasets.length>0 && doughnutChartLabels.length>0">
+  <div>
+    <div style="display: block;">
+      <canvas baseChart
+              [data]="doughnutChartData"
+              [options]="chartOptions"
+              [type]="doughnutChartType">
+      </canvas>
+    </div>
+  </div>
+</div>

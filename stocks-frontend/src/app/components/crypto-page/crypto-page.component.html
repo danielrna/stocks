@@ -1,0 +1,19 @@
+<p>Liste des cryptos</p>
+<tbody>
+<mat-form-field appearance="outline" floatLabel="always">
+  <mat-label>Rechercher</mat-label>
+  <input matInput type="text" class="example-right-align"
+         [(ngModel)]="filter">
+</mat-form-field>
+<button mat-raised-button (click)="this.setFilteredSymbols()">
+  <mat-icon style="color: black">search</mat-icon>
+</button>
+<button mat-raised-button (click)="this.filteredSymbols = this.symbols ; this.filter=''">
+  <mat-icon style="color: black">clear</mat-icon>
+
+</button>
+<tr *ngFor="let symbol of this.filteredSymbols">
+  <td><b>{{symbol.symbol.toUpperCase()}}</b></td>
+  <td>{{symbol.name}}</td>
+</tr>
+</tbody>
