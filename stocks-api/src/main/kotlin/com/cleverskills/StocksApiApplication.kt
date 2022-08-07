@@ -1,8 +1,10 @@
-package com.cleverskills.stocksapi
+package com.cleverskills
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux
 
+@EnableSwagger2WebFlux
 @SpringBootApplication
 class StocksApiApplication
 

@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+	api("org.springframework.boot:spring-boot-starter-webflux")
+
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -27,6 +29,12 @@ dependencies {
 	runtimeOnly("org.postgresql:r2dbc-postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+
+	implementation("io.springfox:springfox-swagger2:2.10.0")
+	implementation("io.springfox:springfox-swagger-ui:2.10.0")
+	implementation("io.springfox:springfox-spring-webflux:2.10.0")
+
+	implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.3")
 }
 
 tasks.withType<KotlinCompile> {
