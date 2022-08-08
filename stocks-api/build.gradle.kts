@@ -35,6 +35,11 @@ dependencies {
 	implementation("io.springfox:springfox-spring-webflux:2.10.0")
 
 	implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.3")
+	// Spring r2dbc
+	implementation("org.springframework.data:spring-data-r2dbc:1.1.4.RELEASE")
+	implementation("io.r2dbc:r2dbc-postgresql:0.8.5.RELEASE")
+	implementation("org.postgresql:postgresql:42.2.18")
+
 }
 
 tasks.withType<KotlinCompile> {

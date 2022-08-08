@@ -1,24 +1,36 @@
 package com.cleverskills.api
 
+import com.cleverskills.domain.ProjectService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 
 @Api("Project")
 @RestController
 @RequestMapping("project")
-class ProjectController() {
+class ProjectController(val projectService: ProjectService) {
 
     @ApiOperation(value = "Create project")
     @PostMapping("/create")
-    suspend fun createProject(
-//        @RequestBody request: ApiCreateProjectRequest
-    ): String {
-        return "sqddq"
+    suspend fun create(
+        @RequestBody request: ApiCreateProjectRequest
+    ): ResponseEntity<Unit> {
+        projectService.create(
+            request.type,
+            request.ownerId,
+            request.name,
+            request.inputs,
+        )
+        return ResponseEntity.noContent().build()
+    }
+    @ApiOperation(value = "Get project")
+    @GetMapping("{id}")
+    suspend fun get(
+        @PathVariable(name = "id", required = true) id: Long,
+    ) {
+        return Unit
     }
 
 }
