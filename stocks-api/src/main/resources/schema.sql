@@ -8,6 +8,6 @@ create TABLE IF NOT EXISTS public.projects
     name varchar,
     type   varchar,
     inputsId varchar,
-    createdDate date not null default current_date,
-    updatedDate date not null
+    createdDate timestamp not null default current_date,
+    updatedDate timestamp not null
 );

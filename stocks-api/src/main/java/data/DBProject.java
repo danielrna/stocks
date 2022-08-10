@@ -9,6 +9,7 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Table("projects")
@@ -25,11 +26,11 @@ public class DBProject implements Persistable<Long> {
 
     @Column("createdDate")
     @CreatedDate
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column("updatedDate")
     @LastModifiedDate
-    private Date updatedDate;
+    private LocalDateTime updatedDate;
 
     @Column("type")
     private ProjectType type;
@@ -51,10 +52,62 @@ public class DBProject implements Persistable<Long> {
         this.name = name;
         this.type = type;
         this.inputsId = inputsId;
-        this.updatedDate = new Date();
+        this.updatedDate = LocalDateTime.now();
     }
 
     public DBProject() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public ProjectType getType() {
+        return type;
+    }
+
+    public void setType(ProjectType type) {
+        this.type = type;
+    }
+
+    public String getInputsId() {
+        return inputsId;
+    }
+
+    public void setInputsId(String inputsId) {
+        this.inputsId = inputsId;
     }
 
     @Override

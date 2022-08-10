@@ -1,6 +1,7 @@
 package com.cleverskills.api
 
 import com.cleverskills.domain.ProjectService
+import data.DBProject
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.ResponseEntity
@@ -29,8 +30,8 @@ class ProjectController(val projectService: ProjectService) {
     @GetMapping("{id}")
     suspend fun get(
         @PathVariable(name = "id", required = true) id: Long,
-    ) {
-        return Unit
+    ): DBProject? {
+        return projectService.get(id)
     }
 
 }

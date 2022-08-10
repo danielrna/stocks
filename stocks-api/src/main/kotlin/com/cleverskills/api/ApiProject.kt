@@ -1,6 +1,7 @@
 package com.cleverskills.api
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.time.LocalDateTime
 import java.util.*
 
 data class ApiProject(
@@ -9,8 +10,8 @@ data class ApiProject(
     @JsonProperty("ownerUid") val ownerUid: String,
     @JsonProperty("name") val name: String,
     @JsonProperty("inputs") val inputs: ProjectInputs,
-    @JsonProperty("createdDate") val createdDate: Date,
-    @JsonProperty("upadatedDate") val upadatedDate: Date,
+    @JsonProperty("createdDate") val createdDate: LocalDateTime,
+    @JsonProperty("upadatedDate") val upadatedDate: LocalDateTime,
 )
 
 

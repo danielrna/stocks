@@ -14,4 +14,8 @@ class ProjectService(val projectRepository: ProjectRepository) {
             DBProject(null, ownerUid, name, type, "1323123")
         ).awaitFirst()
     }
+
+    suspend fun get(id: Long): DBProject? {
+        return projectRepository.findById(id).awaitFirst()
+    }
 }

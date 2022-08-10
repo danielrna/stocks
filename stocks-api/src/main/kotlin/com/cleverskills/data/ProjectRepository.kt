@@ -5,4 +5,5 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ProjectRepository : ReactiveCrudRepository<DBProject, Long>
+interface ProjectRepository : ReactiveCrudRepository<DBProject, Long> {
+}

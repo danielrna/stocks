@@ -16,29 +16,28 @@ repositories {
 }
 
 dependencies {
-	api("org.springframework.boot:spring-boot-starter-webflux")
+	//spring miscellaneous
 
-	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+	// kotlin
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-	runtimeOnly("com.h2database:h2")
-	runtimeOnly("io.r2dbc:r2dbc-h2")
-	runtimeOnly("org.postgresql:postgresql")
-	runtimeOnly("org.postgresql:r2dbc-postgresql")
+
+	// tests
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 
+	//springfox
 	implementation("io.springfox:springfox-swagger2:2.10.0")
 	implementation("io.springfox:springfox-swagger-ui:2.10.0")
 	implementation("io.springfox:springfox-spring-webflux:2.10.0")
 
 	implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.3")
-	// Spring r2dbc
-	implementation("org.springframework.data:spring-data-r2dbc:1.1.4.RELEASE")
-	implementation("io.r2dbc:r2dbc-postgresql:0.8.5.RELEASE")
-	implementation("org.postgresql:postgresql:42.2.18")
+	//  r2dbc
+	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	runtimeOnly("org.postgresql:r2dbc-postgresql")
 
 }
 
