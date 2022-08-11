@@ -10,7 +10,6 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Table("projects")
 public class DBProject implements Persistable<Long> {
@@ -53,6 +52,7 @@ public class DBProject implements Persistable<Long> {
         this.type = type;
         this.inputsId = inputsId;
         this.updatedDate = LocalDateTime.now();
+        if (id == null) this.createdDate = LocalDateTime.now();
     }
 
     public DBProject() {
@@ -121,7 +121,7 @@ public class DBProject implements Persistable<Long> {
         return this.newProject || id == null;
     }
 
-    public DBProject setAsNew(){
+    public DBProject setAsNew() {
         this.newProject = true;
         return this;
     }

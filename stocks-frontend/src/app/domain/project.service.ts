@@ -14,15 +14,15 @@ export class ProjectService {
   constructor(private projectRespository: ProjectRepository, private toast: ToastService) {
   }
 
-  createOrUpdateProject(project: Project): Promise<string> {
+  createOrUpdateProject(project: Project): Observable<Project> {
     project.updated = Date.now()
-    let promise;
+    let obs;
     if (project.id != null) {
-      promise = this.projectRespository.updateProject(project)
+      obs = this.projectRespository.updateProject(project)
     } else {
-      promise = this.projectRespository.createProject(project)
+      obs = this.projectRespository.createProject(project)
     }
-    return promise.then(id => {
+    return obs.pipe(id => {
       this.toast.showToast("Project Saved", ["success"])
       return id
     })
@@ -39,7 +39,7 @@ export class ProjectService {
     return this.projectRespository.getProjectsByOwnerId(id)
   }
 
-  getProjectsById(id: string): Promise<Project> {
+  getProjectsById(id: string): Observable<Project> {
     return this.projectRespository.getProjectsById(id)
   }
 

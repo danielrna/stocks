@@ -43,7 +43,7 @@ export class IncomeService {
       type: IncomeType.Immobilier,
       name: `Linked to <${project.name}>`,
       value: out.cashflowNoCredit,
-      ownerId: project.ownerUid
+      ownerId: project.ownerId
     }
 
   }

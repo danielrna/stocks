@@ -17,6 +17,9 @@ repositories {
 
 dependencies {
 	//spring miscellaneous
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-web:2.4.0")
+	api("com.squareup.okhttp3:okhttp:3.14.9")
 
 	// kotlin
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -36,7 +39,6 @@ dependencies {
 	implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.3")
 	//  r2dbc
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	runtimeOnly("org.postgresql:r2dbc-postgresql")
 
 }

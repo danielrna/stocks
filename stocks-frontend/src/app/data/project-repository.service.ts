@@ -1,9 +1,12 @@
 import {Injectable} from "@angular/core";
-import {AngularFirestore} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
 import {Project, ProjectType} from "../domain/model/Project";
 import {Observable} from "rxjs";
 import {IProjectRepository} from "./iproject.repository";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {catchError, tap} from "rxjs/operators";
+import {handleError} from "./utils/LoggingUtils";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
@@ -12,25 +15,34 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
   }
 )
 export class ProjectRepository implements IProjectRepository {
-  constructor(private afs: AngularFirestore) {
+
+  constructor(private http: HttpClient, private afs: AngularFirestore) {
   }
 
-  createProject(project: Project): Promise<string> {
-    const projectRef = this.afs.collection("projects")
-    return projectRef.add({...project}).then(added => {
-      return added.id
-    });
+  private envUrl = "http://localhost:8080";
+
+  httpOptions = {
+    headers: new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin':'*',
+      })
+  };
+
+  createProject(_project: Project): Observable<Project> {
+    return this.http.post<Project>(`${this.envUrl}/project`, _project, this.httpOptions).pipe(
+      tap((newP: Project) => console.log(`Project created w/ id=${newP.id}`)),
+      catchError(handleError<Project>('createProject'))
+    );
 
   }
 
-  updateProject(project: Project): Promise<string> {
-    if (project.id == null) {
+  updateProject(_project: Project): Observable<Project> {
+    if (_project.id == null) {
       throw Error("Id cannopt be null for update")
     } else {
-      return this.afs.collection("projects").doc(project.id!!)
-        .update({...project}).then(a => {
-          return project.id!!
-        })
+      return this.http.put<Project>(`${this.envUrl}/projects`, _project, this.httpOptions).pipe(
+      )
     }
   }
 
@@ -64,17 +76,15 @@ export class ProjectRepository implements IProjectRepository {
       id: project.id,
       type: project.get("type") as ProjectType,
       name: project.get("name"),
-      ownerUid: project.get("ownerUid"),
+      ownerId: project.get("ownerUid"),
       updated: project.get("updated"),
       inputs: project.get("inputs"),
     } as Project;
   }
 
-  getProjectsById(id: string): Promise<Project> {
-    return this.afs.collection('projects').ref
-      .doc(id).get().then(value => {
-        return this.toDomainProject(value)
-      })
+  getProjectsById(id: string): Observable<Project> {
+    return this.http.get<Project>(`${this.envUrl}/projects/${id}`).pipe(
+    );
 
   }
 

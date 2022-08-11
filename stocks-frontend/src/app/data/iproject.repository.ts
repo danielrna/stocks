@@ -3,13 +3,13 @@ import {Observable} from "rxjs";
 
 export interface IProjectRepository {
 
-  createProject(project: Project): Promise<string>
+  createProject(project: Project): Observable<Project>
 
-  updateProject(project: Project): Promise<string>
+  updateProject(project: Project): Observable<Project>
 
   deleteProject(id: string): Promise<void>
 
   getProjectsByOwnerId(ownerId: string): Observable<Project[]>
 
-  getProjectsById(id: string): Promise<Project>
+  getProjectsById(id: string): Observable<Project>
 }
