@@ -255,7 +255,9 @@
       </mat-form-field>
       <button mat-raised-button (click)="saveProject()">
         <mat-icon style="color: black">save</mat-icon>
-        <span>Mettre à jour</span>
+        <div *ngIf="this.project.id != null; else elseBlock">Mettre à jour</div>
+        <ng-template #elseBlock>Créer</ng-template>
+        <span ></span>
       </button>
     </div>
 

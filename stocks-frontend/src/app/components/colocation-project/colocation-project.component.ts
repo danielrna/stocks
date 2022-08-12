@@ -5,7 +5,6 @@ import {ProjectInputs} from "../../domain/model/ProjectInputs";
 import {AuthenticationService} from "../../domain/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectOutputs} from "../../domain/model/ProjectOutputs";
-import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-colocation-project',
@@ -76,18 +75,16 @@ export class ColocationProjectComponent implements OnInit {
 
   private loadProject(projectId: string) {
     if (projectId && projectId != "new") {
-      this.projectService.getProjectsById(projectId).pipe(map(value => {
+      this.projectService.getProjectById(projectId).subscribe(value => {
         this.project = value
         this.calculateAllFields()
-      }))
+      })
     }
   }
 
   calculateAllFields() {
     this.outputs = this.projectService.calculate(this.project.inputs)
   }
-
-
   getCashflowClassName() {
     let color: string = "red"
     if (this.outputs.cashflow > 0) {
@@ -98,7 +95,7 @@ export class ColocationProjectComponent implements OnInit {
 
   saveProject() {
     this.projectService.createOrUpdateProject(this.project).subscribe(proj =>
-      this.router.navigate(["/colocation/" + proj.id]))
+      this.router.navigate(["/account/projects"]))
   }
 
 

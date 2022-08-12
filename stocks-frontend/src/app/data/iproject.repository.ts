@@ -9,7 +9,7 @@ export interface IProjectRepository {
 
   deleteProject(id: string): Promise<void>
 
-  getProjectsByOwnerId(ownerId: string): Observable<Project[]>
+  getProjectsByUserId(ownerId: string): Observable<Project[]>
 
-  getProjectsById(id: string): Observable<Project>
+  getProjectById(id: string): Observable<Project>
 }

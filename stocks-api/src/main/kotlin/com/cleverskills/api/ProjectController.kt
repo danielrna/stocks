@@ -34,6 +34,14 @@ class ProjectController(val projectService: ProjectService) {
         return projectService.get(id)?.toApi()
     }
 
+    @ApiOperation(value = "Get projects by user id")
+    @GetMapping("")
+    suspend fun findByUserId(
+        @RequestParam(name = "userId", required = true) userId: String,
+    ): List<ApiProject> {
+        return projectService.findByUserId(userId).map { it.toApi() }
+    }
+
 }
 
 private fun Project.toApi(): ApiProject {
@@ -42,7 +50,7 @@ private fun Project.toApi(): ApiProject {
         type = type,
         ownerId = ownerId,
         name = name,
-        inputs = inputs.toApi(),
+        inputs = inputs?.toApi(),
         createdDate = createdDate,
         upadatedDate = upadatedDate
     )

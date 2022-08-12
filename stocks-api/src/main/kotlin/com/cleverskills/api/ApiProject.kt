@@ -8,7 +8,7 @@ data class ApiProject(
     @JsonProperty("type") val type: ProjectType,
     @JsonProperty("ownerUid") val ownerId: String,
     @JsonProperty("name") val name: String,
-    @JsonProperty("inputs") val inputs: ApiProjectInputs,
+    @JsonProperty("inputs") val inputs: ApiProjectInputs?,
     @JsonProperty("createdDate") val createdDate: LocalDateTime,
     @JsonProperty("upadatedDate") val upadatedDate: LocalDateTime,
 )

@@ -1,6 +1,6 @@
 create schema IF NOT EXISTS public;
 
-drop table if exists projects;
+-- drop table if exists projects;
 create TABLE IF NOT EXISTS public.projects
 (
     id       SERIAL NOT NULL PRIMARY KEY,

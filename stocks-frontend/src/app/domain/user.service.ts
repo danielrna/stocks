@@ -24,7 +24,7 @@ export class UserService {
 
   getFullUser(id: string): Observable<FullUser> {
     let obs1 = this.userRepository.getUser(id)
-    let obs2 = this.projectRepository.getProjectsByOwnerId(id)
+    let obs2 = this.projectRepository.getProjectsByUserId(id)
 
     return combineLatest([obs1, obs2]).pipe(source =>
       source.pipe(map(value => {

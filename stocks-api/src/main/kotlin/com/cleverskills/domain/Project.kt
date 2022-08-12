@@ -8,7 +8,7 @@ data class Project(
     val type: ProjectType,
     val ownerId: String,
     val name: String,
-    val inputs: ProjectInputs,
+    val inputs: ProjectInputs?,
     val createdDate: LocalDateTime,
     val upadatedDate: LocalDateTime,
 )

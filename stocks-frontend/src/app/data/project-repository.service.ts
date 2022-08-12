@@ -52,23 +52,11 @@ export class ProjectRepository implements IProjectRepository {
   }
 
 
-  getProjectsByOwnerId(ownerId: string): Observable<Project[]> {
-    return new Observable(subscriber => {
-      const snapUnsub = this.afs.collection('projects').ref
-        .where('ownerUid', '==', ownerId).onSnapshot(next => {
-          subscriber.next(
-            next.docs
-              .map(value => {
-                  return this.toDomainProject(value)
-                }
-              )
-          );
-        });
-      subscriber.add(() => {
-        snapUnsub();
-      });
-    });
-
+  getProjectsByUserId(_userId: string): Observable<Project[]> {
+    return this.http.get<Project[]>(`${this.envUrl}/project?userId=${_userId}`, this.httpOptions).pipe(
+      tap((_projects: Project[]) => console.log(`${_projects.length} projects retrived`)),
+      catchError(handleError<Project[]>('getProjectsByUserId'))
+    );
   }
 
   private toDomainProject(project: DocumentSnapshot<unknown>): Project {
@@ -82,29 +70,12 @@ export class ProjectRepository implements IProjectRepository {
     } as Project;
   }
 
-  getProjectsById(id: string): Observable<Project> {
-    return this.http.get<Project>(`${this.envUrl}/projects/${id}`).pipe(
+  getProjectById(id: string): Observable<Project> {
+    return this.http.get<Project>(`${this.envUrl}/project/${id}`).pipe(
+      tap((_project: Project) => console.log(`Project retrived w/ id ${_project.id}`)),
+      catchError(handleError<Project>('getProjectById'))
     );
 
   }
 
-  clear(): Observable<Project[]> {
-    return new Observable(subscriber => {
-      const snapUnsub = this.afs.collection('projects').ref
-        .where('id', '==', null).onSnapshot(next => {
-          subscriber.next(
-            next.docs
-              .map(value => {
-                  console.log()
-                  return this.toDomainProject(value)
-                }
-              )
-          );
-        });
-      subscriber.add(() => {
-        snapUnsub();
-      });
-    });
-
-  }
 }

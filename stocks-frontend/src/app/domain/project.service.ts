@@ -36,20 +36,11 @@ export class ProjectService {
   }
 
   getProjectsByOwnerId(id: string): Observable<Project[]> {
-    return this.projectRespository.getProjectsByOwnerId(id)
+    return this.projectRespository.getProjectsByUserId(id)
   }
 
-  getProjectsById(id: string): Observable<Project> {
-    return this.projectRespository.getProjectsById(id)
-  }
-
-  clearProjects() {
-    this.projectRespository.clear().subscribe(value => {
-      value.forEach(value1 => {
-        this.projectRespository.deleteProject(value1.id!!).then(r => {
-        })
-      })
-    })
+  getProjectById(id: string): Observable<Project> {
+    return this.projectRespository.getProjectById(id)
   }
 
   calculate(inputs: ProjectInputs): ProjectOutputs {
