@@ -7,7 +7,7 @@ export interface IProjectRepository {
 
   updateProject(project: Project): Observable<Project>
 
-  deleteProject(id: string): Promise<void>
+  deleteProject(id: string): Observable<void>
 
   getProjectsByUserId(ownerId: string): Observable<Project[]>
 

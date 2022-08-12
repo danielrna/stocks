@@ -11,6 +11,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -77,8 +78,14 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
         val pairs = deferred.awaitAll()
         return projects.map { project ->
             val inputs: DBProjectInputs? = pairs.find { it.first == project.inputsId }?.second
-           project.toDomain(inputs)
+            project.toDomain(inputs)
         }
+    }
+
+    suspend fun deleteById(id: Long) {
+        val project = projectRepository.findById(id).awaitFirst()
+        projectInputsRepository.deleteById(project.inputsId).awaitFirstOrNull()
+        projectRepository.deleteById(id).awaitFirstOrNull()
     }
 
 

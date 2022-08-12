@@ -30,7 +30,7 @@ export class ProjectService {
   }
 
   deleteProject(id: string) {
-    return this.projectRespository.deleteProject(id).then(() => {
+    return this.projectRespository.deleteProject(id).subscribe(() => {
       this.toast.showToast("Project Deleted", ["success"])
     })
   }

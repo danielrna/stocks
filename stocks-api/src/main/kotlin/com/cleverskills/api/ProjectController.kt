@@ -5,6 +5,8 @@ import com.cleverskills.domain.ProjectInputs
 import com.cleverskills.domain.ProjectService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
@@ -40,6 +42,14 @@ class ProjectController(val projectService: ProjectService) {
         @RequestParam(name = "userId", required = true) userId: String,
     ): List<ApiProject> {
         return projectService.findByUserId(userId).map { it.toApi() }
+    }
+    @ApiOperation(value = "Delete project by id")
+    @DeleteMapping("{id}")
+    suspend fun delete(
+        @PathVariable(name = "id", required = true) id: Long,
+    ): ResponseEntity<Unit> {
+        projectService.deleteById(id)
+        return ResponseEntity<Unit>(HttpStatus.NO_CONTENT)
     }
 
 }

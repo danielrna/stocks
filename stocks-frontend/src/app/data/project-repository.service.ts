@@ -41,13 +41,13 @@ export class ProjectRepository implements IProjectRepository {
     if (_project.id == null) {
       throw Error("Id cannopt be null for update")
     } else {
-      return this.http.put<Project>(`${this.envUrl}/projects`, _project, this.httpOptions).pipe(
+      return this.http.put<Project>(`${this.envUrl}/project`, _project, this.httpOptions).pipe(
       )
     }
   }
 
-  deleteProject(id: string): Promise<void> {
-    return this.afs.collection("projects").ref.doc(id).delete()
+  deleteProject(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.envUrl}/project/${id}`, this.httpOptions).pipe()
 
   }
 

@@ -45,8 +45,7 @@ export class ProjectsComponent implements OnInit {
     let dialogref = this.dialog.open(ConfirmDialogComponent)
     dialogref.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        this.projectService.deleteProject(id).then(r => {
-        })
+        this.projectService.deleteProject(id)
       }
     });
   }
