@@ -35,7 +35,7 @@ public class DBProject implements Persistable<Long> {
     private ProjectType type;
 
     @Column("inputsId")
-    private String inputsId;
+    private Long inputsId;
 
     @Transient
     private boolean newProject;
@@ -44,7 +44,7 @@ public class DBProject implements Persistable<Long> {
                      String ownerId,
                      String name,
                      ProjectType type,
-                     String inputsId
+                     Long inputsId
     ) {
         this.id = id;
         this.ownerId = ownerId;
@@ -102,11 +102,11 @@ public class DBProject implements Persistable<Long> {
         this.type = type;
     }
 
-    public String getInputsId() {
+    public Long getInputsId() {
         return inputsId;
     }
 
-    public void setInputsId(String inputsId) {
+    public void setInputsId(Long inputsId) {
         this.inputsId = inputsId;
     }
 

@@ -1,6 +1,5 @@
 package com.cleverskills.domain
 
-import com.cleverskills.api.ApiProjectInputs
 import com.cleverskills.api.ProjectType
 import java.time.LocalDateTime
 
@@ -20,7 +19,7 @@ data class ProjectInputs(
     val prix: Long,
     val travaux: Long,
     val apport: Long,
-    val tauxCredit: Long,
+    val tauxCredit: Double,
     val dureeCredit: Long,
     val meubles: Long,
     val copro: Long,

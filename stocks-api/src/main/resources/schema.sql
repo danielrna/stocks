@@ -11,3 +11,28 @@ create TABLE IF NOT EXISTS public.projects
     createdDate timestamp not null default current_date,
     updatedDate timestamp not null
 );
+
+create TABLE IF NOT EXISTS public.projectinputs
+(
+    id       SERIAL NOT NULL PRIMARY KEY,
+    nbChambre smallint ,
+    prixChambre smallint ,
+    prix bigint ,
+    travaux bigint ,
+    apport bigint ,
+    tauxCredit numeric ,
+    dureeCredit smallint ,
+    meubles bigint ,
+    copro bigint ,
+    impots bigint ,
+    tf bigint ,
+    pno bigint ,
+    autre bigint ,
+    cfe bigint ,
+    entretien bigint ,
+    chasse bigint ,
+    vacance smallint ,
+
+    updatedDate timestamp not null
+
+);
