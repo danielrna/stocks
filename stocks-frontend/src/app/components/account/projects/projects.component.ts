@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.component";
 import {DatePipe} from "@angular/common";
 import {Project, ProjectType} from "../../../domain/model/Project";
+import {ToastService} from "../../../domain/toast.service";
 
 @Component({
   selector: 'app-projects',
@@ -25,11 +26,17 @@ export class ProjectsComponent implements OnInit {
     public projectService: ProjectService,
     private router: Router,
     public dialog: MatDialog,
-    public datePipe: DatePipe) {
+    public datePipe: DatePipe,
+    private toast: ToastService) {
 
   }
 
   ngOnInit(): void {
+    this.refreshProjects();
+  }
+
+
+  private refreshProjects() {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
         this.projectService.getProjectsByOwnerId(user.uid).subscribe(projects => {
@@ -40,12 +47,14 @@ export class ProjectsComponent implements OnInit {
     })
   }
 
-
   deleteProject(id: string) {
     let dialogref = this.dialog.open(ConfirmDialogComponent)
     dialogref.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        this.projectService.deleteProject(id)
+        this.projectService.deleteProject(id).subscribe(() => {
+          this.toast.showToast("Project Deleted", ["success"])
+          this.refreshProjects()
+        })
       }
     });
   }

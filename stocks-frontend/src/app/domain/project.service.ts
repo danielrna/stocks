@@ -11,7 +11,7 @@ import {ProjectOutputs} from "./model/ProjectOutputs";
 })
 export class ProjectService {
 
-  constructor(private projectRespository: ProjectRepository, private toast: ToastService) {
+  constructor(private projectRespository: ProjectRepository) {
   }
 
   createOrUpdateProject(project: Project): Observable<Project> {
@@ -23,16 +23,13 @@ export class ProjectService {
       obs = this.projectRespository.createProject(project)
     }
     return obs.pipe(id => {
-      this.toast.showToast("Project Saved", ["success"])
       return id
     })
 
   }
 
-  deleteProject(id: string) {
-    return this.projectRespository.deleteProject(id).subscribe(() => {
-      this.toast.showToast("Project Deleted", ["success"])
-    })
+  deleteProject(id: string) : Observable<void> {
+    return this.projectRespository.deleteProject(id)
   }
 
   getProjectsByOwnerId(id: string): Observable<Project[]> {
