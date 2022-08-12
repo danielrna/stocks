@@ -40,6 +40,10 @@ export class ProjectService {
     return this.projectRespository.getProjectById(id)
   }
 
+  getProjectOutputs(inputs: ProjectInputs): Observable<ProjectOutputs> {
+    return this.projectRespository.getProjectOutputs(inputs)
+  }
+
   calculate(inputs: ProjectInputs): ProjectOutputs {
 
     let outputs = <ProjectOutputs>{}

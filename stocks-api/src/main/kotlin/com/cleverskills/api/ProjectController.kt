@@ -2,6 +2,7 @@ package com.cleverskills.api
 
 import com.cleverskills.domain.Project
 import com.cleverskills.domain.ProjectInputs
+import com.cleverskills.domain.ProjectOutputs
 import com.cleverskills.domain.ProjectService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -24,7 +25,7 @@ class ProjectController(val projectService: ProjectService) {
             request.type,
             request.ownerId,
             request.name,
-            request.inputs,
+            request.inputs.toDomain(),
         ).toApi()
     }
 
@@ -43,6 +44,7 @@ class ProjectController(val projectService: ProjectService) {
     ): List<ApiProject> {
         return projectService.findByUserId(userId).map { it.toApi() }
     }
+
     @ApiOperation(value = "Delete project by id")
     @DeleteMapping("{id}")
     suspend fun delete(
@@ -50,6 +52,14 @@ class ProjectController(val projectService: ProjectService) {
     ): ResponseEntity<Unit> {
         projectService.deleteById(id)
         return ResponseEntity<Unit>(HttpStatus.NO_CONTENT)
+    }
+
+    @ApiOperation(value = "Calculate project outputs")
+    @PostMapping("calculateOutputs")
+    suspend fun calculateOutputs(
+        @RequestBody(required = true) req: ApiProjectInputs,
+    ): ApiProjectOutputs {
+        return projectService.calculateOutputs(req.toDomain()).toApi()
     }
 
 }
@@ -61,6 +71,7 @@ private fun Project.toApi(): ApiProject {
         ownerId = ownerId,
         name = name,
         inputs = inputs?.toApi(),
+        outputs = outputs?.toApi(),
         createdDate = createdDate,
         upadatedDate = upadatedDate
     )
@@ -86,5 +97,44 @@ private fun ProjectInputs.toApi(): ApiProjectInputs {
         chasse = chasse,
         vacance = vacance,
     )
+}
+
+private fun ApiProjectInputs.toDomain(): ProjectInputs {
+    return ProjectInputs(
+        nbChambre = nbChambre,
+        prixChambre = prixChambre,
+        prix = prix,
+        travaux = travaux,
+        apport = apport,
+        tauxCredit = tauxCredit,
+        dureeCredit = dureeCredit,
+        meubles = meubles,
+        copro = copro,
+        impots = impots,
+        tf = tf,
+        pno = pno,
+        autre = autre,
+        cfe = cfe,
+        entretien = entretien,
+        chasse = chasse,
+        vacance = vacance,
+    )
+}
+
+private fun ProjectOutputs.toApi(): ApiProjectOutputs {
+    return ApiProjectOutputs(
+        monthlyExpenses = monthlyExpenses,
+        notaire = notaire,
+        tfMensuelle = tfMensuelle,
+        monthlyRent = monthlyRent,
+        totalEmprunte = totalEmprunte,
+        cashflow = cashflow,
+        cashflowNoCredit = cashflowNoCredit,
+        gestion = gestion,
+        mensualiteCredit = mensualiteCredit,
+        rendementBrut = rendementBrut,
+        rendementNet = rendementNet,
+
+        )
 }
 

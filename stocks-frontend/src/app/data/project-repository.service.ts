@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
-import firebase from "firebase/compat";
-import {Project, ProjectType} from "../domain/model/Project";
+import {Project} from "../domain/model/Project";
 import {Observable} from "rxjs";
 import {IProjectRepository} from "./iproject.repository";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "./utils/LoggingUtils";
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {ProjectInputs} from "../domain/model/ProjectInputs";
+import {ProjectOutputs} from "../domain/model/ProjectOutputs";
 
 @Injectable(
   {
@@ -59,21 +59,20 @@ export class ProjectRepository implements IProjectRepository {
     );
   }
 
-  private toDomainProject(project: DocumentSnapshot<unknown>): Project {
-    return {
-      id: project.id,
-      type: project.get("type") as ProjectType,
-      name: project.get("name"),
-      ownerId: project.get("ownerUid"),
-      updated: project.get("updated"),
-      inputs: project.get("inputs"),
-    } as Project;
-  }
 
   getProjectById(id: string): Observable<Project> {
     return this.http.get<Project>(`${this.envUrl}/project/${id}`).pipe(
       tap((_project: Project) => console.log(`Project retrived w/ id ${_project.id}`)),
       catchError(handleError<Project>('getProjectById'))
+    );
+
+  }
+
+  getProjectOutputs(inputs: ProjectInputs): Observable<ProjectOutputs> {
+
+    return this.http.post<ProjectOutputs>(`${this.envUrl}/project/calculateOutputs`, inputs, this.httpOptions).pipe(
+      tap((newP: ProjectOutputs) => console.log(`Project outputs calculated`)),
+      catchError(handleError<ProjectOutputs>('createProject'))
     );
 
   }

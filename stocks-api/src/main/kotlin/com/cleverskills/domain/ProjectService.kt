@@ -1,6 +1,5 @@
 package com.cleverskills.domain
 
-import com.cleverskills.api.ApiProjectInputs
 import com.cleverskills.api.ProjectType
 import com.cleverskills.data.ProjectInputsRepository
 import com.cleverskills.data.ProjectRepository
@@ -15,8 +14,12 @@ import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class ProjectService(val projectRepository: ProjectRepository, val projectInputsRepository: ProjectInputsRepository) {
-    suspend fun create(type: ProjectType, ownerUid: String, name: String, inputs: ApiProjectInputs): Project {
+class ProjectService(
+    val projectRepository: ProjectRepository,
+    val projectInputsRepository: ProjectInputsRepository,
+    val rentaService: RentaService
+) {
+    suspend fun create(type: ProjectType, ownerUid: String, name: String, inputs: ProjectInputs): Project {
         val inputs = projectInputsRepository.save(
             DBProjectInputs(
                 null,
@@ -51,7 +54,8 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
         return project.toDomain(inputs)
     }
 
-    private fun DBProject.toDomain(inputs: DBProjectInputs?): Project {
+    private suspend fun DBProject.toDomain(inputs: DBProjectInputs?): Project {
+        val domainInputs = inputs?.toDomain()
         return Project(
             id = id ?: throw IllegalStateException(""),
             type = type,
@@ -59,7 +63,8 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
             name = name,
             createdDate = createdDate,
             upadatedDate = updatedDate,
-            inputs = inputs?.toDomain()
+            inputs = domainInputs,
+            outputs = domainInputs?.let { calculateOutputs(it) }
         )
 
     }
@@ -77,7 +82,7 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
         }
         val pairs = deferred.awaitAll()
         return projects.map { project ->
-            val inputs: DBProjectInputs? = pairs.find { it.first == project.inputsId }?.second
+            val inputs: DBProjectInputs? = pairs.find { it.first == project.id }?.second
             project.toDomain(inputs)
         }
     }
@@ -86,6 +91,10 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
         val project = projectRepository.findById(id).awaitFirst()
         projectInputsRepository.deleteById(project.inputsId).awaitFirstOrNull()
         projectRepository.deleteById(id).awaitFirstOrNull()
+    }
+
+    suspend fun calculateOutputs(inputs: ProjectInputs): ProjectOutputs {
+        return rentaService.calculateOutputs(inputs)
     }
 
 
@@ -108,7 +117,6 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
             entretien = entretien,
             chasse = chasse,
             vacance = vacance,
-            id = id!!,
         )
     }
 }
