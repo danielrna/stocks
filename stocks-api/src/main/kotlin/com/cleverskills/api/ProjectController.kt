@@ -3,7 +3,6 @@ package com.cleverskills.api
 import com.cleverskills.domain.Project
 import com.cleverskills.domain.ProjectInputs
 import com.cleverskills.domain.ProjectService
-import data.DBProject
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
@@ -31,8 +30,8 @@ class ProjectController(val projectService: ProjectService) {
     @GetMapping("{id}")
     suspend fun get(
         @PathVariable(name = "id", required = true) id: Long,
-    ): DBProject? {
-        return projectService.get(id)
+    ): ApiProject? {
+        return projectService.get(id)?.toApi()
     }
 
 }
@@ -50,24 +49,24 @@ private fun Project.toApi(): ApiProject {
 }
 
 private fun ProjectInputs.toApi(): ApiProjectInputs {
-return ApiProjectInputs(
-    nbChambre = nbChambre,
-    prixChambre = prixChambre,
-    prix = prix,
-    travaux = travaux,
-    apport = apport,
-    tauxCredit = tauxCredit,
-    dureeCredit = dureeCredit,
-    meubles = meubles,
-    copro = copro,
-    impots = impots,
-    tf = tf,
-    pno = pno,
-    autre = autre,
-    cfe = cfe,
-    entretien = entretien,
-    chasse = chasse,
-    vacance =vacance,
-)
+    return ApiProjectInputs(
+        nbChambre = nbChambre,
+        prixChambre = prixChambre,
+        prix = prix,
+        travaux = travaux,
+        apport = apport,
+        tauxCredit = tauxCredit,
+        dureeCredit = dureeCredit,
+        meubles = meubles,
+        copro = copro,
+        impots = impots,
+        tf = tf,
+        pno = pno,
+        autre = autre,
+        cfe = cfe,
+        entretien = entretien,
+        chasse = chasse,
+        vacance = vacance,
+    )
 }
 

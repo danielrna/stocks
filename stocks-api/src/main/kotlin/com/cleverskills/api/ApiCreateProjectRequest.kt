@@ -3,9 +3,8 @@ package com.cleverskills.api
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.annotations.ApiModel
 
-@ApiModel("ApiCreateTaskRequest", description = "Create a task")
+@ApiModel("ApiCreateProjectRequest", description = "Create a task")
 data class ApiCreateProjectRequest(
-//    @JsonProperty("id") val id: String,
     @JsonProperty("type") val type: ProjectType,
     @JsonProperty("ownerId") val ownerId: String,
     @JsonProperty("name") val name: String,

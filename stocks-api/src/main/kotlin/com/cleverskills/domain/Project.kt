@@ -30,5 +30,6 @@ data class ProjectInputs(
     val cfe: Long,
     val entretien: Long,
     val chasse: Long,
-    val vacance: Long
+    val vacance: Long,
+    val id: Long
 )

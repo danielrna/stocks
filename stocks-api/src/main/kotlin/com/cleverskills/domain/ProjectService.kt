@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 @Service
 class ProjectService(val projectRepository: ProjectRepository, val projectInputsRepository: ProjectInputsRepository) {
     suspend fun create(type: ProjectType, ownerUid: String, name: String, inputs: ApiProjectInputs): Project {
-      val inputsId =   projectInputsRepository.save(
+        val inputs = projectInputsRepository.save(
             DBProjectInputs(
                 null,
                 inputs.nbChambre,
@@ -33,17 +33,20 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
                 inputs.chasse,
                 inputs.vacance
             )
-        ).awaitFirst().id
-        return projectRepository.save(
-            DBProject(null, ownerUid, name, type, inputsId)
-        ).awaitFirst().toDomain()
+        ).awaitFirst()
+        val project = projectRepository.save(
+            DBProject(null, ownerUid, name, type, inputs.id)
+        ).awaitFirst()
+        return project.toDomain(inputs)
     }
 
-    suspend fun get(id: Long): DBProject? {
-        return projectRepository.findById(id).awaitFirst()
+    suspend fun get(id: Long): Project? {
+        val project = projectRepository.findById(id).awaitFirst()
+        val inputs = projectInputsRepository.findById(project.inputsId).awaitFirst()
+        return project.toDomain(inputs)
     }
 
-    private fun DBProject.toDomain(): Project {
+    private fun DBProject.toDomain(inputs: DBProjectInputs): Project {
         return Project(
             id = id ?: throw IllegalStateException(""),
             type = type,
@@ -51,26 +54,31 @@ class ProjectService(val projectRepository: ProjectRepository, val projectInputs
             name = name,
             createdDate = createdDate,
             upadatedDate = updatedDate,
-            inputs = ProjectInputs(
-                nbChambre = 0,
-                prixChambre = 0,
-                prix = 0,
-                travaux = 0,
-                apport = 0,
-                tauxCredit = 0.0,
-                dureeCredit = 0,
-                meubles = 0,
-                copro = 0,
-                impots = 0,
-                tf = 0,
-                pno = 0,
-                autre = 0,
-                cfe = 0,
-                entretien = 0,
-                chasse = 0,
-                vacance = 0
-            ) // FIXME
+            inputs = inputs.toDomain()
         )
 
     }
+}
+
+private fun DBProjectInputs.toDomain(): ProjectInputs {
+    return ProjectInputs(
+        nbChambre = nbChambre,
+        prixChambre = prixChambre,
+        prix = prix,
+        travaux = travaux,
+        apport = apport,
+        tauxCredit = tauxCredit,
+        dureeCredit = dureeCredit,
+        meubles = meubles,
+        copro = copro,
+        impots = impots,
+        tf = tf,
+        pno = pno,
+        autre = autre,
+        cfe = cfe,
+        entretien = entretien,
+        chasse = chasse,
+        vacance = vacance,
+        id = id!!,
+    )
 }
