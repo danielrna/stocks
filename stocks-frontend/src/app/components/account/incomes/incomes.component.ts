@@ -20,7 +20,7 @@ export class IncomesComponent implements OnInit {
 
   creationMode: boolean = false;
   newIcome: Income = {
-    type: IncomeType.Immobilier,
+    type: IncomeType.IMMO,
     name: "Nouveau revenu",
     value: 2500
   } as Income;
@@ -38,7 +38,7 @@ export class IncomesComponent implements OnInit {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
         this.newIcome.userId = user.uid
-        this.incomeService.getIncomesByOwnerId(user.uid).subscribe(incomes => {
+        this.incomeService.getIncomesByUserId(user.uid).subscribe(incomes => {
           this.incomes = incomes
         })
       } else this.router.navigate(["login"]).then(r => {

@@ -9,7 +9,7 @@ export interface IIncomeRepository {
 
   deleteIncome(id: string): Promise<void>
 
-  getIncomesByOwnerId(ownerId: string): Observable<Income[]>
+  getIncomesByUserId(ownerId: string): Observable<Income[]>
 
   getIncomesById(id: string): Promise<Income>
 }

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../../domain/user.service";
 import {AuthenticationService} from "../../../domain/authentication.service";
 import {Router} from "@angular/router";
 import {ProjectService} from "../../../domain/project.service";
@@ -26,7 +25,7 @@ export class ProjectsComponent implements OnInit {
     public dialog: MatDialog,
     public datePipe: DatePipe,
     private toast: ToastService,
-    ) {
+  ) {
 
   }
 

@@ -27,7 +27,7 @@ class ProjectService(
     ): Project {
         val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
 
-        val savedInputs: ProjectInputs = projectInputsService.createOrUpdate(existingProject?.inputsId, inputs)
+        val savedInputs = createOrUpdateLinkedInputs(existingProject, inputs)
 
         val project: Project = projectRepository.save(
             DBProject(
@@ -40,22 +40,25 @@ class ProjectService(
                 updatedDate = LocalDateTime.now(),
             )
         ).awaitFirst().toDomain(savedInputs)
-
-        project.createOrUpdateLinkedIncome()
-
+        createOrUpdateLinkedIncome(project)
         return project
     }
 
-    private suspend fun Project.createOrUpdateLinkedIncome() {
-        val existingIncome: Income? = incomeService.findByProjectId(id)
+    private suspend fun createOrUpdateLinkedInputs(
+        existingProject: DBProject?,
+        inputs: ProjectInputs
+    ) = projectInputsService.createOrUpdate(existingProject?.inputsId, inputs)
+
+    private suspend fun createOrUpdateLinkedIncome(project: Project) {
+        val existingIncome: Income? = incomeService.findByProjectId(project.id)
 
         incomeService.createOrUpdate(
             id = existingIncome?.id,
             type = IncomeType.IMMO,
-            userId = userId,
-            name = "Revenu lié au projet '$name'",
-            value = outputs.cashflowNoCredit,
-            projectId = id
+            userId = project.userId,
+            name = "Revenu lié au projet '${project.name}'",
+            value = project.outputs.cashflowNoCredit,
+            projectId = project.id
         )
     }
 
@@ -66,7 +69,7 @@ class ProjectService(
     }
 
 
-    private suspend fun DBProject.toDomain(inputs: ProjectInputs): Project {
+    internal suspend fun DBProject.toDomain(inputs: ProjectInputs): Project {
         return Project(
             id = checkNotNull(id) ,
             type = type,

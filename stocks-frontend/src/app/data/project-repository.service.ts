@@ -3,11 +3,11 @@ import {Project} from "../domain/model/Project";
 import {Observable} from "rxjs";
 import {IProjectRepository} from "./iproject.repository";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "./utils/LoggingUtils";
 import {ProjectInputs} from "../domain/model/ProjectInputs";
 import {ProjectOutputs} from "../domain/model/ProjectOutputs";
+import {envUrl} from "./utils/GlobalConstants";
 
 @Injectable(
   {
@@ -15,11 +15,11 @@ import {ProjectOutputs} from "../domain/model/ProjectOutputs";
   }
 )
 export class ProjectRepository implements IProjectRepository {
+  private envUrl: string = envUrl;
 
   constructor(private http: HttpClient) {
   }
 
-  private envUrl = "http://localhost:8080";
 
   httpOptions = {
     headers: new HttpHeaders(

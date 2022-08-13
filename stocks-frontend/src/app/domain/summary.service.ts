@@ -22,7 +22,7 @@ export class SummaryService {
   }
 
   private getTotalNotSalaryIncome(id: string) {
-    return this.incomeService.getNotSalaryIncomesByOwnerId(id).pipe(
+    return this.incomeService.getNotSalaryIncomesByUserId(id).pipe(
       map(income => {
         return income.reduce(function (accumulator, a) {
           return accumulator + a.value;
@@ -50,11 +50,11 @@ export class SummaryService {
   }
 
   private getUserBankConsideredIncome(id: string): Observable<number> {
-    return this.incomeService.getIncomesByOwnerId(id).pipe(
+    return this.incomeService.getIncomesByUserId(id).pipe(
       map(incomes => {
         return incomes.reduce(function (accumulator, a) {
           //bank only considers 70% of immo income
-          if (a.type == IncomeType.Immobilier) {
+          if (a.type == IncomeType.IMMO) {
             return accumulator + 0.7 * a.value;
           } else {
             return accumulator + a.value;
@@ -64,11 +64,11 @@ export class SummaryService {
   }
 
   private get(id: string): Observable<number> {
-    return this.incomeService.getIncomesByOwnerId(id).pipe(
+    return this.incomeService.getIncomesByUserId(id).pipe(
       map(incomes => {
         return incomes.reduce(function (accumulator, a) {
           //bank only considers 70% of immo income
-          if (a.type == IncomeType.Immobilier) {
+          if (a.type == IncomeType.IMMO) {
             return accumulator + 0.7 * a.value;
           } else {
             return accumulator + a.value;

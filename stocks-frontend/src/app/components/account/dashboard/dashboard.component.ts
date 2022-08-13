@@ -69,7 +69,7 @@ export class DashboardComponent {
 
   private getIncomeDashboardData(id: string) {
     return {
-      incomes: this.incomeService.getIncomesByOwnerId(id),
+      incomes: this.incomeService.getIncomesByUserId(id),
       incomeLabels: getIncomeTypeValues(),
       incomeKeys: getIncomeTypeKeys()
     };

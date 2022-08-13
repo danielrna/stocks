@@ -4,6 +4,10 @@ import firebase from "firebase/compat";
 import {Income, IncomeType} from "../domain/model/Income";
 import {Observable} from "rxjs";
 import {IIncomeRepository} from "./iincome.repository";
+import {catchError, tap} from "rxjs/operators";
+import {handleError} from "./utils/LoggingUtils";
+import {envUrl} from "./utils/GlobalConstants";
+import {HttpClient} from '@angular/common/http';
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
@@ -12,7 +16,9 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
   }
 )
 export class IncomeRespository implements IIncomeRepository {
-  constructor(private afs: AngularFirestore) {
+  private envUrl: string = envUrl;
+
+  constructor(private afs: AngularFirestore, private http: HttpClient) {
   }
 
   createIncome(income: Income): Promise<string> {
@@ -37,24 +43,13 @@ export class IncomeRespository implements IIncomeRepository {
   }
 
 
-  getIncomesByOwnerId(ownerId: string): Observable<Income[]> {
-    return new Observable(subscriber => {
-      const snapUnsub = this.afs.collection('incomes').ref
-        .where('ownerId', '==', ownerId).onSnapshot(next => {
-          subscriber.next(
-            next.docs
-              .map(value => {
-                  return this.toDomainIncome(value)
-                }
-              )
-          );
-        });
-      subscriber.add(() => {
-        snapUnsub();
-      });
-    });
-
+  getIncomesByUserId(_userId: string): Observable<Income[]> {
+    return this.http.get<Income[]>(`${this.envUrl}/income?userId=${_userId}`).pipe(
+      tap((_incomes: Income[]) => console.log(`${_incomes.length} incomes retrieved`)),
+      catchError(handleError<Income[]>('getIncomesByUserId'))
+    );
   }
+
 
   private toDomainIncome(income: DocumentSnapshot<unknown>): Income {
     return {
@@ -78,7 +73,7 @@ export class IncomeRespository implements IIncomeRepository {
     return new Observable(subscriber => {
       const snapUnsub = this.afs.collection('incomes').ref
         .where('ownerId', '==', id)
-        .where('type', '!=', IncomeType.Salaire)
+        .where('type', '!=', IncomeType.SALAIRE)
         .onSnapshot(next => {
           subscriber.next(
             next.docs

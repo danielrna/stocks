@@ -4,12 +4,12 @@ export interface Income {
   name: string;
   value: number;
   userId: string;
-  projectId: string;
+  projectId: string| null;
 }
 
 export enum IncomeType {
-  Immobilier,
-  Salaire,
+  IMMO,
+  SALAIRE,
   Autre
 }
 

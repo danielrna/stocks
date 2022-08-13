@@ -35,40 +35,12 @@ export class IncomeService {
 
   }
 
-  getIncomesByOwnerId(id: string): Observable<Income[]> {
-    return this.incomeRespository.getIncomesByOwnerId(id)
+  getIncomesByUserId(id: string): Observable<Income[]> {
+    return this.incomeRespository.getIncomesByUserId(id)
   }
 
-  //
-  // getIncomesByOwnerId(id: string): Observable<Income[]> {
-  //
-  //
-  //   let obs1: Observable<Income[]> = this.projectRespository.getProjectsByOwnerId(id).pipe(
-  //     map(it => {
-  //               return this.toIncome(it)
-  //     })
-  //   )
-  //
-  //   let obs2 = this.incomeRespository.getIncomesByOwnerId(id)
-  //   return combineLatest([obs1, obs2]).pipe(source => {
-  //
-  //   })
-  // }
-
-  getNotSalaryIncomesByOwnerId(id: string): Observable<Income[]> {
+  getNotSalaryIncomesByUserId(id: string): Observable<Income[]> {
     return this.incomeRespository.getNotSalaryIncomesByOwnerId(id)
   }
 
-  getIncomesById(id: string): Promise<Income> {
-    return this.incomeRespository.getIncomesById(id)
-  }
-
-  clearIncomes() {
-    this.incomeRespository.clear().subscribe(value => {
-      value.forEach(value1 => {
-        this.incomeRespository.deleteIncome(value1.id!!).then(r => {
-        })
-      })
-    })
-  }
 }
