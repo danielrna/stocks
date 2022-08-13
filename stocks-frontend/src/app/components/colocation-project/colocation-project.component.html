@@ -107,7 +107,7 @@
       <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Taux</mat-label>
         <input matInput type="number" [step]=0.1 class="example-right-align" placeholder="90000"
-               [(ngModel)]="this.project.inputs.tauxCredit" (ngModelChange)="calculateProjectOutputs()">
+               [(ngModel)]="this.project.inputs.loanRate" (ngModelChange)="calculateProjectOutputs()">
         <span matPrefix>%&nbsp;</span>
         <mat-icon matSuffix>percent</mat-icon>
       </mat-form-field>
@@ -132,7 +132,7 @@
           Crédit
         </mat-label>
         <input disabled matInput class="example-right-align"
-               [ngModel]="project.outputs.creditMensuel"
+               [ngModel]="project.outputs.monthlyLoan"
         >
         <span matPrefix>€&nbsp;</span>
       </mat-form-field>

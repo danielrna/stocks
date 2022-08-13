@@ -27,7 +27,7 @@ class FinanceController(val financeService: FinanceService) {
     private fun FinancialSummary.toApi(): ApiFinancialSummary {
 
         return ApiFinancialSummary(
-            passiveTotalIncome = passiveTotalIncome, activeTotalIncome = activeTotalIncome, debtRate = debtRate
+            passiveTotalIncome = passiveTotalIncome, activeTotalIncome = activeTotalIncome, debtRatio = debtRatio
         )
     }
 }

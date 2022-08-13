@@ -7,7 +7,7 @@ data class ProjectInputs(
     val prix: Long,
     val travaux: Long,
     val apport: Long,
-    val tauxCredit: Double,
+    val loanRate: Double,
     val dureeCredit: Long,
     val meubles: Long,
     val copro: Long,

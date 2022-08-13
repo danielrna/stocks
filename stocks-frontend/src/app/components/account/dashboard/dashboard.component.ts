@@ -35,7 +35,7 @@ export class DashboardComponent {
         this.incomeDashboardData = this.getIncomeDashboardData(user.uid)
         this.summaryService.getNotSalaryIncomesByUserId(user.uid).subscribe(summary => {
           this.miniCards.push(
-            DashboardComponent.getDebtRateMiniCardData(user.uid, summary.debtRate),
+            DashboardComponent.getLoanRateMiniCardData(user.uid, summary.debtRatio),
             DashboardComponent.getCashflowMiniCardData(user.uid, summary.passiveTotalIncome)
           )
 
@@ -76,7 +76,7 @@ export class DashboardComponent {
     };
   }
 
-  private static getDebtRateMiniCardData(id: string, value: number): MiniCardData {
+  private static getLoanRateMiniCardData(id: string, value: number): MiniCardData {
     return {
       title: "Taux d'endettement",
       value: value.toFixed(2),

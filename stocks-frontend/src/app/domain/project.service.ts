@@ -57,7 +57,7 @@ export class ProjectService {
       + inputs.prix
       + inputs.chasse
       - inputs.apport;
-    outputs.creditMensuel = this.PMT(inputs.tauxCredit, inputs.dureeCredit, outputs.totalEmprunte)
+    outputs.monthlyLoan = this.PMT(inputs.loanRate, inputs.dureeCredit, outputs.totalEmprunte)
 
     outputs.monthlyExpenses = inputs.copro
       + inputs.impots
@@ -66,14 +66,14 @@ export class ProjectService {
       + outputs.tfMensuelle
       + inputs.cfe
       + inputs.entretien
-      + outputs.creditMensuel
+      + outputs.monthlyLoan
       + outputs.gestion
 
 
     outputs.cashflow = outputs.monthlyRent - outputs.monthlyExpenses
-    outputs.cashflowAfterCredit = outputs.cashflow - outputs.creditMensuel
+    outputs.cashflowWithoutLoan = outputs.cashflow - outputs.monthlyLoan
     outputs.rendementBrut = Math.round(outputs.monthlyRent * 12 / inputs.prix * 100)
-    outputs.rendementNet = Math.round((outputs.cashflow + outputs.creditMensuel) * 12 / outputs.totalEmprunte * 100)
+    outputs.rendementNet = Math.round((outputs.cashflow + outputs.monthlyLoan) * 12 / outputs.totalEmprunte * 100)
     return outputs
   }
 

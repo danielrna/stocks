@@ -7,9 +7,9 @@ data class ProjectOutputs(
     val monthlyRent: Long,
     val totalEmprunte: Long,
     val cashflow: Long,
-    val cashflowAfterCredit: Long,
+    val cashflowWithoutLoan: Long,
     val gestion: Long,
-    val creditMensuel: Long,
+    val monthlyLoan: Long,
     val rendementBrut: Long,
     val rendementNet: Long,
 )

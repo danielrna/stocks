@@ -6,6 +6,9 @@ import com.cleverskills.domain.finance.FinanceService
 import com.cleverskills.domain.income.Income
 import com.cleverskills.domain.income.IncomeService
 import com.cleverskills.domain.income.IncomeType
+import com.cleverskills.domain.loan.Loan
+import com.cleverskills.domain.loan.LoanService
+import com.cleverskills.domain.loan.LoanType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -20,6 +23,7 @@ class ProjectService(
     val projectRepository: ProjectRepository,
     val projectInputsService: ProjectInputsService,
     val incomeService: IncomeService,
+    val loanService: LoanService,
     val financeService: FinanceService
 ) {
     suspend fun createOrUpdate(
@@ -41,6 +45,7 @@ class ProjectService(
             )
         ).awaitFirst().toDomain(savedInputs)
         createOrUpdateLinkedIncome(project)
+        createOrUpdateLinkedLoan(project)
         return project
     }
 
@@ -56,7 +61,19 @@ class ProjectService(
             type = IncomeType.IMMO,
             userId = project.userId,
             name = "Revenu lié au projet '${project.name}'",
-            value = project.outputs.cashflowAfterCredit,
+            value = project.outputs.cashflowWithoutLoan,
+            projectId = project.id
+        )
+    }
+    private suspend fun createOrUpdateLinkedLoan(project: Project) {
+        val existingLoan: Loan? = loanService.findByProjectId(project.id)
+
+        loanService.createOrUpdate(
+            id = existingLoan?.id,
+            type = LoanType.IMMO,
+            userId = project.userId,
+            name = "Crédit lié au projet '${project.name}'",
+            value = project.outputs.monthlyLoan,
             projectId = project.id
         )
     }

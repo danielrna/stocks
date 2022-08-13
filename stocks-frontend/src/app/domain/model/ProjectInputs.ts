@@ -4,7 +4,7 @@ export interface ProjectInputs {
   prix: number
   travaux: number
   apport: number
-  tauxCredit: number
+  loanRate: number
   dureeCredit: number
   meubles: number
   copro: number

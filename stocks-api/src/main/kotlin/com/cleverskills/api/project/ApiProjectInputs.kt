@@ -8,7 +8,7 @@ data class ApiProjectInputs(
     @JsonProperty("prix") val prix: Long,
     @JsonProperty("travaux") val travaux: Long,
     @JsonProperty("apport") val apport: Long,
-    @JsonProperty("tauxCredit") val tauxCredit: Double,
+    @JsonProperty("loanRate") val loanRate: Double,
     @JsonProperty("dureeCredit") val dureeCredit: Long,
     @JsonProperty("meubles") val meubles: Long,
     @JsonProperty("copro") val copro: Long,

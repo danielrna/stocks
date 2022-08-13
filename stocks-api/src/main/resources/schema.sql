@@ -1,8 +1,9 @@
 create schema IF NOT EXISTS public;
 
-drop table if exists projects;
-drop table if exists projectinputs;
-drop table if exists incomes;
+-- drop table if exists projects;
+-- drop table if exists projectinputs;
+-- drop table if exists incomes;
+-- drop table if exists loans;
 create TABLE IF NOT EXISTS public.projects
 (
     id       SERIAL NOT NULL PRIMARY KEY,
@@ -22,7 +23,7 @@ create TABLE IF NOT EXISTS public.projectinputs
     prix bigint ,
     travaux bigint ,
     apport bigint ,
-    tauxCredit numeric ,
+    loanRate numeric ,
     dureeCredit smallint ,
     meubles bigint ,
     copro bigint ,
@@ -39,6 +40,18 @@ create TABLE IF NOT EXISTS public.projectinputs
 
 );
 create TABLE IF NOT EXISTS public.incomes
+(
+    id       SERIAL NOT NULL PRIMARY KEY,
+    userId     varchar,
+    name varchar,
+    type   varchar,
+    value  bigint ,
+    projectId bigint,
+    createdDate timestamp not null default current_date,
+    updatedDate timestamp not null
+);
+
+create TABLE IF NOT EXISTS public.loans
 (
     id       SERIAL NOT NULL PRIMARY KEY,
     userId     varchar,

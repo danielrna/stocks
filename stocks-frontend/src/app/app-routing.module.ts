@@ -10,7 +10,7 @@ import {PersonalDataComponent} from "./components/account/personal-data/personal
 import {AccountPageComponent} from "./components/account/account-page/account-page.component";
 import {IncomesComponent} from "./components/account/incomes/incomes.component";
 import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
-import {DebtsComponent} from "./components/account/debts/debts.component";
+import {LoansComponent} from "./components/account/loans/loans.component";
 import {NewProjectPageComponent} from "./components/new-project-page/new-project-page.component";
 import {ChargesComponent} from "./components/account/charges/charges.component";
 
@@ -36,8 +36,8 @@ const routes: Routes = [
         path: 'incomes',
         component: IncomesComponent
       }, {
-        path: 'debts',
-        component: DebtsComponent
+        path: 'loans',
+        component: LoansComponent
       }, {
         path: 'charges',
         component: ChargesComponent

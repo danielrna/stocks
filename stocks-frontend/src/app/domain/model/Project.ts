@@ -30,7 +30,7 @@ export const placeHolderProject = <Project>{
     prix: 90000,
     travaux: 0,
     apport: 10000,
-    tauxCredit: 1,
+    loanRate: 1,
     dureeCredit: 25,
     meubles: 10000,
     copro: 0,

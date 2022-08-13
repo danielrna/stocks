@@ -2,6 +2,7 @@ package com.cleverskills.domain.finance
 
 import com.cleverskills.domain.income.IncomeService
 import com.cleverskills.domain.income.IncomeType
+import com.cleverskills.domain.loan.LoanService
 import com.cleverskills.domain.project.ProjectInputs
 import com.cleverskills.domain.project.ProjectOutputs
 import org.springframework.stereotype.Service
@@ -9,7 +10,7 @@ import kotlin.math.pow
 import kotlin.math.roundToLong
 
 @Service
-class FinanceService(val incomeService: IncomeService) {
+class FinanceService(val incomeService: IncomeService, val loanService: LoanService) {
 
 
     fun calculateProjectOutputs(inputs: ProjectInputs): ProjectOutputs {
@@ -21,7 +22,7 @@ class FinanceService(val incomeService: IncomeService) {
                 + inputs.prix
                 + inputs.chasse
                 - inputs.apport)
-        val creditMensuel = this.PMT(inputs.tauxCredit, inputs.dureeCredit, totalEmprunte)
+        val monthlyLoan = this.PMT(inputs.loanRate, inputs.dureeCredit, totalEmprunte)
         val monthlyRent = (inputs.nbChambre * inputs.prixChambre) * (12 - inputs.vacance) / 12
         val gestion = (0.08 * monthlyRent).roundToLong()
         val monthlyExpenses = (inputs.copro
@@ -31,21 +32,21 @@ class FinanceService(val incomeService: IncomeService) {
                 + tfMensuelle
                 + inputs.cfe
                 + inputs.entretien
-                + creditMensuel
+                + monthlyLoan
                 + gestion)
         val cashflow = monthlyRent - monthlyExpenses
         return ProjectOutputs(
             notaire = notaire,
             totalEmprunte = totalEmprunte,
-            creditMensuel = creditMensuel,
+            monthlyLoan = monthlyLoan,
             tfMensuelle = tfMensuelle,
             monthlyRent = monthlyRent,
             gestion = gestion,
             monthlyExpenses = monthlyExpenses,
             cashflow = cashflow,
-            cashflowAfterCredit = cashflow - creditMensuel,
+            cashflowWithoutLoan = cashflow + monthlyLoan,
             rendementBrut = (monthlyRent * 12 / inputs.prix * 100).toDouble().roundToLong(),
-            rendementNet = ((cashflow + creditMensuel) * 12 / totalEmprunte * 100).toDouble().roundToLong()
+            rendementNet = ((cashflow + monthlyLoan) * 12 / totalEmprunte * 100).toDouble().roundToLong()
         )
     }
 
@@ -63,12 +64,19 @@ class FinanceService(val incomeService: IncomeService) {
     }
 
     suspend fun getUserSummary(userId: String): FinancialSummary {
-        val immoIncome = incomeService.findUserIncomes(userId).filter { it.type == IncomeType.IMMO }.sumOf { it.value }
-        val otherIncome = incomeService.findUserIncomes(userId).filter { it.type != IncomeType.IMMO }.sumOf { it.value }
-        val consideredIncomeForMortgage = 0.7*immoIncome + otherIncome
+        val incomes = incomeService.findUserIncomes(userId)
+        val immoIncome = incomes.filter { it.type == IncomeType.IMMO }.sumOf { it.value }
+        val salaryIncome = incomes.filter { it.type == IncomeType.SALAIRE }.sumOf { it.value }
+        val otherIncome = incomes.filter { it.type != IncomeType.IMMO }.sumOf { it.value }
 
-        val salaryIncome = incomeService.findUserIncomes(userId).filter { it.type == IncomeType.SALAIRE }.sumOf { it.value }
+        val totalLoans = loanService.findUserLoans(userId).sumOf { it.value }
+        val consideredIncomeForLoan = 0.7 * immoIncome + otherIncome
+        val debtRatio = totalLoans / consideredIncomeForLoan*100
 
-       return FinancialSummary(passiveTotalIncome = immoIncome, activeTotalIncome = salaryIncome, debtRate = 13.0)
+        return FinancialSummary(
+            passiveTotalIncome = immoIncome,
+            activeTotalIncome = salaryIncome,
+            debtRatio = debtRatio
+        )
     }
 }

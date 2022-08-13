@@ -1,4 +1,4 @@
-<div *ngIf="debts">
+<div *ngIf="loans">
   <div class="dashboard-data-container">
     <mat-card>
       <div class="sticky-buttons">
@@ -28,17 +28,17 @@
           <mat-form-field appearance="outline">
             <mat-label>Type</mat-label>
             <mat-select [(value)]="this.newIcome.type">
-              <mat-option *ngFor="let type of debtTypesKeys" [value]="type">
-                {{debtTypes[type]}}
+              <mat-option *ngFor="let type of loanTypesKeys" [value]="type">
+                {{loanTypes[type]}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <button mat-raised-button (click)="saveNewDebt()">
+          <button mat-raised-button (click)="saveNewLoan()">
             <mat-icon mat-list-icon>save</mat-icon>
           </button>
         </div>
 
-        <table mat-table [dataSource]="this.debts" class="mat-elevation-z8" *ngIf="this.debts">
+        <table mat-table [dataSource]="this.loans" class="mat-elevation-z8" *ngIf="this.loans">
 
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
@@ -54,7 +54,7 @@
           <ng-container matColumnDef="type">
 
             <th mat-header-cell *matHeaderCellDef>Type</th>
-            <td mat-cell *matCellDef="let element"> {{debtTypes[element.type]}} </td>
+            <td mat-cell *matCellDef="let element"> {{loanTypes[element.type]}} </td>
           </ng-container>
 
           <ng-container matColumnDef="value">
@@ -67,7 +67,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
-              <button mat-button (click)="deleteDebt(element.id!!)">
+              <button mat-button (click)="deleteLoan(element.id!!)">
                 <mat-icon mat-list-icon>delete</mat-icon>
               </button>
             </td>

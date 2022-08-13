@@ -43,7 +43,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {DashCardComponent} from './components/account/dashboard/dashcard/dash-card.component';
 import {DoughnutChartComponent} from './components/account/dashboard/charts/doughnut-chart/doughnut-chart.component';
 import {NgChartsModule} from 'ng2-charts';
-import {DebtsComponent} from './components/account/debts/debts.component';
+import {LoansComponent} from './components/account/loans/loans.component';
 import {NewProjectPageComponent} from './components/new-project-page/new-project-page.component';
 import { ChargesComponent } from './components/account/charges/charges.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -67,7 +67,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     DashboardComponent,
     DashCardComponent,
     DoughnutChartComponent,
-    DebtsComponent,
+    LoansComponent,
     NewProjectPageComponent,
     ChargesComponent,
   ],

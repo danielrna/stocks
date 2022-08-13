@@ -11,29 +11,19 @@ import java.time.LocalDateTime
 
 @Table("projects")
 data class DBProject(
-    @Id
-    @Column("id")
-    private var id: Long? = null,
+    @Id @Column("id") private var id: Long? = null,
 
-    @Column("userId")
-    var userId: String,
+    @Column("userId") var userId: String,
 
-    @Column("name")
-    var name: String,
+    @Column("name") var name: String,
 
-    @Column("createdDate")
-    @CreatedDate
-    var createdDate: LocalDateTime,
+    @Column("createdDate") @CreatedDate var createdDate: LocalDateTime,
 
-    @Column("updatedDate")
-    @LastModifiedDate
-    var updatedDate: LocalDateTime,
+    @Column("updatedDate") @LastModifiedDate var updatedDate: LocalDateTime,
 
-    @Column("type")
-    var type: ProjectType,
+    @Column("type") var type: ProjectType,
 
-    @Column("inputsId")
-    var inputsId: Long,
+    @Column("inputsId") var inputsId: Long,
 
     ) : Persistable<Long?> {
     override fun getId(): Long? {
