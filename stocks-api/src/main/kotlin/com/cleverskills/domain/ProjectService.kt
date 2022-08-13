@@ -12,6 +12,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class ProjectService(
@@ -27,8 +28,17 @@ class ProjectService(
         val saved: DBProjectInputs = projectInputsRepository.save(inputs.toDB(existingProject?.inputsId)).awaitFirst()
 
         val project: DBProject =
-            projectRepository.save(DBProject(id, userId, name, type, saved.id, existingProject?.createdDate))
-                .awaitFirst()
+            projectRepository.save(
+                DBProject(
+                    id = id,
+                    userId = userId,
+                    name = name,
+                    type = type,
+                    inputsId = saved.id!!,
+                    createdDate = existingProject?.createdDate ?: LocalDateTime.now(),
+                    updatedDate = LocalDateTime.now(),
+                )
+            ).awaitFirst()
 
         return project.toDomain(saved)
     }
@@ -63,7 +73,8 @@ class ProjectService(
 
     private suspend fun DBProject.toDomain(inputs: DBProjectInputs?): Project {
         val domainInputs = inputs?.toDomain()
-        return Project(id = id ?: throw IllegalStateException(""),
+        return Project(
+            id = id ?: throw IllegalStateException(""),
             type = type,
             userId = userId,
             name = name,

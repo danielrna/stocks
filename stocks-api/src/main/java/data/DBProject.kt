@@ -1,132 +1,50 @@
-package data;
+package data
 
-import com.cleverskills.api.ProjectType;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
-
-import java.time.LocalDateTime;
+import com.cleverskills.api.ProjectType
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.domain.Persistable
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDateTime
 
 @Table("projects")
-public class DBProject implements Persistable<Long> {
+data class DBProject(
     @Id
     @Column("id")
-    private Long id;
+    private var id: Long? = null,
 
     @Column("userId")
-    private String userId;
+    var userId: String,
 
     @Column("name")
-    private String name;
+    var name: String,
 
     @Column("createdDate")
     @CreatedDate
-    private LocalDateTime createdDate;
+    var createdDate: LocalDateTime,
 
     @Column("updatedDate")
     @LastModifiedDate
-    private LocalDateTime updatedDate;
+    var updatedDate: LocalDateTime ,
 
     @Column("type")
-    private ProjectType type;
+    var type: ProjectType,
 
     @Column("inputsId")
-    private Long inputsId;
+    var inputsId: Long,
 
-    @Transient
-    private boolean newProject;
-
-    public DBProject(Long id,
-                     String userId,
-                     String name,
-                     ProjectType type,
-                     Long inputsId,
-                     LocalDateTime createdDate
-    ) {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.type = type;
-        this.inputsId = inputsId;
-        this.updatedDate = LocalDateTime.now();
-        if(id == null) this.createdDate = LocalDateTime.now();
-        if (createdDate != null) this.createdDate = createdDate;
+    ) : Persistable<Long?> {
+    //        if (id == null) this.createdDate = LocalDateTime.now()
+//        if (createdDate != null) this.createdDate = createdDate
+    override fun getId(): Long? {
+        return id
     }
 
-    public DBProject() {
+    override fun isNew(): Boolean {
+        return id == null
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public ProjectType getType() {
-        return type;
-    }
-
-    public void setType(ProjectType type) {
-        this.type = type;
-    }
-
-    public Long getInputsId() {
-        return inputsId;
-    }
-
-    public void setInputsId(Long inputsId) {
-        this.inputsId = inputsId;
-    }
-
-    @Override
-    public Long getId() {
-        return this.id;
-    }
-
-    @Override
-    @Transient
-    public boolean isNew() {
-        return this.newProject || id == null;
-    }
-
-    public DBProject setAsNew() {
-        this.newProject = true;
-        return this;
-    }
-
-
 }
+
+
