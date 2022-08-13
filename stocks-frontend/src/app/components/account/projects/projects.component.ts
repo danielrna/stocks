@@ -16,18 +16,17 @@ import {ToastService} from "../../../domain/toast.service";
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
-  showFiller: any;
   displayedColumns: string[] = ['name', 'type', 'updated', 'actions'];
   toApiProjectType = toApiProjectType
 
   constructor(
     public auth: AuthenticationService,
-    public userService: UserService,
     public projectService: ProjectService,
     private router: Router,
     public dialog: MatDialog,
     public datePipe: DatePipe,
-    private toast: ToastService) {
+    private toast: ToastService,
+    ) {
 
   }
 
@@ -43,6 +42,8 @@ export class ProjectsComponent implements OnInit {
           this.projects = projects
         })
       } else this.router.navigate(["login"]).then(r => {
+        // TODO document why this arrow function is empty
+
       })
     })
   }

@@ -46,6 +46,7 @@ import {NgChartsModule} from 'ng2-charts';
 import {DebtsComponent} from './components/account/debts/debts.component';
 import {NewProjectPageComponent} from './components/new-project-page/new-project-page.component';
 import { ChargesComponent } from './components/account/charges/charges.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -70,34 +71,35 @@ import { ChargesComponent } from './components/account/charges/charges.component
     NewProjectPageComponent,
     ChargesComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatIconModule,
-    HttpClientModule,
-    MatCardModule,
-    MatSelectModule,
-    MatMenuModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatGridListModule,
-    FormsModule,
-    MatToolbarModule,
-    MatTableModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
-    MatSnackBarModule,
-    MatAutocompleteModule,
-    MatListModule,
-    MatDialogModule,
-    MatSidenavModule,
-    LayoutModule,
-    NgChartsModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatIconModule,
+        HttpClientModule,
+        MatCardModule,
+        MatSelectModule,
+        MatMenuModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatGridListModule,
+        FormsModule,
+        MatToolbarModule,
+        MatTableModule,
+        ReactiveFormsModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        MatSnackBarModule,
+        MatAutocompleteModule,
+        MatListModule,
+        MatDialogModule,
+        MatSidenavModule,
+        LayoutModule,
+        NgChartsModule,
+        MatProgressSpinnerModule
 
-  ],
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

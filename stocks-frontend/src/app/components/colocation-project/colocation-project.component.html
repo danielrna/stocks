@@ -1,4 +1,5 @@
-<div style="margin-inline: 300px" xmlns="http://www.w3.org/1999/html">
+<div *ngIf="this.project.inputs" style="margin-inline: 300px" xmlns="http://www.w3.org/1999/html">
+
   <mat-form-field appearance="outline">
     <mat-label>Nom du projet</mat-label>
     <input matInput [(ngModel)]=this.project.name>
