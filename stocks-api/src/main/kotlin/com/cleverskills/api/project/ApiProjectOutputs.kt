@@ -9,9 +9,9 @@ data class ApiProjectOutputs(
     @JsonProperty("monthlyRent") val monthlyRent: Long,
     @JsonProperty("totalEmprunte") val totalEmprunte: Long,
     @JsonProperty("cashflow") val cashflow: Long,
-    @JsonProperty("cashflowNoCredit") val cashflowNoCredit: Long,
+    @JsonProperty("cashflowAfterCredit") val cashflowAfterCredit: Long,
     @JsonProperty("gestion") val gestion: Long,
-    @JsonProperty("mensualiteCredit") val mensualiteCredit: Long,
+    @JsonProperty("creditMensuel") val creditMensuel: Long,
     @JsonProperty("rendementBrut") val rendementBrut: Long,
     @JsonProperty("rendementNet") val rendementNet: Long,
 )

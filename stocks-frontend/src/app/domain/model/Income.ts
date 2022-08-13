@@ -1,10 +1,10 @@
 export interface Income {
-  id: string;
+  id: string | null;
   type: IncomeType;
   name: string;
   value: number;
   userId: string;
-  projectId: string| null;
+  projectId: string | null;
 }
 
 export enum IncomeType {

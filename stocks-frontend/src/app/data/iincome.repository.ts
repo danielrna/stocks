@@ -3,13 +3,12 @@ import {Observable} from "rxjs";
 
 export interface IIncomeRepository {
 
-  createIncome(income: Income): Promise<string>
+  createIncome(income: Income): Observable<Income>
 
-  updateIncome(income: Income): Promise<void>
+  updateIncome(income: Income):  Observable<Income>
 
-  deleteIncome(id: string): Promise<void>
+  deleteIncome(id: string): Observable<void>
 
-  getIncomesByUserId(ownerId: string): Observable<Income[]>
+  getIncomesByUserId(userId: string): Observable<Income[]>
 
-  getIncomesById(id: string): Promise<Income>
 }

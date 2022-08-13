@@ -15,21 +15,18 @@ export class IncomeService {
   constructor(private incomeRespository: IncomeRespository, private projectRespository: ProjectRepository, private projectService: ProjectService, private toast: ToastService) {
   }
 
-  createOrUpdateIncome(income: Income): Promise<void> {
-    let promise;
+  createOrUpdateIncome(income: Income): Observable<Income> {
+    let obs;
     if (income.id != null) {
-      promise = this.incomeRespository.updateIncome(income)
+      obs = this.incomeRespository.updateIncome(income)
     } else {
-      promise = this.incomeRespository.createIncome(income)
+      obs = this.incomeRespository.createIncome(income)
     }
-    return promise.then(value => {
-      this.toast.showToast("Income Saved", ["success"])
-    })
-
+    return obs
   }
 
   deleteIncome(id: string) {
-    return this.incomeRespository.deleteIncome(id).then(() => {
+    return this.incomeRespository.deleteIncome(id).subscribe(() => {
       this.toast.showToast("Income Deleted", ["success"])
     })
 

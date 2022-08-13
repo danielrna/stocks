@@ -21,24 +21,23 @@ export class IncomeRespository implements IIncomeRepository {
   constructor(private afs: AngularFirestore, private http: HttpClient) {
   }
 
-  createIncome(income: Income): Promise<string> {
-    const incomeRef = this.afs.collection("incomes")
-    return incomeRef.add({...income}).then(added => {
-      return added.id
-    });
+  createIncome(_income: Income): Observable<Income> {
+    return this.http.post<Income>(`${this.envUrl}/income`, _income).pipe(
+      tap((newP: Income) => console.log(`Income created w/ id=${newP.id}`)),
+      catchError(handleError<Income>('createIncome'))
+    );
+  }
+
+  updateIncome(_income: Income): Observable<Income> {
+    return this.http.put<Income>(`${this.envUrl}/income`, _income).pipe(
+      tap((newP: Income) => console.log(`Income updated w/ id=${newP.id}`)),
+      catchError(handleError<Income>('updateIncome'))
+    );
 
   }
 
-  updateIncome(income: Income): Promise<void> {
-    return this.afs.collection("incomes").doc(income.id!!)
-      .update({...income}).then(a => {
-        console.log(income)
-      })
-
-  }
-
-  deleteIncome(id: string): Promise<void> {
-    return this.afs.collection("incomes").ref.doc(id).delete()
+  deleteIncome(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.envUrl}/income/${id}`).pipe()
 
   }
 
@@ -61,13 +60,6 @@ export class IncomeRespository implements IIncomeRepository {
     } as Income;
   }
 
-  getIncomesById(id: string): Promise<Income> {
-    return this.afs.collection('incomes').ref
-      .doc(id).get().then(value => {
-        return this.toDomainIncome(value)
-      })
-
-  }
 
   getNotSalaryIncomesByOwnerId(id: string): Observable<Income[]> {
     return new Observable(subscriber => {
@@ -90,24 +82,5 @@ export class IncomeRespository implements IIncomeRepository {
 
   }
 
-  clear(): Observable<Income[]> {
-    return new Observable(subscriber => {
-      const snapUnsub = this.afs.collection('incomes').ref
-        .where('id', '==', null).onSnapshot(next => {
-          subscriber.next(
-            next.docs
-              .map(value => {
-                  console.log()
-                  return this.toDomainIncome(value)
-                }
-              )
-          );
-        });
-      subscriber.add(() => {
-        snapUnsub();
-      });
-    });
-
-  }
 
 }

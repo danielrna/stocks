@@ -15,7 +15,7 @@ class RentaService {
                 + inputs.prix
                 + inputs.chasse
                 - inputs.apport)
-        val mensualiteCredit = this.PMT(inputs.tauxCredit, inputs.dureeCredit, totalEmprunte)
+        val creditMensuel = this.PMT(inputs.tauxCredit, inputs.dureeCredit, totalEmprunte)
         val monthlyRent = (inputs.nbChambre * inputs.prixChambre) * (12 - inputs.vacance) / 12
         val gestion = (0.08 * monthlyRent).roundToLong()
         val monthlyExpenses = (inputs.copro
@@ -25,21 +25,21 @@ class RentaService {
                 + tfMensuelle
                 + inputs.cfe
                 + inputs.entretien
-                + mensualiteCredit
+                + creditMensuel
                 + gestion)
         val cashflow = monthlyRent - monthlyExpenses
         return ProjectOutputs(
             notaire = notaire,
             totalEmprunte = totalEmprunte,
-            mensualiteCredit = mensualiteCredit,
+            creditMensuel = creditMensuel,
             tfMensuelle = tfMensuelle,
             monthlyRent = monthlyRent,
             gestion = gestion,
             monthlyExpenses = monthlyExpenses,
             cashflow = cashflow,
-            cashflowNoCredit = cashflow - mensualiteCredit,
+            cashflowAfterCredit = cashflow - creditMensuel,
             rendementBrut = (monthlyRent * 12 / inputs.prix * 100).toDouble().roundToLong(),
-            rendementNet = ((cashflow + mensualiteCredit) * 12 / totalEmprunte * 100).toDouble().roundToLong()
+            rendementNet = ((cashflow + creditMensuel) * 12 / totalEmprunte * 100).toDouble().roundToLong()
         )
     }
 

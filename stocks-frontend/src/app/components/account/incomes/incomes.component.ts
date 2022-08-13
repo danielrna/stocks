@@ -35,6 +35,10 @@ export class IncomesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.refreshIncomes();
+  }
+
+  private refreshIncomes() {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
         this.newIcome.userId = user.uid
@@ -47,13 +51,15 @@ export class IncomesComponent implements OnInit {
   }
 
   saveNewIncome() {
-    this.incomeService.createOrUpdateIncome(this.newIcome).then(() => {
+    this.incomeService.createOrUpdateIncome(this.newIcome).subscribe(() => {
       this.creationMode = false
+      this.refreshIncomes()
     })
   }
 
   deleteIncome(id: string) {
-    this.incomeService.deleteIncome(id).then(() => {
-    })
+    this.incomeService.deleteIncome(id)
+    this.refreshIncomes()
+
   }
 }

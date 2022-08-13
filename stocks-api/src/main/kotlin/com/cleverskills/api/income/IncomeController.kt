@@ -4,31 +4,30 @@ import com.cleverskills.domain.Income
 import com.cleverskills.domain.IncomeService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 
 @Api("Income")
 @RestController
 @RequestMapping("income")
 class IncomeController(val incomeService: IncomeService) {
-//
-//    @ApiOperation(value = "Create income")
-//    @PostMapping("")
-//    suspend fun create(
-//        @RequestBody request: ApiCreateIncomeRequest
-//    ): ApiIncome {
-//        return incomeService.createOrUpdate(
-//            null,
-//            request.type,
-//            request.userId,
-//            request.name,
-//            request.inputs.toDomain(),
-//        ).toApi()
-//    }
-//
+
+    @ApiOperation(value = "Create income")
+    @PostMapping("")
+    suspend fun create(
+        @RequestBody request: ApiCreateIncomeRequest
+    ): ApiIncome {
+        return incomeService.createOrUpdate(
+            null,
+            request.type,
+            request.userId,
+            request.name,
+            request.value,
+        ).toApi()
+    }
+
 //    @ApiOperation(value = "Update income")
 //    @PutMapping("")
 //    suspend fun update(
@@ -58,23 +57,15 @@ class IncomeController(val incomeService: IncomeService) {
     ): List<ApiIncome> {
         return incomeService.findByUserId(userId).map { it.toApi() }
     }
-//
-//    @ApiOperation(value = "Delete income by id")
-//    @DeleteMapping("{id}")
-//    suspend fun delete(
-//        @PathVariable(name = "id", required = true) id: Long,
-//    ): ResponseEntity<Unit> {
-//        incomeService.deleteById(id)
-//        return ResponseEntity<Unit>(HttpStatus.NO_CONTENT)
-//    }
-//
-//    @ApiOperation(value = "Calculate income outputs")
-//    @PostMapping("calculateOutputs")
-//    suspend fun calculateOutputs(
-//        @RequestBody(required = true) req: ApiIncomeInputs,
-//    ): ApiIncomeOutputs {
-//        return incomeService.calculateOutputs(req.toDomain()).toApi()
-//    }
+
+    @ApiOperation(value = "Delete income by id")
+    @DeleteMapping("{id}")
+    suspend fun delete(
+        @PathVariable(name = "id", required = true) id: Long,
+    ): ResponseEntity<Unit> {
+        incomeService.deleteById(id)
+        return ResponseEntity<Unit>(HttpStatus.NO_CONTENT)
+    }
 
 
     private fun Income.toApi(): ApiIncome {

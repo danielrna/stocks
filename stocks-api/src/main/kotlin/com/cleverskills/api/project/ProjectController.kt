@@ -144,9 +144,9 @@ class ProjectController(val projectService: ProjectService) {
             monthlyRent = monthlyRent,
             totalEmprunte = totalEmprunte,
             cashflow = cashflow,
-            cashflowNoCredit = cashflowNoCredit,
+            cashflowAfterCredit = cashflowAfterCredit,
             gestion = gestion,
-            mensualiteCredit = mensualiteCredit,
+            creditMensuel = creditMensuel,
             rendementBrut = rendementBrut,
             rendementNet = rendementNet,
         )

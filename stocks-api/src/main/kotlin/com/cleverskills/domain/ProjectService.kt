@@ -57,7 +57,7 @@ class ProjectService(
             type = IncomeType.IMMO,
             userId = project.userId,
             name = "Revenu lié au projet '${project.name}'",
-            value = project.outputs.cashflowNoCredit,
+            value = project.outputs.cashflowAfterCredit,
             projectId = project.id
         )
     }

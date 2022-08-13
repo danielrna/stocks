@@ -5,9 +5,9 @@ export interface ProjectOutputs {
   monthlyRent: number
   totalEmprunte: number
   cashflow: number
-  cashflowNoCredit: number
+  cashflowAfterCredit: number
   gestion: number
-  mensualiteCredit: number
+  creditMensuel: number
   rendementBrut: number
   rendementNet: number
 }
