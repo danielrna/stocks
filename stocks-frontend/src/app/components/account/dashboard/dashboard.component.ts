@@ -40,7 +40,6 @@ export class DashboardComponent {
           )
 
         })
-
       } else this.router.navigate(["login"]).then(r => {
       })
     })

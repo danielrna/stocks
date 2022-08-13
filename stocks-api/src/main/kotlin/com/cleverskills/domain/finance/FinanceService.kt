@@ -1,5 +1,7 @@
 package com.cleverskills.domain.finance
 
+import com.cleverskills.domain.income.IncomeService
+import com.cleverskills.domain.income.IncomeType
 import com.cleverskills.domain.project.ProjectInputs
 import com.cleverskills.domain.project.ProjectOutputs
 import org.springframework.stereotype.Service
@@ -7,7 +9,7 @@ import kotlin.math.pow
 import kotlin.math.roundToLong
 
 @Service
-class FinanceService {
+class FinanceService(val incomeService: IncomeService) {
 
 
     fun calculateProjectOutputs(inputs: ProjectInputs): ProjectOutputs {
@@ -60,7 +62,13 @@ class FinanceService {
         return (-pmt).roundToLong();
     }
 
-    fun getUserSummary(userId: String): FinancialSummary {
-       return FinancialSummary(passiveTotalIncome = 12320, activeTotalIncome = 0, debtRate = 13.0)
+    suspend fun getUserSummary(userId: String): FinancialSummary {
+        val immoIncome = incomeService.findUserIncomes(userId).filter { it.type == IncomeType.IMMO }.sumOf { it.value }
+        val otherIncome = incomeService.findUserIncomes(userId).filter { it.type != IncomeType.IMMO }.sumOf { it.value }
+        val consideredIncomeForMortgage = 0.7*immoIncome + otherIncome
+
+        val salaryIncome = incomeService.findUserIncomes(userId).filter { it.type == IncomeType.SALAIRE }.sumOf { it.value }
+
+       return FinancialSummary(passiveTotalIncome = immoIncome, activeTotalIncome = salaryIncome, debtRate = 13.0)
     }
 }

@@ -38,7 +38,7 @@ class IncomeService(
     }
 
 
-    suspend fun findByUserId(userId: String): List<Income> {
+    suspend fun findUserIncomes(userId: String): List<Income> {
         return incomeRepository.findAllByUserId(userId).collectList().awaitFirst().map { it.toDomain() }
     }
 

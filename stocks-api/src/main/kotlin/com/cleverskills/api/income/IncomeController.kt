@@ -55,7 +55,7 @@ class IncomeController(val incomeService: IncomeService) {
     suspend fun findByUserId(
         @RequestParam(name = "userId", required = true) userId: String,
     ): List<ApiIncome> {
-        return incomeService.findByUserId(userId).map { it.toApi() }
+        return incomeService.findUserIncomes(userId).map { it.toApi() }
     }
 
     @ApiOperation(value = "Delete income by id")

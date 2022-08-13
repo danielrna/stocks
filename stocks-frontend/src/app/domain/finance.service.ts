@@ -1,40 +1,30 @@
+import {cryptoUrl} from "../data/utils/GlobalConstants";
 import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {QuoteResponse} from "../Quote";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Symbol} from "../Symbol";
+
+11
 
 @Injectable({
   providedIn: 'root'
 })
 export class FinanceService {
 
-  // private apiKey = "9a0c005faa579fba14a77ad1c36154ccdce5954859030232a7c8f8f868332e8c"
-  private url = `https://api.coingecko.com/api/v3`
-  httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'}),
-    withCredentials: false
-  };
 
   constructor(private http: HttpClient) {
   }
 
-  getEODQuote(ticker: String): Observable<QuoteResponse> {
-    return this.http.get<QuoteResponse>(this.url + "/simple/price?ids=" + ticker + "&vs_currencies=usd&include_24hr_change=true").pipe(
-      catchError(this.handleError<QuoteResponse>('getEODQuote',))
-    );
-  }
-
   getSymbols(): Observable<Symbol[]> {
-    return this.http.get<Symbol[]>(this.url + "/coins/list?include_platform=false").pipe(
+    return this.http.get<Symbol[]>(cryptoUrl + "/coins/list?include_platform=false").pipe(
       catchError(this.handleError<Symbol[]>('getSymbols',))
     );
   }
 
   /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-
+  private static log(message: string) {
+    console.log(message)
   }
 
   /**
@@ -50,7 +40,7 @@ export class FinanceService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      FinanceService.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
