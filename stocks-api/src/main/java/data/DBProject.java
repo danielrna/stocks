@@ -17,8 +17,8 @@ public class DBProject implements Persistable<Long> {
     @Column("id")
     private Long id;
 
-    @Column("ownerId")
-    private String ownerId;
+    @Column("userId")
+    private String userId;
 
     @Column("name")
     private String name;
@@ -41,18 +41,20 @@ public class DBProject implements Persistable<Long> {
     private boolean newProject;
 
     public DBProject(Long id,
-                     String ownerId,
+                     String userId,
                      String name,
                      ProjectType type,
-                     Long inputsId
+                     Long inputsId,
+                     LocalDateTime createdDate
     ) {
         this.id = id;
-        this.ownerId = ownerId;
+        this.userId = userId;
         this.name = name;
         this.type = type;
         this.inputsId = inputsId;
         this.updatedDate = LocalDateTime.now();
-        if (id == null) this.createdDate = LocalDateTime.now();
+        if(id == null) this.createdDate = LocalDateTime.now();
+        if (createdDate != null) this.createdDate = createdDate;
     }
 
     public DBProject() {
@@ -62,12 +64,12 @@ public class DBProject implements Persistable<Long> {
         this.id = id;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {

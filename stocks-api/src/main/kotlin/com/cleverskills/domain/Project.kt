@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class Project(
     val id: Long,
     val type: ProjectType,
-    val ownerId: String,
+    val userId: String,
     val name: String,
     val inputs: ProjectInputs?,
     val outputs: ProjectOutputs?,

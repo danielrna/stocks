@@ -21,9 +21,24 @@ class ProjectController(val projectService: ProjectService) {
     suspend fun create(
         @RequestBody request: ApiCreateProjectRequest
     ): ApiProject {
-        return projectService.create(
+        return projectService.createOrUpdate(
+            null,
             request.type,
-            request.ownerId,
+            request.userId,
+            request.name,
+            request.inputs.toDomain(),
+        ).toApi()
+    }
+
+    @ApiOperation(value = "Update project")
+    @PutMapping("")
+    suspend fun update(
+        @RequestBody request: ApiUpdateProjectRequest
+    ): ApiProject {
+        return projectService.createOrUpdate(
+            request.id,
+            request.type,
+            request.userId,
             request.name,
             request.inputs.toDomain(),
         ).toApi()
@@ -68,7 +83,7 @@ private fun Project.toApi(): ApiProject {
     return ApiProject(
         id = id,
         type = type,
-        ownerId = ownerId,
+        userId = userId,
         name = name,
         inputs = inputs?.toApi(),
         outputs = outputs?.toApi(),

@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux
 
 @Repository
 interface ProjectRepository : ReactiveCrudRepository<DBProject, Long> {
-suspend fun findAllByOwnerId(userId:String) : Flux<DBProject>
+suspend fun findAllByUserId(userId:String) : Flux<DBProject>
 
 }
 

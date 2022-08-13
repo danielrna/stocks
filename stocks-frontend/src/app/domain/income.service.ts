@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {IncomeRespository} from "../data/income.respository";
 import {ToastService} from "./toast.service";
-import {Income, IncomeType} from "./model/Income";
-import {combineLatest, Observable} from "rxjs";
+import {Income} from "./model/Income";
+import {Observable} from "rxjs";
 import {ProjectRepository} from "../data/project-repository.service";
-import {map} from "rxjs/operators";
-import {Project} from "./model/Project";
 import {ProjectService} from "./project.service";
 
 @Injectable({
@@ -34,22 +32,13 @@ export class IncomeService {
     return this.incomeRespository.deleteIncome(id).then(() => {
       this.toast.showToast("Income Deleted", ["success"])
     })
-  }
-
-  toIncome(project: Project): Income {
-    let out = this.projectService.calculate(project.inputs)
-    return <Income>{
-      id: "",
-      type: IncomeType.Immobilier,
-      name: `Linked to <${project.name}>`,
-      value: out.cashflowNoCredit,
-      ownerId: project.ownerId
-    }
 
   }
+
   getIncomesByOwnerId(id: string): Observable<Income[]> {
     return this.incomeRespository.getIncomesByOwnerId(id)
   }
+
   //
   // getIncomesByOwnerId(id: string): Observable<Income[]> {
   //

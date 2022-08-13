@@ -19,33 +19,18 @@ class ProjectService(
     val projectInputsRepository: ProjectInputsRepository,
     val rentaService: RentaService
 ) {
-    suspend fun create(type: ProjectType, ownerUid: String, name: String, inputs: ProjectInputs): Project {
-        val inputs = projectInputsRepository.save(
-            DBProjectInputs(
-                null,
-                inputs.nbChambre,
-                inputs.prixChambre,
-                inputs.prix,
-                inputs.travaux,
-                inputs.apport,
-                inputs.tauxCredit,
-                inputs.dureeCredit,
-                inputs.meubles,
-                inputs.copro,
-                inputs.impots,
-                inputs.tf,
-                inputs.pno,
-                inputs.autre,
-                inputs.cfe,
-                inputs.entretien,
-                inputs.chasse,
-                inputs.vacance
-            )
-        ).awaitFirst()
-        val project = projectRepository.save(
-            DBProject(null, ownerUid, name, type, inputs.id)
-        ).awaitFirst()
-        return project.toDomain(inputs)
+    suspend fun createOrUpdate(
+        id: Long? = null, type: ProjectType, userId: String, name: String, inputs: ProjectInputs
+    ): Project {
+        val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
+
+        val saved: DBProjectInputs = projectInputsRepository.save(inputs.toDB(existingProject?.inputsId)).awaitFirst()
+
+        val project: DBProject =
+            projectRepository.save(DBProject(id, userId, name, type, saved.id, existingProject?.createdDate))
+                .awaitFirst()
+
+        return project.toDomain(saved)
     }
 
     suspend fun get(id: Long): Project? {
@@ -54,24 +39,44 @@ class ProjectService(
         return project.toDomain(inputs)
     }
 
+
+    private fun ProjectInputs.toDB(id: Long? = null) = DBProjectInputs(
+        id,
+        this.nbChambre,
+        this.prixChambre,
+        this.prix,
+        this.travaux,
+        this.apport,
+        this.tauxCredit,
+        this.dureeCredit,
+        this.meubles,
+        this.copro,
+        this.impots,
+        this.tf,
+        this.pno,
+        this.autre,
+        this.cfe,
+        this.entretien,
+        this.chasse,
+        this.vacance
+    )
+
     private suspend fun DBProject.toDomain(inputs: DBProjectInputs?): Project {
         val domainInputs = inputs?.toDomain()
-        return Project(
-            id = id ?: throw IllegalStateException(""),
+        return Project(id = id ?: throw IllegalStateException(""),
             type = type,
-            ownerId = ownerId,
+            userId = userId,
             name = name,
             createdDate = createdDate,
             upadatedDate = updatedDate,
             inputs = domainInputs,
-            outputs = domainInputs?.let { calculateOutputs(it) }
-        )
+            outputs = domainInputs?.let { calculateOutputs(it) })
 
     }
 
     suspend fun findByUserId(userId: String): List<Project> {
 
-        val projects = projectRepository.findAllByOwnerId(userId).collectList().awaitFirst()
+        val projects = projectRepository.findAllByUserId(userId).collectList().awaitFirst()
 
         val deferred: List<Deferred<Pair<Long?, DBProjectInputs>>> = projects.map {
             coroutineScope {

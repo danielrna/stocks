@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ProjectRepository} from "../data/project-repository.service";
 import {Project} from "./model/Project";
 import {Observable} from "rxjs";
-import {ToastService} from "./toast.service";
 import {ProjectInputs} from "./model/ProjectInputs";
 import {ProjectOutputs} from "./model/ProjectOutputs";
 
@@ -28,7 +27,7 @@ export class ProjectService {
 
   }
 
-  deleteProject(id: string) : Observable<void> {
+  deleteProject(id: string): Observable<void> {
     return this.projectRespository.deleteProject(id)
   }
 

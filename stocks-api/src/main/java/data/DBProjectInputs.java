@@ -13,8 +13,6 @@ public class DBProjectInputs implements Persistable<Long> {
     @Id
     @Column("id")
     private Long id;
-    @Column("ownerId")
-    private String ownerId;
     @Column("nbChambre")
     private Long nbChambre;
     @Column("prixChambre")
@@ -102,14 +100,6 @@ public class DBProjectInputs implements Persistable<Long> {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
     }
 
     public Long getNbChambre() {

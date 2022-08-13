@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class ApiProject(
     @JsonProperty("id") val id: Long,
     @JsonProperty("type") val type: ProjectType,
-    @JsonProperty("ownerUid") val ownerId: String,
+    @JsonProperty("userId") val userId: String,
     @JsonProperty("name") val name: String,
     @JsonProperty("inputs") val inputs: ApiProjectInputs?,
     @JsonProperty("outputs") val outputs: ApiProjectOutputs?,
