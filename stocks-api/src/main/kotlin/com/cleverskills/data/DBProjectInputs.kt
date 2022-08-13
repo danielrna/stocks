@@ -1,4 +1,4 @@
-package data
+package com.cleverskills.data
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient

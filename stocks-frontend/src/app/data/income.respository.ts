@@ -62,7 +62,7 @@ export class IncomeRespository implements IIncomeRepository {
       type: income.get("type"),
       name: income.get("name"),
       value: income.get("value"),
-      ownerId: income.get("ownerId"),
+      userId: income.get("ownerId"),
     } as Income;
   }
 

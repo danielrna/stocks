@@ -16,7 +16,7 @@ import {ProjectOutputs} from "../domain/model/ProjectOutputs";
 )
 export class ProjectRepository implements IProjectRepository {
 
-  constructor(private http: HttpClient, private afs: AngularFirestore) {
+  constructor(private http: HttpClient) {
   }
 
   private envUrl = "http://localhost:8080";
@@ -39,7 +39,7 @@ export class ProjectRepository implements IProjectRepository {
 
   updateProject(_project: Project): Observable<Project> {
     if (_project.id == null) {
-      throw Error("Id cannopt be null for update")
+      throw Error("Id cannot be null for update")
     } else {
       return this.http.put<Project>(`${this.envUrl}/project`, _project, this.httpOptions).pipe(
       )

@@ -37,7 +37,7 @@ export class IncomesComponent implements OnInit {
   ngOnInit(): void {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
-        this.newIcome.ownerId = user.uid
+        this.newIcome.userId = user.uid
         this.incomeService.getIncomesByOwnerId(user.uid).subscribe(incomes => {
           this.incomes = incomes
         })

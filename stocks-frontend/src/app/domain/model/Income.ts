@@ -3,7 +3,8 @@ export interface Income {
   type: IncomeType;
   name: string;
   value: number;
-  ownerId: string;
+  userId: string;
+  projectId: string;
 }
 
 export enum IncomeType {

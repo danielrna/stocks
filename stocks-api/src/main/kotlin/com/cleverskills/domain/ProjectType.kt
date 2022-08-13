@@ -1,4 +1,4 @@
-package com.cleverskills.api
+package com.cleverskills.domain
 
 enum class ProjectType {
     Colocation,

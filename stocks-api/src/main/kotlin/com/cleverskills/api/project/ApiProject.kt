@@ -1,5 +1,6 @@
-package com.cleverskills.api
+package com.cleverskills.api.project
 
+import com.cleverskills.domain.ProjectType
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDateTime
 

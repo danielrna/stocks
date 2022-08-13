@@ -1,4 +1,4 @@
-package com.cleverskills.api
+package com.cleverskills.api.project
 
 import com.cleverskills.domain.Project
 import com.cleverskills.domain.ProjectInputs
@@ -77,79 +77,79 @@ class ProjectController(val projectService: ProjectService) {
         return projectService.calculateOutputs(req.toDomain()).toApi()
     }
 
-}
 
-private fun Project.toApi(): ApiProject {
-    return ApiProject(
-        id = id,
-        type = type,
-        userId = userId,
-        name = name,
-        inputs = inputs?.toApi(),
-        outputs = outputs?.toApi(),
-        createdDate = createdDate,
-        upadatedDate = upadatedDate
-    )
-}
-
-private fun ProjectInputs.toApi(): ApiProjectInputs {
-    return ApiProjectInputs(
-        nbChambre = nbChambre,
-        prixChambre = prixChambre,
-        prix = prix,
-        travaux = travaux,
-        apport = apport,
-        tauxCredit = tauxCredit,
-        dureeCredit = dureeCredit,
-        meubles = meubles,
-        copro = copro,
-        impots = impots,
-        tf = tf,
-        pno = pno,
-        autre = autre,
-        cfe = cfe,
-        entretien = entretien,
-        chasse = chasse,
-        vacance = vacance,
-    )
-}
-
-private fun ApiProjectInputs.toDomain(): ProjectInputs {
-    return ProjectInputs(
-        nbChambre = nbChambre,
-        prixChambre = prixChambre,
-        prix = prix,
-        travaux = travaux,
-        apport = apport,
-        tauxCredit = tauxCredit,
-        dureeCredit = dureeCredit,
-        meubles = meubles,
-        copro = copro,
-        impots = impots,
-        tf = tf,
-        pno = pno,
-        autre = autre,
-        cfe = cfe,
-        entretien = entretien,
-        chasse = chasse,
-        vacance = vacance,
-    )
-}
-
-private fun ProjectOutputs.toApi(): ApiProjectOutputs {
-    return ApiProjectOutputs(
-        monthlyExpenses = monthlyExpenses,
-        notaire = notaire,
-        tfMensuelle = tfMensuelle,
-        monthlyRent = monthlyRent,
-        totalEmprunte = totalEmprunte,
-        cashflow = cashflow,
-        cashflowNoCredit = cashflowNoCredit,
-        gestion = gestion,
-        mensualiteCredit = mensualiteCredit,
-        rendementBrut = rendementBrut,
-        rendementNet = rendementNet,
-
+    private fun Project.toApi(): ApiProject {
+        return ApiProject(
+            id = id,
+            type = type,
+            userId = userId,
+            name = name,
+            inputs = inputs?.toApi(),
+            outputs = outputs.toApi(),
+            createdDate = createdDate,
+            upadatedDate = upadatedDate
         )
-}
+    }
 
+    private fun ProjectInputs.toApi(): ApiProjectInputs {
+        return ApiProjectInputs(
+            nbChambre = nbChambre,
+            prixChambre = prixChambre,
+            prix = prix,
+            travaux = travaux,
+            apport = apport,
+            tauxCredit = tauxCredit,
+            dureeCredit = dureeCredit,
+            meubles = meubles,
+            copro = copro,
+            impots = impots,
+            tf = tf,
+            pno = pno,
+            autre = autre,
+            cfe = cfe,
+            entretien = entretien,
+            chasse = chasse,
+            vacance = vacance,
+        )
+    }
+
+    private fun ApiProjectInputs.toDomain(): ProjectInputs {
+        return ProjectInputs(
+            nbChambre = nbChambre,
+            prixChambre = prixChambre,
+            prix = prix,
+            travaux = travaux,
+            apport = apport,
+            tauxCredit = tauxCredit,
+            dureeCredit = dureeCredit,
+            meubles = meubles,
+            copro = copro,
+            impots = impots,
+            tf = tf,
+            pno = pno,
+            autre = autre,
+            cfe = cfe,
+            entretien = entretien,
+            chasse = chasse,
+            vacance = vacance,
+            id = null,
+        )
+    }
+
+    private fun ProjectOutputs.toApi(): ApiProjectOutputs {
+        return ApiProjectOutputs(
+            monthlyExpenses = monthlyExpenses,
+            notaire = notaire,
+            tfMensuelle = tfMensuelle,
+            monthlyRent = monthlyRent,
+            totalEmprunte = totalEmprunte,
+            cashflow = cashflow,
+            cashflowNoCredit = cashflowNoCredit,
+            gestion = gestion,
+            mensualiteCredit = mensualiteCredit,
+            rendementBrut = rendementBrut,
+            rendementNet = rendementNet,
+        )
+    }
+
+}

@@ -1,13 +1,15 @@
 create schema IF NOT EXISTS public;
 
 drop table if exists projects;
+drop table if exists projectinputs;
+drop table if exists incomes;
 create TABLE IF NOT EXISTS public.projects
 (
     id       SERIAL NOT NULL PRIMARY KEY,
     userId     varchar,
     name varchar,
     type   varchar,
-    inputsId varchar,
+    inputsId bigint,
     createdDate timestamp not null default current_date,
     updatedDate timestamp not null
 );
@@ -35,4 +37,15 @@ create TABLE IF NOT EXISTS public.projectinputs
 
     updatedDate timestamp not null
 
+);
+create TABLE IF NOT EXISTS public.incomes
+(
+    id       SERIAL NOT NULL PRIMARY KEY,
+    userId     varchar,
+    name varchar,
+    type   varchar,
+    value  bigint ,
+    projectId bigint,
+    createdDate timestamp not null default current_date,
+    updatedDate timestamp not null
 );

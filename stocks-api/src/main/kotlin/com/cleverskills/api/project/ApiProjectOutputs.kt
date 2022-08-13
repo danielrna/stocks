@@ -1,4 +1,4 @@
-package com.cleverskills.api
+package com.cleverskills.api.project
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
