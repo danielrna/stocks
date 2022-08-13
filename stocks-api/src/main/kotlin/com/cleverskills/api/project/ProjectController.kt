@@ -1,9 +1,9 @@
 package com.cleverskills.api.project
 
-import com.cleverskills.domain.Project
-import com.cleverskills.domain.ProjectInputs
-import com.cleverskills.domain.ProjectOutputs
-import com.cleverskills.domain.ProjectService
+import com.cleverskills.domain.project.Project
+import com.cleverskills.domain.project.ProjectInputs
+import com.cleverskills.domain.project.ProjectOutputs
+import com.cleverskills.domain.project.ProjectService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.HttpStatus
@@ -70,7 +70,7 @@ class ProjectController(val projectService: ProjectService) {
     }
 
     @ApiOperation(value = "Calculate project outputs")
-    @PostMapping("calculateOutputs")
+    @PostMapping("calculate-outputs")
     suspend fun calculateOutputs(
         @RequestBody(required = true) req: ApiProjectInputs,
     ): ApiProjectOutputs {
@@ -84,14 +84,14 @@ class ProjectController(val projectService: ProjectService) {
             type = type,
             userId = userId,
             name = name,
-            inputs = inputs?.toApi(),
+            inputs = inputs.toApi(),
             outputs = outputs.toApi(),
             createdDate = createdDate,
             upadatedDate = upadatedDate
         )
     }
 
-    private fun ProjectInputs.toApi(): ApiProjectInputs {
+    internal fun ProjectInputs.toApi(): ApiProjectInputs {
         return ApiProjectInputs(
             nbChambre = nbChambre,
             prixChambre = prixChambre,

@@ -1,4 +1,4 @@
-package com.cleverskills.domain
+package com.cleverskills.domain.income
 
 import com.cleverskills.data.DBIncome
 import com.cleverskills.data.IncomeRepository

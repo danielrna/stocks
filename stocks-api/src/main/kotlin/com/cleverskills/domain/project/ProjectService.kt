@@ -1,7 +1,11 @@
-package com.cleverskills.domain
+package com.cleverskills.domain.project
 
 import com.cleverskills.data.DBProject
 import com.cleverskills.data.ProjectRepository
+import com.cleverskills.domain.finance.FinanceService
+import com.cleverskills.domain.income.Income
+import com.cleverskills.domain.income.IncomeService
+import com.cleverskills.domain.income.IncomeType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -16,14 +20,10 @@ class ProjectService(
     val projectRepository: ProjectRepository,
     val projectInputsService: ProjectInputsService,
     val incomeService: IncomeService,
-    val rentaService: RentaService
+    val financeService: FinanceService
 ) {
     suspend fun createOrUpdate(
-        id: Long? = null,
-        type: ProjectType,
-        userId: String,
-        name: String,
-        inputs: ProjectInputs
+        id: Long? = null, type: ProjectType, userId: String, name: String, inputs: ProjectInputs
     ): Project {
         val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
 
@@ -45,8 +45,7 @@ class ProjectService(
     }
 
     private suspend fun createOrUpdateLinkedInputs(
-        existingProject: DBProject?,
-        inputs: ProjectInputs
+        existingProject: DBProject?, inputs: ProjectInputs
     ) = projectInputsService.createOrUpdate(existingProject?.inputsId, inputs)
 
     private suspend fun createOrUpdateLinkedIncome(project: Project) {
@@ -71,7 +70,7 @@ class ProjectService(
 
     internal suspend fun DBProject.toDomain(inputs: ProjectInputs): Project {
         return Project(
-            id = checkNotNull(id) ,
+            id = checkNotNull(id),
             type = type,
             userId = userId,
             name = name,
@@ -108,7 +107,7 @@ class ProjectService(
     }
 
     suspend fun calculateOutputs(inputs: ProjectInputs): ProjectOutputs {
-        return rentaService.calculateOutputs(inputs)
+        return financeService.calculateProjectOutputs(inputs)
     }
 
 

@@ -1,6 +1,6 @@
 package com.cleverskills.data
 
-import com.cleverskills.domain.IncomeType
+import com.cleverskills.domain.income.IncomeType
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate

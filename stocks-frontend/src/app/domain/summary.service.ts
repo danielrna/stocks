@@ -4,31 +4,24 @@ import {IncomeService} from "./income.service";
 import {map} from "rxjs/operators";
 import {IncomeType} from "./model/Income";
 import {DebtService} from "./debt.service";
+import {FinancialSummary} from "./model/FinancialSummary";
+import {FinanceRespository} from "../data/finance.respository";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SummaryService {
 
-  constructor(private incomeService: IncomeService, private debtService: DebtService) {
+  constructor(private incomeService: IncomeService,
+              private debtService: DebtService,
+              private financeRepository: FinanceRespository,
+  ) {
   }
 
-  getCashflow(id: string): Observable<number> {
-    let notSalaryincomes = this.getTotalNotSalaryIncome(id)
-    let debts = this.getUserDebts(id)
-    return combineLatest([notSalaryincomes, debts]).pipe(map(res => {
-      return res[0] - res[1]
-    }))
+  getNotSalaryIncomesByUserId(id: string): Observable<FinancialSummary> {
+    return this.financeRepository.getFinancialSummaryByUserId(id)
   }
 
-  private getTotalNotSalaryIncome(id: string) {
-    return this.incomeService.getNotSalaryIncomesByUserId(id).pipe(
-      map(income => {
-        return income.reduce(function (accumulator, a) {
-          return accumulator + a.value;
-        }, 0)
-      }))
-  }
 
   getUserDebtRate(id: string): Observable<number> {
     let incomes = this.getUserBankConsideredIncome(id)

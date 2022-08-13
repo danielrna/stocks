@@ -1,6 +1,6 @@
 package com.cleverskills.data
 
-import com.cleverskills.domain.ProjectType
+import com.cleverskills.domain.project.ProjectType
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate

@@ -1,6 +1,6 @@
 package com.cleverskills.api.income
 
-import com.cleverskills.domain.IncomeType
+import com.cleverskills.domain.income.IncomeType
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ApiCreateIncomeRequest(

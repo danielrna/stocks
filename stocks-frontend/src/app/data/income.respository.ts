@@ -61,26 +61,5 @@ export class IncomeRespository implements IIncomeRepository {
   }
 
 
-  getNotSalaryIncomesByOwnerId(id: string): Observable<Income[]> {
-    return new Observable(subscriber => {
-      const snapUnsub = this.afs.collection('incomes').ref
-        .where('ownerId', '==', id)
-        .where('type', '!=', IncomeType.SALAIRE)
-        .onSnapshot(next => {
-          subscriber.next(
-            next.docs
-              .map(value => {
-                  return this.toDomainIncome(value)
-                }
-              )
-          );
-        });
-      subscriber.add(() => {
-        snapUnsub();
-      });
-    });
-
-  }
-
 
 }

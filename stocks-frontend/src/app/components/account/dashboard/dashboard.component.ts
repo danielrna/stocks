@@ -33,11 +33,13 @@ export class DashboardComponent {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
         this.incomeDashboardData = this.getIncomeDashboardData(user.uid)
-        this.miniCards.push(
-          this.getDebtRateMiniCardData(user.uid),
-          this.getCashflowMiniCardData(user.uid)
+        this.summaryService.getNotSalaryIncomesByUserId(user.uid).subscribe(summary => {
+          this.miniCards.push(
+            DashboardComponent.getDebtRateMiniCardData(user.uid, summary.debtRate),
+            DashboardComponent.getCashflowMiniCardData(user.uid, summary.passiveTotalIncome)
           )
 
+        })
 
       } else this.router.navigate(["login"]).then(r => {
       })
@@ -75,22 +77,18 @@ export class DashboardComponent {
     };
   }
 
-  private getDebtRateMiniCardData(id: string): MiniCardData {
+  private static getDebtRateMiniCardData(id: string, value: number): MiniCardData {
     return {
       title: "Taux d'endettement",
-      value: this.summaryService.getUserDebtRate(id).pipe(map(value => {
-        return value.toFixed(2)
-      })),
+      value: value.toFixed(2),
       symbol: "%",
     } as MiniCardData
   }
 
-  private getCashflowMiniCardData(id: string) {
+  private static getCashflowMiniCardData(id: string, value: number) {
     return {
-      title: "Cashflow (hors salaire)",
-      value: this.summaryService.getCashflow(id).pipe(map(value => {
-        return value.toString()
-      })),
+      title: "Cashflow Passif (hors salaire)",
+      value: value.toString(),
       symbol: "€",
     } as MiniCardData
   }

@@ -1,4 +1,4 @@
-package com.cleverskills.domain
+package com.cleverskills.domain.income
 
 data class Income(
     val id: Long,

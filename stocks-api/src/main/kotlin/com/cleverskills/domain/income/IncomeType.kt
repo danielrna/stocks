@@ -1,4 +1,4 @@
-package com.cleverskills.domain
+package com.cleverskills.domain.income
 
 enum class IncomeType {
     IMMO,

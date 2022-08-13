@@ -1,12 +1,16 @@
-package com.cleverskills.domain
+package com.cleverskills.domain.finance
 
+import com.cleverskills.domain.project.ProjectInputs
+import com.cleverskills.domain.project.ProjectOutputs
 import org.springframework.stereotype.Service
 import kotlin.math.pow
 import kotlin.math.roundToLong
 
 @Service
-class RentaService {
-    fun calculateOutputs(inputs: ProjectInputs): ProjectOutputs {
+class FinanceService {
+
+
+    fun calculateProjectOutputs(inputs: ProjectInputs): ProjectOutputs {
         val tfMensuelle = inputs.tf / 12
         val notaire = (0.08 * inputs.prix).toLong()
         val totalEmprunte = (inputs.travaux
@@ -54,5 +58,9 @@ class RentaService {
         pmt /= (1 + rate);
 
         return (-pmt).roundToLong();
+    }
+
+    fun getUserSummary(userId: String): FinancialSummary {
+       return FinancialSummary(passiveTotalIncome = 12320, activeTotalIncome = 0, debtRate = 13.0)
     }
 }

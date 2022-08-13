@@ -6,9 +6,9 @@
     <mat-grid-tile *ngFor="let mc of miniCards" [colspan]="( cardLayout | async )?.miniCard?.cols"
                    [rowspan]="( cardLayout | async )?.miniCard?.rows">
 
-      <app-card *ngIf="mc.value | async as value" [title]="mc.title">
+      <app-card *ngIf="mc.value != null" [title]="mc.title">
         <h1>
-          {{value}}
+          {{mc.value}}
           {{mc.symbol}}
         </h1>
       </app-card>

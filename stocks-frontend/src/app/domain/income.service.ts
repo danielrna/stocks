@@ -5,6 +5,8 @@ import {Income} from "./model/Income";
 import {Observable} from "rxjs";
 import {ProjectRepository} from "../data/project-repository.service";
 import {ProjectService} from "./project.service";
+import {FinanceRespository} from "../data/finance.respository";
+import {FinancialSummary} from "./model/FinancialSummary";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,10 @@ import {ProjectService} from "./project.service";
 export class IncomeService {
 
 
-  constructor(private incomeRespository: IncomeRespository, private projectRespository: ProjectRepository, private projectService: ProjectService, private toast: ToastService) {
+  constructor(private incomeRespository: IncomeRespository,
+              private projectRespository: ProjectRepository,
+              private projectService: ProjectService,
+              private toast: ToastService) {
   }
 
   createOrUpdateIncome(income: Income): Observable<Income> {
@@ -36,8 +41,5 @@ export class IncomeService {
     return this.incomeRespository.getIncomesByUserId(id)
   }
 
-  getNotSalaryIncomesByUserId(id: string): Observable<Income[]> {
-    return this.incomeRespository.getNotSalaryIncomesByOwnerId(id)
-  }
 
 }

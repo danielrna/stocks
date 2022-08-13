@@ -1,4 +1,4 @@
-package com.cleverskills.domain
+package com.cleverskills.domain.project
 
 import com.cleverskills.data.DBProjectInputs
 import com.cleverskills.data.ProjectInputsRepository

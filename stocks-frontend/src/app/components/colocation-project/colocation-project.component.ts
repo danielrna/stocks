@@ -14,13 +14,18 @@ export class ColocationProjectComponent implements OnInit {
   project: Project = <Project>{}
 
   ngOnInit(): void {
-    this.refreshProject();
-
+    this.auth.getCurrentUser().subscribe(user => {
+      if (user !== null) {
+        this.refreshProject();
+      } else this.router.navigate(["login"]).then(r => {
+      })
+    })
   }
 
   constructor(private projectService: ProjectService,
-              private authService: AuthenticationService, private route: ActivatedRoute, private router: Router) {
-    this.authService.getCurrentUser().subscribe(user => {
+              private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {
+
+    this.auth.getCurrentUser().subscribe(user => {
       if (user) {
         this.project.userId = user.uid
       }

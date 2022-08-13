@@ -1,7 +1,7 @@
 package com.cleverskills.api.income
 
-import com.cleverskills.domain.Income
-import com.cleverskills.domain.IncomeService
+import com.cleverskills.domain.income.Income
+import com.cleverskills.domain.income.IncomeService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.HttpStatus
