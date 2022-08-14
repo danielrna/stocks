@@ -15,7 +15,7 @@ import {ToastService} from "../../../domain/toast.service";
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
-  displayedColumns: string[] = ['name', 'type', 'updated', 'actions'];
+  displayedColumns: string[] = ['name', 'type', 'netprofit', 'updated', 'actions'];
   toApiProjectType = toApiProjectType
 
   constructor(

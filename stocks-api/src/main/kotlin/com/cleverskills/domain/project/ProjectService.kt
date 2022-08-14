@@ -31,7 +31,6 @@ class ProjectService(
     ): FullProject {
         val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
 
-
         val saved: DBProject = projectRepository.save(
             DBProject(
                 id = id,
@@ -44,7 +43,7 @@ class ProjectService(
         ).awaitFirst()
 
         val savedInputs = createOrUpdateLinkedInputs(saved, inputs)
-        val project = saved.toDomain().toFull(savedInputs)
+        val project = saved.toFull(savedInputs)
 
         createOrUpdateLinkedIncome(project)
         createOrUpdateLinkedLoan(project)
@@ -91,7 +90,7 @@ class ProjectService(
     suspend fun get(id: Long): FullProject? {
         val project = projectRepository.findById(id).awaitFirst()
         val inputs = projectInputsService.findByProjectId(project.id!!) ?: throw IllegalStateException("")
-        return project.toDomain().toFull(inputs)
+        return project.toFull(inputs)
     }
 
 
@@ -106,9 +105,9 @@ class ProjectService(
         )
     }
 
-    internal suspend fun Project.toFull(inputs: ProjectInputs): FullProject {
+    internal suspend fun DBProject.toFull(inputs: ProjectInputs): FullProject {
         return FullProject(
-            id = id,
+            id = checkNotNull(id),
             type = type,
             userId = userId,
             name = name,
@@ -136,7 +135,7 @@ class ProjectService(
         val pairs = deferred.awaitAll()
         return projects.map { project ->
             val inputs: ProjectInputs = pairs.filter { it.first == project.id }.firstNotNullOf { it.second }
-            project.toDomain().toFull(inputs)
+            project.toFull(inputs)
         }
     }
 

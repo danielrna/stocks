@@ -45,8 +45,8 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
             monthlyExpenses = monthlyExpenses,
             cashflow = cashflow,
             cashflowWithoutLoan = cashflow + monthlyLoan,
-            rendementBrut = (monthlyRent * 12 / inputs.prix * 100).toDouble().roundToLong(),
-            rendementNet = ((cashflow + monthlyLoan) * 12 / totalEmprunte * 100).toDouble().roundToLong()
+            rendementBrut = (monthlyRent * 12.0 / inputs.prix * 100.0).twoDecimals(),
+            rendementNet = ((cashflow + monthlyLoan) * 12.0 / totalEmprunte * 100.0).twoDecimals()
         )
     }
 
@@ -71,7 +71,7 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
 
         val totalLoans = loanService.findUserLoans(userId).sumOf { it.value }
         val consideredIncomeForLoan = 0.7 * immoIncome + otherIncome
-        val debtRatio = totalLoans / consideredIncomeForLoan*100
+        val debtRatio = totalLoans / consideredIncomeForLoan * 100
 
         return FinancialSummary(
             passiveTotalIncome = immoIncome,

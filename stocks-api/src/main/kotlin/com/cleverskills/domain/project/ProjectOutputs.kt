@@ -10,6 +10,6 @@ data class ProjectOutputs(
     val cashflowWithoutLoan: Long,
     val gestion: Long,
     val monthlyLoan: Long,
-    val rendementBrut: Long,
-    val rendementNet: Long,
+    val rendementBrut: Double,
+    val rendementNet: Double,
 )
