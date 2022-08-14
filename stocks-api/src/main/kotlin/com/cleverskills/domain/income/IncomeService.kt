@@ -32,9 +32,9 @@ class IncomeService(
         return income.toDomain()
     }
 
-    suspend fun get(id: Long): Income {
-        val income = incomeRepository.findById(id).awaitFirst()
-        return income.toDomain()
+    suspend fun get(id: Long): Income? {
+        val income = incomeRepository.findById(id).awaitFirstOrNull()
+        return income?.toDomain()
     }
 
 

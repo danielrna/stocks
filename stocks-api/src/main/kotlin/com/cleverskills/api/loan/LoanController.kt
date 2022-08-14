@@ -1,5 +1,6 @@
 package com.cleverskills.api.loan
 
+import com.cleverskills.api.loan.ApiUpdateLoanRequest
 import com.cleverskills.domain.loan.Loan
 import com.cleverskills.domain.loan.LoanService
 import io.swagger.annotations.Api
@@ -28,6 +29,28 @@ class LoanController(val loanService: LoanService) {
         ).toApi()
     }
 
+    @ApiOperation(value = "Update loan")
+    @PutMapping("")
+    suspend fun update(
+        @RequestBody request: ApiUpdateLoanRequest
+    ): ApiLoan {
+        return loanService.createOrUpdate(
+            request.id,
+            request.type,
+            request.userId,
+            request.name,
+            request.value,
+            request.projectId
+        ).toApi()
+    }
+
+    @ApiOperation(value = "Get loan")
+    @GetMapping("{id}")
+    suspend fun get(
+        @PathVariable(name = "id", required = true) id: Long,
+    ): ApiLoan? {
+        return loanService.get(id)?.toApi()
+    }
 
     @ApiOperation(value = "Get loans by user id")
     @GetMapping("")

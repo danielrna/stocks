@@ -28,27 +28,28 @@ class IncomeController(val incomeService: IncomeService) {
         ).toApi()
     }
 
-//    @ApiOperation(value = "Update income")
-//    @PutMapping("")
-//    suspend fun update(
-//        @RequestBody request: ApiUpdateIncomeRequest
-//    ): ApiIncome {
-//        return incomeService.createOrUpdate(
-//            request.id,
-//            request.type,
-//            request.userId,
-//            request.name,
-//            request.inputs.toDomain(),
-//        ).toApi()
-//    }
-//
-//    @ApiOperation(value = "Get income")
-//    @GetMapping("{id}")
-//    suspend fun get(
-//        @PathVariable(name = "id", required = true) id: Long,
-//    ): ApiIncome? {
-//        return incomeService.get(id)?.toApi()
-//    }
+    @ApiOperation(value = "Update income")
+    @PutMapping("")
+    suspend fun update(
+        @RequestBody request: ApiUpdateIncomeRequest
+    ): ApiIncome {
+        return incomeService.createOrUpdate(
+            request.id,
+            request.type,
+            request.userId,
+            request.name,
+            request.value,
+            request.projectId
+        ).toApi()
+    }
+
+    @ApiOperation(value = "Get income")
+    @GetMapping("{id}")
+    suspend fun get(
+        @PathVariable(name = "id", required = true) id: Long,
+    ): ApiIncome? {
+        return incomeService.get(id)?.toApi()
+    }
 
     @ApiOperation(value = "Get incomes by user id")
     @GetMapping("")
