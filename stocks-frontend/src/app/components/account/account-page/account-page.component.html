@@ -1,11 +1,9 @@
-<mat-drawer-container >
-  <mat-drawer #drawer class="drawer" mode="side" opened=true>
+<div class="account-page-container">
+  <div class="left-menu">
     <app-left-menu></app-left-menu>
-  </mat-drawer>
-
-  <div>
-
-    <router-outlet ></router-outlet>
-
   </div>
-</mat-drawer-container>
+
+  <div class="account-page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

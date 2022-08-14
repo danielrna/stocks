@@ -22,7 +22,7 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
                 + inputs.prix
                 + inputs.chasse
                 - inputs.apport)
-        val monthlyLoan = this.PMT(inputs.loanRate, inputs.dureeCredit, totalEmprunte)
+        val monthlyLoan = this.pmt(inputs.loanRate, inputs.dureeCredit, totalEmprunte)
         val monthlyRent = (inputs.nbChambre * inputs.prixChambre) * (12 - inputs.vacance) / 12
         val gestion = (0.08 * monthlyRent).roundToLong()
         val monthlyExpenses = (inputs.copro
@@ -32,9 +32,8 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
                 + tfMensuelle
                 + inputs.cfe
                 + inputs.entretien
-                + monthlyLoan
                 + gestion)
-        val cashflow = monthlyRent - monthlyExpenses
+        val cashflow = monthlyRent - monthlyExpenses - monthlyLoan
         return ProjectOutputs(
             notaire = notaire,
             totalEmprunte = totalEmprunte,
@@ -51,7 +50,7 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
     }
 
 
-    private fun PMT(taux: Double, dureeAnnees: Long, totalEmprunte: Long): Long {
+    private fun pmt(taux: Double, dureeAnnees: Long, totalEmprunte: Long): Long {
         val rate = taux / 100 / 12
         val nperiod = dureeAnnees * 12
         val fv = 0;

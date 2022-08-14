@@ -1,4 +1,13 @@
-.drawer{
+.left-menu {
   width: 240px;
   display: block;
+}
+
+.account-page-container {
+  display: flex;
+}
+
+.account-page-content {
+  width: 70%;
+  height: 100%;
 }
