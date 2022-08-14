@@ -28,8 +28,8 @@
           <mat-form-field appearance="outline">
             <mat-label>Type</mat-label>
             <mat-select [(value)]="this.newIcome.type">
-              <mat-option *ngFor="let type of loanTypesKeys" [value]="type">
-                {{loanTypes[type]}}
+              <mat-option *ngFor="let type of loanTypesValues" [value]="type">
+                {{toApiLoanType(type)}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -54,7 +54,7 @@
           <ng-container matColumnDef="type">
 
             <th mat-header-cell *matHeaderCellDef>Type</th>
-            <td mat-cell *matCellDef="let element"> {{loanTypes[element.type]}} </td>
+            <td mat-cell *matCellDef="let element"> {{toApiLoanType(element.type)}} </td>
           </ng-container>
 
           <ng-container matColumnDef="value">

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChartData, ChartType} from 'chart.js';
+import {Income} from "../../../../../domain/model/Income";
 
 @Component({
   selector: 'app-doughnut-chart',
@@ -8,9 +9,9 @@ import {ChartData, ChartType} from 'chart.js';
 })
 export class DoughnutChartComponent implements OnInit {
   @Input()
-  pricedList: any[] = []; //object can be Income for example
+  pricedList: Income[] = []; //object can be Income for example
   @Input()
-  public pricedKeys: number[] = []
+  public pricedKeys: string[] = []
 
   map = new Map(); //
 

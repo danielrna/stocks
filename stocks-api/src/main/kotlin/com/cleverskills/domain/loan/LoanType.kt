@@ -1,7 +1,9 @@
 package com.cleverskills.domain.loan
 
 enum class LoanType {
-    IMMO,
-    SALAIRE,
+    RP,
+    LOCATIF,
+    AUTO,
+    CONSO,
     AUTRE
 }

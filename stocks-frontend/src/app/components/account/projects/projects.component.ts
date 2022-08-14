@@ -66,13 +66,13 @@ export class ProjectsComponent implements OnInit {
 
 }
 
-export function toApiProjectType(type: ProjectType): string {
+export function toApiProjectType(type: string): string {
   switch (type) {
-    case ProjectType.Colocation:
+    case ProjectType[ProjectType.COLOC]:
       return "Colocation"
-    case ProjectType.LCD:
+    case ProjectType[ProjectType.LCD]:
       return "Location courte durée"
-    case ProjectType.IDR:
+    case ProjectType[ProjectType.IDR]:
       return "Immeuble de rapport"
     default:
       return "Inconnu"

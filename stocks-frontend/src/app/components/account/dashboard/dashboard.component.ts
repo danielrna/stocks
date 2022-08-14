@@ -6,8 +6,10 @@ import {IncomeService} from "../../../domain/income.service";
 import {Router} from "@angular/router";
 import {SummaryService} from "../../../domain/summary.service";
 import {IncomeDashboardData} from "./api/IncomeDashboardData";
-import {getIncomeTypeKeys, getIncomeTypeValues} from "../../../domain/model/Income";
+import {getIncomeTypeKeys, getIncomeTypeValues, Income} from "../../../domain/model/Income";
 import {MiniCardData} from "./api/MiniCardData";
+import {toApiProjectType} from "../projects/projects.component";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -17,7 +19,7 @@ import {MiniCardData} from "./api/MiniCardData";
 })
 export class DashboardComponent {
 
-  incomeDashboardData: IncomeDashboardData = {} as IncomeDashboardData
+  incomeDashboardData = {} as IncomeDashboardData
   miniCards: MiniCardData[] = []
 
   constructor(
@@ -33,6 +35,7 @@ export class DashboardComponent {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
         this.incomeDashboardData = this.getIncomeDashboardData(user.uid)
+        console.log(this.incomeDashboardData)
         this.summaryService.getNotSalaryIncomesByUserId(user.uid).subscribe(summary => {
           this.miniCards.push(
             DashboardComponent.getLoanRateMiniCardData(user.uid, summary.debtRatio),
@@ -72,7 +75,7 @@ export class DashboardComponent {
     return {
       incomes: this.incomeService.getIncomesByUserId(id),
       incomeLabels: getIncomeTypeValues(),
-      incomeKeys: getIncomeTypeKeys()
+      incomeKeys: getIncomeTypeValues()
     };
   }
 

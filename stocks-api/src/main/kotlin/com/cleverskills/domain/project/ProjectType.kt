@@ -1,7 +1,7 @@
 package com.cleverskills.domain.project
 
 enum class ProjectType {
-    Colocation,
+    COLOC,
     LCD,
     IDR,
 }

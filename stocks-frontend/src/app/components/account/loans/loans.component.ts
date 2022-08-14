@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../domain/authentication.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {getLoanTypeKeys, Loan, LoanType} from "../../../domain/model/Loan";
+import {getLoanTypeKeys, getLoanTypeValues, Loan, LoanType} from "../../../domain/model/Loan";
 import {LoanService} from "../../../domain/loan.service";
+import {IncomeType} from "../../../domain/model/Income";
 
 @Component({
   selector: 'app-invest-profile',
@@ -16,7 +17,7 @@ export class LoansComponent implements OnInit {
   displayedColumns = ["name", "type", "value", "actions"];
 
   loanTypes = LoanType;
-  loanTypesKeys: number[] = getLoanTypeKeys();
+  loanTypesValues: string[] = getLoanTypeValues();
 
   creationMode: boolean = false;
   newIcome: Loan = {
@@ -30,7 +31,6 @@ export class LoansComponent implements OnInit {
     public loanService: LoanService,
     private router: Router,
     public dialog: MatDialog) {
-    console.log(this.loanTypes)
   }
 
 
@@ -55,4 +55,20 @@ export class LoansComponent implements OnInit {
   deleteLoan(id: string) {
     this.loanService.deleteLoan(id)
   }
-}
+
+  toApiLoanType(type: string): string {
+    switch (type) {
+      case LoanType[LoanType.RP]:
+        return "Résidence principale"
+      case LoanType[LoanType.LOCATIF]:
+        return "Immobilier locatif"
+      case LoanType[LoanType.CONSO]:
+        return "Conso"
+      case LoanType[LoanType.AUTO]:
+        return "Auto"
+      case LoanType[LoanType.AUTRE]:
+        return "Autre"
+      default:
+        return "Inconnu"
+    }
+  }}

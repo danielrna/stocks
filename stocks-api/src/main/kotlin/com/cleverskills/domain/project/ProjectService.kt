@@ -70,7 +70,7 @@ class ProjectService(
 
         loanService.createOrUpdate(
             id = existingLoan?.id,
-            type = LoanType.IMMO,
+            type = LoanType.LOCATIF,
             userId = project.userId,
             name = "Crédit lié au projet '${project.name}'",
             value = project.outputs.monthlyLoan,

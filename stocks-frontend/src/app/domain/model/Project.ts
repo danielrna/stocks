@@ -13,14 +13,14 @@ export interface Project {
 }
 
 export enum ProjectType {
-  Colocation,
+  COLOC,
   LCD,
   IDR,
 }
 
 export const placeHolderProject = <Project>{
   id: null,
-  type: ProjectType.Colocation,
+  type: ProjectType.COLOC,
   userId: "",
   updated: Date.now(),
   name: "Nouveau Projet",

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../domain/authentication.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {getIncomeTypeKeys, Income, IncomeType} from "../../../domain/model/Income";
+import {getIncomeTypeValues, Income, IncomeType} from "../../../domain/model/Income";
 import {IncomeService} from "../../../domain/income.service";
 
 @Component({
@@ -16,7 +16,7 @@ export class IncomesComponent implements OnInit {
   displayedColumns = ["name", "type", "value", "actions"];
 
   incomeTypes = IncomeType;
-  incomeTypesKeys: number[] = getIncomeTypeKeys();
+  incomeTypesValues: string[] = getIncomeTypeValues();
 
   creationMode: boolean = false;
   newIcome: Income = {
@@ -61,5 +61,18 @@ export class IncomesComponent implements OnInit {
     this.incomeService.deleteIncome(id)
     this.refreshIncomes()
 
+  }
+
+  toApiIncomeType(type: string): string {
+    switch (type) {
+      case IncomeType[IncomeType.IMMO]:
+        return "Immobilier locatif"
+      case IncomeType[IncomeType.SALAIRE]:
+        return "Salaire"
+      case IncomeType[IncomeType.AUTRE]:
+        return "Autre"
+      default:
+        return "Inconnu"
+    }
   }
 }

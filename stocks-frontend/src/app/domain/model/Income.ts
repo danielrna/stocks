@@ -10,7 +10,7 @@ export interface Income {
 export enum IncomeType {
   IMMO,
   SALAIRE,
-  Autre
+  AUTRE
 }
 
 

@@ -8,10 +8,10 @@ export interface Loan {
 
 export enum LoanType {
   RP,
-  Locatif,
-  Auto,
-  Conso,
-  Autre
+  LOCATIF,
+  AUTO,
+  CONSO,
+  AUTRE
 }
 
 export function getLoanTypeKeys() {
