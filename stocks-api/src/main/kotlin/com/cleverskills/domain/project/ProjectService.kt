@@ -28,32 +28,41 @@ class ProjectService(
 ) {
     suspend fun createOrUpdate(
         id: Long? = null, type: ProjectType, userId: String, name: String, inputs: ProjectInputs
-    ): Project {
+    ): FullProject {
         val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
 
-        val savedInputs = createOrUpdateLinkedInputs(existingProject, inputs)
 
-        val project: Project = projectRepository.save(
+        val saved: DBProject = projectRepository.save(
             DBProject(
                 id = id,
                 userId = userId,
                 name = name,
-                type = type,
-                inputsId = savedInputs.id!!,
                 createdDate = existingProject?.createdDate ?: LocalDateTime.now(),
                 updatedDate = LocalDateTime.now(),
+                type = type,
             )
-        ).awaitFirst().toDomain(savedInputs)
+        ).awaitFirst()
+
+        val savedInputs = createOrUpdateLinkedInputs(saved, inputs)
+        val project = saved.toDomain().toFull(savedInputs)
+
         createOrUpdateLinkedIncome(project)
         createOrUpdateLinkedLoan(project)
         return project
     }
 
     private suspend fun createOrUpdateLinkedInputs(
-        existingProject: DBProject?, inputs: ProjectInputs
-    ) = projectInputsService.createOrUpdate(existingProject?.inputsId, inputs)
+        project: DBProject, inputs: ProjectInputs
+    ): ProjectInputs {
+        val existingProjectInputs: ProjectInputs? = projectInputsService.findByProjectId(project.id!!)
 
-    private suspend fun createOrUpdateLinkedIncome(project: Project) {
+        return projectInputsService.createOrUpdate(
+            id = existingProjectInputs?.id,
+            inputs = inputs.copy(projectId = project.id)
+        )
+    }
+
+    private suspend fun createOrUpdateLinkedIncome(project: FullProject) {
         val existingIncome: Income? = incomeService.findByProjectId(project.id)
 
         incomeService.createOrUpdate(
@@ -65,7 +74,8 @@ class ProjectService(
             projectId = project.id
         )
     }
-    private suspend fun createOrUpdateLinkedLoan(project: Project) {
+
+    private suspend fun createOrUpdateLinkedLoan(project: FullProject) {
         val existingLoan: Loan? = loanService.findByProjectId(project.id)
 
         loanService.createOrUpdate(
@@ -78,54 +88,68 @@ class ProjectService(
         )
     }
 
-    suspend fun get(id: Long): Project? {
+    suspend fun get(id: Long): FullProject? {
         val project = projectRepository.findById(id).awaitFirst()
-        val inputs = projectInputsService.getNotNull(project.inputsId)
-        return project.toDomain(inputs)
+        val inputs = projectInputsService.findByProjectId(project.id!!) ?: throw IllegalStateException("")
+        return project.toDomain().toFull(inputs)
     }
 
 
-    internal suspend fun DBProject.toDomain(inputs: ProjectInputs): Project {
+    internal suspend fun DBProject.toDomain(): Project {
         return Project(
             id = checkNotNull(id),
             type = type,
             userId = userId,
             name = name,
             createdDate = createdDate,
-            upadatedDate = updatedDate,
+            updatedDate = updatedDate,
+        )
+    }
+
+    internal suspend fun Project.toFull(inputs: ProjectInputs): FullProject {
+        return FullProject(
+            id = id,
+            type = type,
+            userId = userId,
+            name = name,
+            createdDate = createdDate,
+            updatedDate = updatedDate,
             inputs = inputs,
             outputs = calculateOutputs(inputs)
         )
 
+
     }
 
-    suspend fun findByUserId(userId: String): List<Project> {
+    suspend fun findByUserId(userId: String): List<FullProject> {
 
         val projects = projectRepository.findAllByUserId(userId).collectList().awaitFirst()
 
         val deferred: List<Deferred<Pair<Long?, ProjectInputs>>> = projects.map {
             coroutineScope {
                 async {
-                    it.id to projectInputsService.getNotNull(it.inputsId)
+                    it.id to (projectInputsService.findByProjectId(it.id!!)
+                        ?: throw IllegalStateException("Project has no matching inputs"))
                 }
             }
         }
         val pairs = deferred.awaitAll()
         return projects.map { project ->
             val inputs: ProjectInputs = pairs.filter { it.first == project.id }.firstNotNullOf { it.second }
-            project.toDomain(inputs)
+            project.toDomain().toFull(inputs)
         }
     }
 
     suspend fun deleteById(id: Long) {
-        val project = projectRepository.findById(id).awaitFirst()
-        projectInputsService.delete(project.inputsId)
         projectRepository.deleteById(id).awaitFirstOrNull()
+        projectInputsService.deleteByProjectId(id)
+        incomeService.deleteByProjectId(id)
+        loanService.deleteByProjectId(id)
     }
 
     suspend fun calculateOutputs(inputs: ProjectInputs): ProjectOutputs {
         return financeService.calculateProjectOutputs(inputs)
     }
 
-
 }
+

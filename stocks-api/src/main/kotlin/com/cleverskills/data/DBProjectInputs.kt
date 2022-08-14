@@ -45,6 +45,8 @@ data class DBProjectInputs(
 
     @Column("vacance") var vacance: Long,
 
+    @Column("projectId") var projectId: Long?,
+
     @Column("updatedDate") var updatedDate: LocalDateTime = LocalDateTime.now()
 ) : Persistable<Long?> {
 

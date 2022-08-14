@@ -1,9 +1,9 @@
 create schema IF NOT EXISTS public;
 
--- drop table if exists projects;
--- drop table if exists projectinputs;
--- drop table if exists incomes;
--- drop table if exists loans;
+drop table if exists projects;
+drop table if exists projectinputs;
+drop table if exists incomes;
+drop table if exists loans;
 create TABLE IF NOT EXISTS public.projects
 (
     id       SERIAL NOT NULL PRIMARY KEY,
@@ -35,6 +35,7 @@ create TABLE IF NOT EXISTS public.projectinputs
     entretien bigint ,
     chasse bigint ,
     vacance smallint ,
+    projectId bigint,
 
     updatedDate timestamp not null
 

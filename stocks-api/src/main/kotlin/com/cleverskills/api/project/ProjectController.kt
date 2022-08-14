@@ -1,9 +1,6 @@
 package com.cleverskills.api.project
 
-import com.cleverskills.domain.project.Project
-import com.cleverskills.domain.project.ProjectInputs
-import com.cleverskills.domain.project.ProjectOutputs
-import com.cleverskills.domain.project.ProjectService
+import com.cleverskills.domain.project.*
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.HttpStatus
@@ -40,7 +37,7 @@ class ProjectController(val projectService: ProjectService) {
             request.type,
             request.userId,
             request.name,
-            request.inputs.toDomain(),
+            request.inputs.toDomain(request.id),
         ).toApi()
     }
 
@@ -78,7 +75,7 @@ class ProjectController(val projectService: ProjectService) {
     }
 
 
-    private fun Project.toApi(): ApiProject {
+    private fun FullProject.toApi(): ApiProject {
         return ApiProject(
             id = id,
             type = type,
@@ -87,7 +84,7 @@ class ProjectController(val projectService: ProjectService) {
             inputs = inputs.toApi(),
             outputs = outputs.toApi(),
             createdDate = createdDate,
-            upadatedDate = upadatedDate
+            upadatedDate = updatedDate
         )
     }
 
@@ -113,7 +110,7 @@ class ProjectController(val projectService: ProjectService) {
         )
     }
 
-    private fun ApiProjectInputs.toDomain(): ProjectInputs {
+    private fun ApiProjectInputs.toDomain(projectId: Long? =null): ProjectInputs {
         return ProjectInputs(
             nbChambre = nbChambre,
             prixChambre = prixChambre,
@@ -133,6 +130,7 @@ class ProjectController(val projectService: ProjectService) {
             chasse = chasse,
             vacance = vacance,
             id = null,
+            projectId = projectId
         )
     }
 

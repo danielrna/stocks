@@ -50,6 +50,9 @@ class LoanService(
     suspend fun deleteById(id: Long) {
         loanRepository.deleteById(id).awaitFirstOrNull()
     }
+    suspend fun deleteByProjectId(id: Long) {
+        loanRepository.deleteByProjectId(id).awaitFirstOrNull()
+    }
 
 
     private fun DBLoan.toDomain(): Loan {

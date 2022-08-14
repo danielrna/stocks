@@ -9,5 +9,6 @@ import reactor.core.publisher.Mono
 interface LoanRepository : ReactiveCrudRepository<DBLoan, Long> {
     suspend fun findAllByUserId(userId: String): Flux<DBLoan>
     suspend fun findByProjectId(projectId: Long): Mono<DBLoan>
+    suspend fun deleteByProjectId(projectId: Long): Mono<Void>
 
 }

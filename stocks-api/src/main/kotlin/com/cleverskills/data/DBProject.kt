@@ -23,8 +23,6 @@ data class DBProject(
 
     @Column("type") var type: ProjectType,
 
-    @Column("inputsId") var inputsId: Long,
-
     ) : Persistable<Long?> {
     override fun getId(): Long? {
         return id

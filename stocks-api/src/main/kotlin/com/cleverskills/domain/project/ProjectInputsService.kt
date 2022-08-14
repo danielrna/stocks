@@ -20,6 +20,10 @@ class ProjectInputsService(
         return projectInputsRepository.findById(id).awaitFirstOrNull()?.toDomain()
     }
 
+    suspend fun findByProjectId(projectId: Long): ProjectInputs? {
+        return projectInputsRepository.findById(projectId).awaitFirstOrNull()?.toDomain()
+    }
+
     suspend fun getNotNull(id: Long): ProjectInputs {
         return projectInputsRepository.findById(id).awaitFirstOrNull()?.toDomain()
             ?: throw IllegalStateException("No Project input found ")
@@ -29,9 +33,13 @@ class ProjectInputsService(
         projectInputsRepository.deleteById(id).awaitFirstOrNull()
     }
 
+    suspend fun deleteByProjectId(projectId: Long) {
+        projectInputsRepository.deleteByProjectId(projectId).awaitFirstOrNull()
+    }
+
     internal fun DBProjectInputs.toDomain(): ProjectInputs {
         return ProjectInputs(
-            id = checkNotNull(id) ,
+            id = checkNotNull(id),
             nbChambre = nbChambre,
             prixChambre = prixChambre,
             prix = prix,
@@ -49,11 +57,13 @@ class ProjectInputsService(
             entretien = entretien,
             chasse = chasse,
             vacance = vacance,
+            projectId = projectId
         )
     }
 
     private fun ProjectInputs.toDB(id: Long? = null) = DBProjectInputs(
         id = id,
+        projectId = checkNotNull(this.projectId),
         nbChambre = this.nbChambre,
         prixChambre = this.prixChambre,
         prix = this.prix,
@@ -70,6 +80,6 @@ class ProjectInputsService(
         cfe = this.cfe,
         entretien = this.entretien,
         chasse = this.chasse,
-        vacance = this.vacance
+        vacance = this.vacance,
     )
 }

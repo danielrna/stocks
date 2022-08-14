@@ -51,6 +51,10 @@ class IncomeService(
         incomeRepository.deleteById(id).awaitFirstOrNull()
     }
 
+    suspend fun deleteByProjectId(id: Long) {
+        incomeRepository.deleteByProjectId(id).awaitFirstOrNull()
+    }
+
 
     private fun DBIncome.toDomain(): Income {
         return Income(

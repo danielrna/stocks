@@ -19,5 +19,6 @@ data class ProjectInputs(
     val entretien: Long,
     val chasse: Long,
     val vacance: Long,
+    val projectId: Long?,
     val id: Long?
 )

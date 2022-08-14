@@ -9,5 +9,6 @@ import reactor.core.publisher.Mono
 interface IncomeRepository : ReactiveCrudRepository<DBIncome, Long> {
     suspend fun findAllByUserId(userId: String): Flux<DBIncome>
     suspend fun findByProjectId(projectId: Long): Mono<DBIncome>
+    suspend fun deleteByProjectId(projectId: Long): Mono<Void>
 
 }
