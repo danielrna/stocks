@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {AngularFirestore} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat";
 import {Loan} from "../domain/model/Loan";
 import {Observable} from "rxjs";
@@ -8,7 +7,6 @@ import {catchError, tap} from "rxjs/operators";
 import {handleError} from "./utils/LoggingUtils";
 import {envUrl} from "./utils/GlobalConstants";
 import {HttpClient} from '@angular/common/http';
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
   {
@@ -18,7 +16,7 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 export class LoanRespository implements ILoanRepository {
   private envUrl: string = envUrl;
 
-  constructor(private afs: AngularFirestore, private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   createLoan(_loan: Loan): Observable<Loan> {
@@ -47,17 +45,6 @@ export class LoanRespository implements ILoanRepository {
       tap((_loans: Loan[]) => console.log(`${_loans.length} loans retrieved`)),
       catchError(handleError<Loan[]>('getLoansByUserId'))
     );
-  }
-
-
-  private toDomainLoan(loan: DocumentSnapshot<unknown>): Loan {
-    return {
-      id: loan.id,
-      type: loan.get("type"),
-      name: loan.get("name"),
-      value: loan.get("value"),
-      userId: loan.get("ownerId"),
-    } as Loan;
   }
 
 

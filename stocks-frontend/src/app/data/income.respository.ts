@@ -1,14 +1,11 @@
 import {Injectable} from "@angular/core";
-import {AngularFirestore} from "@angular/fire/compat/firestore";
-import firebase from "firebase/compat";
-import {Income, IncomeType} from "../domain/model/Income";
+import {Income} from "../domain/model/Income";
 import {Observable} from "rxjs";
 import {IIncomeRepository} from "./iincome.repository";
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "./utils/LoggingUtils";
 import {envUrl} from "./utils/GlobalConstants";
 import {HttpClient} from '@angular/common/http';
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable(
   {
@@ -18,7 +15,7 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 export class IncomeRespository implements IIncomeRepository {
   private envUrl: string = envUrl;
 
-  constructor(private afs: AngularFirestore, private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   createIncome(_income: Income): Observable<Income> {
@@ -48,18 +45,6 @@ export class IncomeRespository implements IIncomeRepository {
       catchError(handleError<Income[]>('getIncomesByUserId'))
     );
   }
-
-
-  private toDomainIncome(income: DocumentSnapshot<unknown>): Income {
-    return {
-      id: income.id,
-      type: income.get("type"),
-      name: income.get("name"),
-      value: income.get("value"),
-      userId: income.get("ownerId"),
-    } as Income;
-  }
-
 
 
 }
