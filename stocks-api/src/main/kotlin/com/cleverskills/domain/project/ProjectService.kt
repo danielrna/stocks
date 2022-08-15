@@ -28,28 +28,30 @@ class ProjectService(
     val financeService: FinanceService
 ) {
     suspend fun createOrUpdate(
-        id: Long? = null, type: ProjectType, userId: String, name: String, inputs: ProjectInputs
+        request: CreateOrUpdateProjectRequest
     ): FullProject {
-        val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
+        val existingProject: DBProject? = request.id?.let { projectRepository.findById(it).awaitFirst() }
 
-        val saved: DBProject = projectRepository.save(
-            DBProject(
-                id = id,
-                userId = userId,
-                name = name,
-                createdDate = existingProject?.createdDate ?: LocalDateTime.now(),
-                updatedDate = LocalDateTime.now(),
-                type = type,
-            )
-        ).awaitFirst()
+        val saved: DBProject = projectRepository.save(request.toDB(existingProject)).awaitFirst()
 
-        val savedInputs = createOrUpdateLinkedInputs(saved, inputs)
+        val savedInputs = createOrUpdateLinkedInputs(saved, request.inputs)
         val project = saved.toFull(savedInputs)
 
         createOrUpdateLinkedIncome(project)
         createOrUpdateLinkedLoan(project)
         return project
     }
+
+    private fun CreateOrUpdateProjectRequest.toDB(
+        existingProject: DBProject?
+    ) = DBProject(
+        id = id,
+        userId = userId,
+        name = name,
+        createdDate = existingProject?.createdDate ?: LocalDateTime.now(),
+        updatedDate = LocalDateTime.now(),
+        type = type,
+    )
 
     private suspend fun createOrUpdateLinkedInputs(
         project: DBProject, inputs: ProjectInputs

@@ -16,29 +16,19 @@ class ProjectController(val projectService: ProjectService) {
     @ApiOperation(value = "Create project")
     @PostMapping("")
     suspend fun create(
-        @RequestBody request: ApiCreateProjectRequest
+        @RequestBody request: ApiCreateOrUpdateProjectRequest
     ): ApiProject {
         return projectService.createOrUpdate(
-            null,
-            request.type,
-            request.userId,
-            request.name,
-            request.inputs.toDomain(),
+            request.toDomain()
         ).toApi()
     }
 
     @ApiOperation(value = "Update project")
     @PutMapping("")
     suspend fun update(
-        @RequestBody request: ApiUpdateProjectRequest
+        @RequestBody request: ApiCreateOrUpdateProjectRequest
     ): ApiProject {
-        return projectService.createOrUpdate(
-            request.id,
-            request.type,
-            request.userId,
-            request.name,
-            request.inputs.toDomain(request.id),
-        ).toApi()
+        return create(request)
     }
 
     @ApiOperation(value = "Get project")
@@ -74,7 +64,15 @@ class ProjectController(val projectService: ProjectService) {
         return projectService.calculateOutputs(req.toDomain()).toApi()
     }
 
-
+    private fun ApiCreateOrUpdateProjectRequest.toDomain():CreateOrUpdateProjectRequest{
+        return CreateOrUpdateProjectRequest(
+            id = id,
+            type = type,
+            userId = userId,
+            name = name,
+            inputs = inputs.toDomain(id),
+        )
+    }
     private fun FullProject.toApi(): ApiProject {
         return ApiProject(
             id = id,
