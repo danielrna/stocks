@@ -1,6 +1,6 @@
 <div *ngIf="projects">
+  <div class="project-container">
   <div class="dashboard-data-container">
-    <mat-card>
       <mat-card-title>Vos projets</mat-card-title>
       <button mat-raised-button mat-button routerLink="/newProject">
         <mat-icon>add</mat-icon>
@@ -53,7 +53,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-    </mat-card>
+    </div>
   </div>
 </div>
 

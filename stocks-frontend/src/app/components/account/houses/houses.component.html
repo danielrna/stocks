@@ -1,52 +1,52 @@
 <div *ngIf="houses">
   <div class="dashboard-data-container">
-    <mat-card>
-      <div class="sticky-buttons">
-        <mat-card-title>Vos bien immobiliers</mat-card-title>
+    <div class="sticky-buttons">
+      <mat-card-title>Vos bien immobiliers</mat-card-title>
 
-        <button mat-raised-button mat-button (click)="this.creationMode = true">
-          <mat-icon>add</mat-icon>
-          <span>Ajouter un bien immobilier</span>
+      <button mat-raised-button mat-button (click)="this.creationMode = true">
+        <mat-icon>add</mat-icon>
+        <span>Ajouter un bien immobilier</span>
 
-        </button>
-        <button *ngIf="creationMode" mat-raised-button mat-button (click)="this.creationMode = false">
-          <mat-icon>remove</mat-icon>
-          <span></span>
+      </button>
+      <button *ngIf="creationMode" mat-raised-button mat-button (click)="this.creationMode = false">
+        <mat-icon>remove</mat-icon>
+        <span></span>
+      </button>
+    </div>
+    <div class="table-and-creation-wrapper">
+      <div *ngIf="creationMode" class="revenu-creation-mode">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom du bien immobilier</mat-label>
+          <input matInput placeholder="Salaire Air-France" [(ngModel)]="newHouse.name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prix d'achat</mat-label>
+          <input matInput type="number" placeholder="2400" [(ngModel)]="newHouse.acquisitionPrice">
+          <span mat-prefix>€</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ville</mat-label>
+          <input matInput type="text" placeholder="2400" [(ngModel)]="newHouse.city">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date d'achat</mat-label>
+          <input matInput type="date" placeholder="2400" [(ngModel)]="newHouse.acquisitionDate">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Type</mat-label>
+          <mat-select [(value)]="this.newHouse.type">
+            <mat-option *ngFor="let type of houseTypesValues" [value]="type">
+              {{toApiHouseType(type)}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="saveNewHouse()">
+          <mat-icon mat-list-icon>save</mat-icon>
         </button>
       </div>
-      <div class="table-and-creation-wrapper">
-        <div *ngIf="creationMode" class="revenu-creation-mode">
-          <mat-form-field appearance="outline">
-            <mat-label>Nom du bien immobilier</mat-label>
-            <input matInput placeholder="Salaire Air-France" [(ngModel)]="newHouse.name">
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Prix d'achat</mat-label>
-            <input matInput type="number" placeholder="2400" [(ngModel)]="newHouse.acquisitionPrice">
-            <span mat-prefix>€</span>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Ville</mat-label>
-            <input matInput type="text" placeholder="2400" [(ngModel)]="newHouse.city">
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Date d'achat</mat-label>
-            <input matInput type="date" placeholder="2400" [(ngModel)]="newHouse.acquisitionDate" >
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Type</mat-label>
-            <mat-select [(value)]="this.newHouse.type">
-              <mat-option *ngFor="let type of houseTypesValues" [value]="type">
-                {{toApiHouseType(type)}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <button mat-raised-button (click)="saveNewHouse()">
-            <mat-icon mat-list-icon>save</mat-icon>
-          </button>
-        </div>
-
+      <div *ngIf="!creationMode">
         <table mat-table [dataSource]="this.houses" class="mat-elevation-z8" *ngIf="this.houses">
+
 
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
@@ -85,8 +85,8 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
+    </div>
 
 
-    </mat-card>
   </div>
 </div>
