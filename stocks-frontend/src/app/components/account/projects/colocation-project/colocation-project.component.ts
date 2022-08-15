@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectService} from "../../domain/project.service";
-import {placeHolderProject, Project} from "../../domain/model/Project";
-import {AuthenticationService} from "../../domain/authentication.service";
+import {ProjectService} from "../../../../domain/project.service";
+import {placeHolderProject, Project} from "../../../../domain/model/Project";
+import {AuthenticationService} from "../../../../domain/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -41,7 +41,8 @@ export class ColocationProjectComponent implements OnInit {
   }
 
   refreshProject() {
-    this.route.pathFromRoot[1].url.subscribe(segment => {
+    console.log(this.route.pathFromRoot)
+    this.route.pathFromRoot[3].url.subscribe(segment => {
       let projectId = segment[1].path
       this.loadProject(projectId);
     });

@@ -1,0 +1,59 @@
+<div *ngIf="projects">
+  <div class="dashboard-data-container">
+    <mat-card-title>Vos projets</mat-card-title>
+    <button mat-raised-button mat-button routerLink="/account/projects/new">
+      <mat-icon>add</mat-icon>
+      <span>Créer un projet</span>
+    </button>
+    <table mat-table [dataSource]="this.projects" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let element"> {{toApiProjectType(element.type)}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="netprofit">
+        <th mat-header-cell *matHeaderCellDef>Net Profit %</th>
+        <td mat-cell *matCellDef="let element"> {{element.outputs.rendementNet}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="updated">
+        <th mat-header-cell *matHeaderCellDef>Updated</th>
+        <td mat-cell
+            *matCellDef="let element"> {{ element.upadatedDate ? this.datePipe.transform(element.upadatedDate, 'dd-MM-yyyy HH:mm') : ""}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button (click)="goToProject(element.id!!)">
+            <mat-icon mat-list-icon>edit</mat-icon>
+          </button>
+          <button mat-button (click)="deleteProject(element.id!!)">
+            <mat-icon mat-list-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>
+

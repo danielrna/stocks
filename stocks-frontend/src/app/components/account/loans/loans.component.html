@@ -1,4 +1,4 @@
-<div *ngIf="loans">
+<ng-container *ngIf="loans">
   <div class="dashboard-data-container">
     <mat-card>
       <div class="sticky-buttons">
@@ -15,7 +15,7 @@
         </button>
       </div>
       <div class="table-and-creation-wrapper">
-        <div *ngIf="creationMode" class="revenu-creation-mode">
+        <ng-container *ngIf="creationMode" class="revenu-creation-mode">
           <mat-form-field appearance="outline">
             <mat-label>Nom du crédit</mat-label>
             <input matInput placeholder="Salaire Air-France" [(ngModel)]="newIcome.name">
@@ -36,7 +36,7 @@
           <button mat-raised-button (click)="saveNewLoan()">
             <mat-icon mat-list-icon>save</mat-icon>
           </button>
-        </div>
+        </ng-container>
 
         <table mat-table [dataSource]="this.loans" class="mat-elevation-z8" *ngIf="this.loans">
 
@@ -81,4 +81,4 @@
 
     </mat-card>
   </div>
-</div>
+</ng-container>

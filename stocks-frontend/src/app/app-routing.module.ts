@@ -5,27 +5,31 @@ import {HomeComponent} from "./components/home/home.component";
 import {LoginPageComponent} from "./components/login-page/login-page.component";
 import {SignupPageComponent} from "./components/signup-page/signup-page.component";
 import {ProjectsComponent} from "./components/account/projects/projects.component";
-import {ColocationProjectComponent} from "./components/colocation-project/colocation-project.component";
+import {ColocationProjectComponent} from "./components/account/projects/colocation-project/colocation-project.component";
 import {PersonalDataComponent} from "./components/account/personal-data/personal-data.component";
 import {AccountPageComponent} from "./components/account/account-page/account-page.component";
 import {IncomesComponent} from "./components/account/incomes/incomes.component";
 import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
 import {LoansComponent} from "./components/account/loans/loans.component";
-import {NewProjectPageComponent} from "./components/new-project-page/new-project-page.component";
+import {NewProjectPageComponent} from "./components/account/projects/new-project-page/new-project-page.component";
 import {HousesComponent} from "./components/account/houses/houses.component";
+import {ProjectsListComponent} from "./components/account/projects/projects-list/projects-list.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
-  {path: 'colocation/:id', component: ColocationProjectComponent},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'signup', component: SignupPageComponent},
-  {path: 'newProject', component: NewProjectPageComponent},
   {
     path: 'account', component: AccountPageComponent, children: [
       {
         path: 'projects',
-        component: ProjectsComponent
+        component: ProjectsComponent,
+        children: [
+          {path: '', component: ProjectsListComponent},
+          {path: 'new', component: NewProjectPageComponent},
+          {path: 'colocation/:id', component: ColocationProjectComponent},
+        ]
       }, {
         path: 'dashboard',
         component: DashboardComponent

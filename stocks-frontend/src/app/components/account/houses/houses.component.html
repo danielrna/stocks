@@ -1,4 +1,4 @@
-<div *ngIf="houses">
+<ng-container *ngIf="houses">
   <div class="dashboard-data-container">
     <div class="sticky-buttons">
       <mat-card-title>Vos bien immobiliers</mat-card-title>
@@ -14,7 +14,7 @@
       </button>
     </div>
     <div class="table-and-creation-wrapper">
-      <div *ngIf="creationMode" class="revenu-creation-mode">
+      <ng-container *ngIf="creationMode" class="revenu-creation-mode">
         <mat-form-field appearance="outline">
           <mat-label>Nom du bien immobilier</mat-label>
           <input matInput placeholder="Salaire Air-France" [(ngModel)]="newHouse.name">
@@ -43,7 +43,7 @@
         <button mat-raised-button (click)="saveNewHouse()">
           <mat-icon mat-list-icon>save</mat-icon>
         </button>
-      </div>
+      </ng-container>
       <div *ngIf="!creationMode">
         <table mat-table [dataSource]="this.houses" class="mat-elevation-z8" *ngIf="this.houses">
 
@@ -89,4 +89,4 @@
 
 
   </div>
-</div>
+</ng-container>

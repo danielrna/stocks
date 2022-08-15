@@ -28,7 +28,7 @@ import {SnackbarComponent} from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {SignupPageComponent} from './components/signup-page/signup-page.component';
 import {MatListModule} from "@angular/material/list";
-import {ColocationProjectComponent} from './components/colocation-project/colocation-project.component';
+import {ColocationProjectComponent} from './components/account/projects/colocation-project/colocation-project.component';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {DatePipe} from "@angular/common";
@@ -44,9 +44,10 @@ import {DashCardComponent} from './components/account/dashboard/dashcard/dash-ca
 import {DoughnutChartComponent} from './components/account/dashboard/charts/doughnut-chart/doughnut-chart.component';
 import {NgChartsModule} from 'ng2-charts';
 import {LoansComponent} from './components/account/loans/loans.component';
-import {NewProjectPageComponent} from './components/new-project-page/new-project-page.component';
-import { HousesComponent } from './components/account/houses/houses.component';
+import {NewProjectPageComponent} from './components/account/projects/new-project-page/new-project-page.component';
+import {HousesComponent} from './components/account/houses/houses.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ProjectsListComponent} from "./components/account/projects/projects-list/projects-list.component";
 
 @NgModule({
   declarations: [
@@ -69,37 +70,38 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     DoughnutChartComponent,
     LoansComponent,
     NewProjectPageComponent,
+    ProjectsListComponent,
     HousesComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatIconModule,
-        HttpClientModule,
-        MatCardModule,
-        MatSelectModule,
-        MatMenuModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatGridListModule,
-        FormsModule,
-        MatToolbarModule,
-        MatTableModule,
-        ReactiveFormsModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFirestoreModule,
-        MatSnackBarModule,
-        MatAutocompleteModule,
-        MatListModule,
-        MatDialogModule,
-        MatSidenavModule,
-        LayoutModule,
-        NgChartsModule,
-        MatProgressSpinnerModule
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatIconModule,
+    HttpClientModule,
+    MatCardModule,
+    MatSelectModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
+    FormsModule,
+    MatToolbarModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatListModule,
+    MatDialogModule,
+    MatSidenavModule,
+    LayoutModule,
+    NgChartsModule,
+    MatProgressSpinnerModule
 
-    ],
+  ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })
