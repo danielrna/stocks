@@ -1,5 +1,5 @@
 export interface House {
-  acquisitionDate: number;
+  acquisitionDate: string;
   id: string | null;
   type: HouseType;
   name: string;

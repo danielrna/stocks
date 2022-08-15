@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {getHouseTypeValues, House, HouseType} from "../../../domain/model/House";
 import {HouseService} from "../../../domain/house.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-invest-profile',
@@ -23,13 +24,15 @@ export class HousesComponent implements OnInit {
     type: HouseType.APPART,
     name: "Nouveau bien",
     acquisitionPrice: 250000,
-    city: "Rennes"
+    city: "Rennes",
+    acquisitionDate: this.datePipe.transform(Date.now(), 'yyyy-MM-dd'),
   } as House;
 
   constructor(
     public auth: AuthenticationService,
     public houseService: HouseService,
     private router: Router,
+    private datePipe: DatePipe,
     public dialog: MatDialog) {
     console.log(this.houseTypes)
   }

@@ -36,8 +36,16 @@ export class DashboardComponent {
         console.log(this.incomeDashboardData)
         this.summaryService.getNotSalaryIncomesByUserId(user.uid).subscribe(summary => {
           this.miniCards.push(
-            DashboardComponent.getLoanRateMiniCardData(user.uid, summary.debtRatio),
-            DashboardComponent.getCashflowMiniCardData(user.uid, summary.passiveTotalIncome)
+            {
+              title: "Taux d'endettement",
+              value: summary.debtRatio.toFixed(2),
+              symbol: "%",
+            },
+            {
+              title: "Cashflow Passif (hors salaire)",
+              value: summary.passiveTotalIncome.toString(),
+              symbol: "€",
+            }
           )
 
         })
@@ -77,19 +85,4 @@ export class DashboardComponent {
     };
   }
 
-  private static getLoanRateMiniCardData(id: string, value: number): MiniCardData {
-    return {
-      title: "Taux d'endettement",
-      value: value.toFixed(2),
-      symbol: "%",
-    } as MiniCardData
-  }
-
-  private static getCashflowMiniCardData(id: string, value: number) {
-    return {
-      title: "Cashflow Passif (hors salaire)",
-      value: value.toString(),
-      symbol: "€",
-    } as MiniCardData
-  }
 }
