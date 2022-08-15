@@ -16,7 +16,7 @@ export class SummaryService {
   ) {
   }
 
-  getNotSalaryIncomesByUserId(id: string): Observable<FinancialSummary> {
+  getFinancialSummaryOfUser(id: string): Observable<FinancialSummary> {
     return this.financeRepository.getFinancialSummaryByUserId(id)
   }
 

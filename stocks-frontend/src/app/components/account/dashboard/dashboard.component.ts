@@ -33,8 +33,7 @@ export class DashboardComponent {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
         this.incomeDashboardData = this.getIncomeDashboardData(user.uid)
-        console.log(this.incomeDashboardData)
-        this.summaryService.getNotSalaryIncomesByUserId(user.uid).subscribe(summary => {
+        this.summaryService.getFinancialSummaryOfUser(user.uid).subscribe(summary => {
           this.miniCards.push(
             {
               title: "Taux d'endettement",

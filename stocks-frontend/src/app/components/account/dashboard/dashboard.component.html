@@ -13,13 +13,6 @@
         </h1>
       </app-card>
     </mat-grid-tile>
-    <mat-grid-tile *ngFor="let i of [ 3, 4]" [colspan]="( cardLayout | async )?.miniCard?.cols"
-                   [rowspan]="( cardLayout | async )?.miniCard?.rows">
-      <app-card title="Card {{i}}">
-        <div>Mini Card Content Here</div>
-      </app-card>
-    </mat-grid-tile>
-    <!--    Charts-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols"
                    [rowspan]="( cardLayout | async )?.chart?.rows">
       <app-card title="Revenu">
@@ -31,6 +24,14 @@
         </app-doughnut-chart>
       </app-card>
     </mat-grid-tile>
+    <mat-grid-tile *ngFor="let i of [ 3, 4]" [colspan]="( cardLayout | async )?.miniCard?.cols"
+                   [rowspan]="( cardLayout | async )?.miniCard?.rows">
+      <app-card title="Card {{i}}">
+        <div>Mini Card Content Here</div>
+      </app-card>
+    </mat-grid-tile>
+    <!--    Charts-->
+
     <mat-grid-tile *ngFor="let i of [6, 7, 8]" [colspan]="( cardLayout | async )?.chart?.cols"
                    [rowspan]="( cardLayout | async )?.chart?.rows">
       <app-card title="Card {{i}}">

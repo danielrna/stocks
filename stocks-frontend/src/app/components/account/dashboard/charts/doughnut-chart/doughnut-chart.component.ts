@@ -20,11 +20,11 @@ export class DoughnutChartComponent implements OnInit {
   public doughnutChartLabels: string[] = []
 
 
-  public doughnutChartData: ChartData<'doughnut'> = {
+  public doughnutChartData: ChartData<'pie'> = {
     labels: [],
     datasets: []
   };
-  public doughnutChartType: ChartType = 'doughnut';
+  public doughnutChartType: ChartType = 'pie';
 
   chartOptions = {
     responsive: true,
