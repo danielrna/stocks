@@ -1,4 +1,4 @@
-package com.cleverskills.data
+package com.cleverskills.data.income
 
 import com.cleverskills.domain.income.IncomeType
 import org.springframework.data.annotation.CreatedDate

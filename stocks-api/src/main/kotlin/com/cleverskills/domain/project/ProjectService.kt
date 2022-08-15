@@ -1,8 +1,9 @@
 package com.cleverskills.domain.project
 
-import com.cleverskills.data.DBProject
-import com.cleverskills.data.ProjectRepository
+import com.cleverskills.data.project.DBProject
+import com.cleverskills.data.project.ProjectRepository
 import com.cleverskills.domain.finance.FinanceService
+import com.cleverskills.domain.income.CreateOrUpdateIncomeRequest
 import com.cleverskills.domain.income.Income
 import com.cleverskills.domain.income.IncomeService
 import com.cleverskills.domain.income.IncomeType
@@ -65,12 +66,15 @@ class ProjectService(
         val existingIncome: Income? = incomeService.findByProjectId(project.id)
 
         incomeService.createOrUpdate(
-            id = existingIncome?.id,
-            type = IncomeType.IMMO,
-            userId = project.userId,
-            name = "Revenu brut lié au projet '${project.name}'",
-            value = project.outputs.monthlyRent,
-            projectId = project.id
+            CreateOrUpdateIncomeRequest(
+                id = existingIncome?.id,
+                type = IncomeType.IMMO,
+                userId = project.userId,
+                name = "Revenu brut lié au projet '${project.name}'",
+                value = project.outputs.monthlyRent,
+                projectId = project.id
+            )
+
         )
     }
 

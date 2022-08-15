@@ -1,5 +1,6 @@
 package com.cleverskills.api.income
 
+import com.cleverskills.domain.income.CreateOrUpdateIncomeRequest
 import com.cleverskills.domain.income.Income
 import com.cleverskills.domain.income.IncomeService
 import io.swagger.annotations.Api
@@ -17,30 +18,19 @@ class IncomeController(val incomeService: IncomeService) {
     @ApiOperation(value = "Create income")
     @PostMapping("")
     suspend fun create(
-        @RequestBody request: ApiCreateIncomeRequest
+        @RequestBody request: ApiCreateOrUpdateIncomeRequest
     ): ApiIncome {
         return incomeService.createOrUpdate(
-            null,
-            request.type,
-            request.userId,
-            request.name,
-            request.value,
+            request.toDomain(),
         ).toApi()
     }
 
     @ApiOperation(value = "Update income")
     @PutMapping("")
     suspend fun update(
-        @RequestBody request: ApiUpdateIncomeRequest
+        @RequestBody request: ApiCreateOrUpdateIncomeRequest
     ): ApiIncome {
-        return incomeService.createOrUpdate(
-            request.id,
-            request.type,
-            request.userId,
-            request.name,
-            request.value,
-            request.projectId
-        ).toApi()
+        return create(request)
     }
 
     @ApiOperation(value = "Get income")
@@ -80,4 +70,14 @@ class IncomeController(val incomeService: IncomeService) {
         )
     }
 
+    fun ApiCreateOrUpdateIncomeRequest.toDomain(): CreateOrUpdateIncomeRequest {
+        return CreateOrUpdateIncomeRequest(
+            id = id,
+            type = type,
+            userId = userId,
+            name = name,
+            value = value,
+            projectId = projectId
+        )
+    }
 }

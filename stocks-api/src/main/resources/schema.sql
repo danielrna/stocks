@@ -4,6 +4,7 @@ drop table if exists projects;
 drop table if exists projectinputs;
 drop table if exists incomes;
 drop table if exists loans;
+drop table if exists houses;
 create TABLE IF NOT EXISTS public.projects
 (
     id       SERIAL NOT NULL PRIMARY KEY,
@@ -59,6 +60,19 @@ create TABLE IF NOT EXISTS public.loans
     name varchar,
     type   varchar,
     value  bigint ,
+    projectId bigint,
+    createdDate timestamp not null default current_date,
+    updatedDate timestamp not null
+);
+create TABLE IF NOT EXISTS public.houses
+(
+    id       SERIAL NOT NULL PRIMARY KEY,
+    userId     varchar,
+    name varchar,
+    type   varchar,
+    acquisitionPrice  bigint ,
+    acquisitionDate  timestamp not null ,
+    city  varchar ,
     projectId bigint,
     createdDate timestamp not null default current_date,
     updatedDate timestamp not null

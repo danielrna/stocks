@@ -1,7 +1,7 @@
 package com.cleverskills.domain.income
 
-import com.cleverskills.data.DBIncome
-import com.cleverskills.data.IncomeRepository
+import com.cleverskills.data.income.DBIncome
+import com.cleverskills.data.income.IncomeRepository
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service
@@ -11,26 +11,28 @@ import java.time.LocalDateTime
 class IncomeService(
     val incomeRepository: IncomeRepository,
 ) {
-    suspend fun createOrUpdate(
-        id: Long? = null, type: IncomeType, userId: String, name: String, value: Long, projectId: Long? = null
-    ): Income {
-        val existingIncome: DBIncome? = id?.let { incomeRepository.findById(it).awaitFirst() }
+    suspend fun createOrUpdate(request: CreateOrUpdateIncomeRequest): Income {
+        val existingIncome: DBIncome? = request.id?.let { incomeRepository.findById(it).awaitFirst() }
 
         val income: DBIncome = incomeRepository.save(
-            DBIncome(
-                id = id,
-                userId = userId,
-                name = name,
-                createdDate = existingIncome?.createdDate ?: LocalDateTime.now(),
-                updatedDate = LocalDateTime.now(),
-                type = type,
-                value = value,
-                projectId = projectId,
-            )
+            request.toDB(existingIncome)
         ).awaitFirst()
 
         return income.toDomain()
     }
+
+    private fun CreateOrUpdateIncomeRequest.toDB(
+        existingIncome: DBIncome?
+    ): DBIncome = DBIncome(
+        id = id,
+        userId = userId,
+        name = name,
+        createdDate = existingIncome?.createdDate ?: LocalDateTime.now(),
+        updatedDate = LocalDateTime.now(),
+        type = type,
+        value = value,
+        projectId = projectId,
+    )
 
     suspend fun get(id: Long): Income? {
         val income = incomeRepository.findById(id).awaitFirstOrNull()

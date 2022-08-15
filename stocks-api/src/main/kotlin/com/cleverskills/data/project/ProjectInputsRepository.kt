@@ -1,6 +1,5 @@
-package com.cleverskills.data
+package com.cleverskills.data.project
 
-import com.cleverskills.domain.project.ProjectInputs
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono

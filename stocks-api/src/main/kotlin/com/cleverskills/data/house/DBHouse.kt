@@ -1,25 +1,30 @@
-package com.cleverskills.data
+package com.cleverskills.data.house
 
-import com.cleverskills.domain.loan.LoanType
+import com.cleverskills.domain.house.HouseType
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.domain.Persistable
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDate
 import java.time.LocalDateTime
 
-@Table("loans")
-data class DBLoan(
+@Table("houses")
+data class DBHouse(
     @Id @Column("id") private var id: Long? = null,
 
     @Column("userId") var userId: String,
 
     @Column("name") var name: String,
 
-    @Column("type") var type: LoanType,
+    @Column("type") var type: HouseType,
 
-    @Column("value") var value: Long,
+    @Column("acquisitionPrice") var acquisitionPrice: Long,
+
+    @Column("acquisitionDate") var acquisitionDate: LocalDate,
+
+    @Column("city") var city: String,
 
     @Column("projectId") var projectId: Long?,
 

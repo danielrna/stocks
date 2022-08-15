@@ -12,7 +12,7 @@ import {IncomesComponent} from "./components/account/incomes/incomes.component";
 import {DashboardComponent} from "./components/account/dashboard/dashboard.component";
 import {LoansComponent} from "./components/account/loans/loans.component";
 import {NewProjectPageComponent} from "./components/new-project-page/new-project-page.component";
-import {ChargesComponent} from "./components/account/charges/charges.component";
+import {HousesComponent} from "./components/account/houses/houses.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
@@ -39,8 +39,8 @@ const routes: Routes = [
         path: 'loans',
         component: LoansComponent
       }, {
-        path: 'charges',
-        component: ChargesComponent
+        path: 'houses',
+        component: HousesComponent
       }]
   }
 ];

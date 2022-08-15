@@ -1,7 +1,7 @@
 package com.cleverskills.domain.loan
 
-import com.cleverskills.data.DBLoan
-import com.cleverskills.data.LoanRepository
+import com.cleverskills.data.loan.DBLoan
+import com.cleverskills.data.loan.LoanRepository
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service

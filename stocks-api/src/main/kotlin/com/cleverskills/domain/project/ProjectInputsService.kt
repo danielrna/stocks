@@ -1,7 +1,7 @@
 package com.cleverskills.domain.project
 
-import com.cleverskills.data.DBProjectInputs
-import com.cleverskills.data.ProjectInputsRepository
+import com.cleverskills.data.project.DBProjectInputs
+import com.cleverskills.data.project.ProjectInputsRepository
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service

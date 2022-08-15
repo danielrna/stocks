@@ -1,35 +1,3 @@
-$light-yellow: rgba(255, 253, 143, 0.24);
-$light-green: rgba(162, 255, 143, 0.24);
-$light-red: rgba(255, 143, 143, 0.24);
-
-
-
-.light-yellow-input {
-  ::ng-deep .mat-form-field-flex {
-    background-color: $light-yellow;
-  }
-}
-
-.light-green-input {
-  ::ng-deep .mat-form-field-flex {
-    background-color: $light-green;
-  }
-}
-.mat-input-element:disabled{
-  //color: black;
-  font-weight: bold;
-}
-
-.light-red-input {
-  ::ng-deep .mat-form-field-flex {
-    background-color: $light-red;
-  }
-}
-.card-container {
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 16px;
-  width: 25%;
-  display: inline-table;
-
+.block-content{
+ margin-top: 20px;
 }

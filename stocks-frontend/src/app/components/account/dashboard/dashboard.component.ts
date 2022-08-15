@@ -6,10 +6,8 @@ import {IncomeService} from "../../../domain/income.service";
 import {Router} from "@angular/router";
 import {SummaryService} from "../../../domain/summary.service";
 import {IncomeDashboardData} from "./api/IncomeDashboardData";
-import {getIncomeTypeKeys, getIncomeTypeValues, Income} from "../../../domain/model/Income";
+import {getIncomeTypeValues} from "../../../domain/model/Income";
 import {MiniCardData} from "./api/MiniCardData";
-import {toApiProjectType} from "../projects/projects.component";
-import {Observable} from "rxjs";
 
 
 @Component({

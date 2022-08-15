@@ -45,7 +45,7 @@ import {DoughnutChartComponent} from './components/account/dashboard/charts/doug
 import {NgChartsModule} from 'ng2-charts';
 import {LoansComponent} from './components/account/loans/loans.component';
 import {NewProjectPageComponent} from './components/new-project-page/new-project-page.component';
-import { ChargesComponent } from './components/account/charges/charges.component';
+import { HousesComponent } from './components/account/houses/houses.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
@@ -69,7 +69,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     DoughnutChartComponent,
     LoansComponent,
     NewProjectPageComponent,
-    ChargesComponent,
+    HousesComponent,
   ],
     imports: [
         BrowserModule,
