@@ -48,6 +48,7 @@ import {NewProjectPageComponent} from './components/account/projects/new-project
 import {HousesComponent} from './components/account/houses/houses.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ProjectsListComponent} from "./components/account/projects/projects-list/projects-list.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {ProjectsListComponent} from "./components/account/projects/projects-list
     MatSidenavModule,
     LayoutModule,
     NgChartsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule
 
   ],
   providers: [DatePipe],

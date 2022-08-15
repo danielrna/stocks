@@ -60,7 +60,7 @@ export class ProjectsListComponent implements OnInit {
   }
 
   goToProject(id: string) {
-    this.router.navigate(['/colocation', id]).then(r => {
+    this.router.navigate(['/account/projects/colocation', id]).then(r => {
     })
   }
 
