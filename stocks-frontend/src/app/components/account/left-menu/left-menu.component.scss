@@ -4,12 +4,16 @@
   height: 1000px;
   flex-direction: column;
   background-color: #F9F9F7;
-
+  width: 220px;
+  padding-right: 10px;
 }
 
-.active{
+.active {
   background-color: #e7e5e5;
 }
-.mat-raised-button{
+.mat-button{
+  text-align: left;
+}
+.mat-raised-button {
   display: flex;
 }
