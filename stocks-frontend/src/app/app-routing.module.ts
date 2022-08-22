@@ -5,7 +5,9 @@ import {HomeComponent} from "./components/home/home.component";
 import {LoginPageComponent} from "./components/login-page/login-page.component";
 import {SignupPageComponent} from "./components/signup-page/signup-page.component";
 import {ProjectsComponent} from "./components/account/projects/projects.component";
-import {ColocationProjectComponent} from "./components/account/projects/colocation-project/colocation-project.component";
+import {
+  ColocationProjectFormComponent
+} from "./components/account/projects/colocation-project-form/colocation-project-form.component";
 import {PersonalDataComponent} from "./components/account/personal-data/personal-data.component";
 import {AccountPageComponent} from "./components/account/account-page/account-page.component";
 import {IncomesComponent} from "./components/account/incomes/incomes.component";
@@ -28,7 +30,7 @@ const routes: Routes = [
         children: [
           {path: '', component: ProjectsListComponent},
           {path: 'new', component: NewProjectPageComponent},
-          {path: 'colocation/:id', component: ColocationProjectComponent},
+          {path: 'colocation/:id', component: ColocationProjectFormComponent},
         ]
       }, {
         path: 'dashboard',

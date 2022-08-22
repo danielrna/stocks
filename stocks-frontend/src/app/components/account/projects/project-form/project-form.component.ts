@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ProjectService} from "../../../../domain/project.service";
-import {placeHolderProject, Project} from "../../../../domain/model/Project";
+import {placeHolderProject, Project, ProjectType} from "../../../../domain/model/Project";
 import {AuthenticationService} from "../../../../domain/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-colocation-project',
-  templateUrl: './colocation-project.component.html',
-  styleUrls: ['./colocation-project.component.scss']
+  selector: 'app-project-form',
+  templateUrl: './project-form.component.html',
+  styleUrls: ['./project-form.component.scss'],
 })
-export class ColocationProjectComponent implements OnInit {
+export class ProjectFormComponent implements OnInit {
 
   project: Project = <Project>{}
+  @Input() type: ProjectType = ProjectType.COLOC;
 
   ngOnInit(): void {
     this.auth.getCurrentUser().subscribe(user => {
