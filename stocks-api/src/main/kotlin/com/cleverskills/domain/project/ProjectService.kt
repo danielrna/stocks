@@ -59,8 +59,7 @@ class ProjectService(
         val existingProjectInputs: ProjectInputs? = projectInputsService.findByProjectId(project.id!!)
 
         return projectInputsService.createOrUpdate(
-            id = existingProjectInputs?.id,
-            inputs = inputs.copy(projectId = project.id)
+            id = existingProjectInputs?.id, inputs = inputs.copy(projectId = project.id)
         )
     }
 
