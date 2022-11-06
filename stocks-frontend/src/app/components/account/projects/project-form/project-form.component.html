@@ -13,14 +13,14 @@
             <ng-template matStepLabel>Le bien</ng-template>
             <div class="block">
               <div class="block-content">
-                <div *ngFor="let houseInputField of houseInputFields">
-                  <mat-form-field [appearance]="houseInputField.readonly ? 'standard' : 'outline'">
-                    <mat-label>{{houseInputField.label}}</mat-label>
-                    <input matInput type="{{houseInputField.controlType}}"
-                           [formControlName]="houseInputField.key"
-                           [id]="houseInputField.key"
+                <div *ngFor="let houseFormField of houseFormFields">
+                  <mat-form-field [appearance]="houseFormField.readonly ? 'standard' : 'outline'">
+                    <mat-label>{{houseFormField.label}}</mat-label>
+                    <input matInput type="{{houseFormField.controlType}}"
+                           [formControlName]="houseFormField.key"
+                           [id]="houseFormField.key"
                            (input)="calculateResults()"
-                           [readonly]=houseInputField.readonly
+                           [readonly]=houseFormField.readonly
                     >
                   </mat-form-field>
                 </div>
@@ -34,13 +34,13 @@
             <ng-template matStepLabel>Crédit</ng-template>
             <div class="block">
               <div class="block-content">
-                <div *ngFor="let loanInputField of loanInputFields">
-                  <mat-form-field [appearance]="loanInputField.readonly ? 'standard' : 'outline'">
-                    <mat-label>{{loanInputField.label}}</mat-label>
-                    <input matInput type="{{loanInputField.type}}"
-                           [formControlName]="loanInputField.key"
-                           [id]="loanInputField.key"
-                           [readonly]=loanInputField.readonly
+                <div *ngFor="let loanFormField of loanFormFields">
+                  <mat-form-field [appearance]="loanFormField.readonly ? 'standard' : 'outline'">
+                    <mat-label>{{loanFormField.label}}</mat-label>
+                    <input matInput type="{{loanFormField.type}}"
+                           [formControlName]="loanFormField.key"
+                           [id]="loanFormField.key"
+                           [readonly]=loanFormField.readonly
                            (input)="calculateResults()"
                     />
                   </mat-form-field>
@@ -58,13 +58,13 @@
             <div class="block">
               <div class="block-content">
 
-                <div *ngFor="let expensesInputField of expensesInputFields">
-                  <mat-form-field [appearance]="expensesInputField.readonly ? 'standard' : 'outline'">
-                    <mat-label>{{expensesInputField.label}}</mat-label>
-                    <input matInput type="{{expensesInputField.type}}"
-                           [formControlName]="expensesInputField.key"
-                           [id]="expensesInputField.key"
-                           [readonly]=expensesInputField.readonly
+                <div *ngFor="let expensesFormField of expensesFormFields">
+                  <mat-form-field [appearance]="expensesFormField.readonly ? 'standard' : 'outline'">
+                    <mat-label>{{expensesFormField.label}}</mat-label>
+                    <input matInput type="{{expensesFormField.type}}"
+                           [formControlName]="expensesFormField.key"
+                           [id]="expensesFormField.key"
+                           [readonly]=expensesFormField.readonly
                            (input)="calculateResults()"
                     />
                   </mat-form-field>
@@ -84,13 +84,13 @@
         <span>Résultat</span>
         <div class="block">
           <div class="block-content">
-            <div *ngFor="let resultInputField of resultInputFields">
-              <mat-form-field [appearance]="resultInputField.readonly ? 'standard' : 'outline'">
-                <mat-label>{{resultInputField.label}}</mat-label>
-                <input matInput type="{{resultInputField.type}}"
-                       [formControlName]="resultInputField.key"
-                       [id]="resultInputField.key"
-                       [readonly]=resultInputField.readonly
+            <div *ngFor="let resultFormField of resultFormFields">
+              <mat-form-field [appearance]="resultFormField.readonly ? 'standard' : 'outline'">
+                <mat-label>{{resultFormField.label}}</mat-label>
+                <input matInput type="{{resultFormField.type}}"
+                       [formControlName]="resultFormField.key"
+                       [id]="resultFormField.key"
+                       [readonly]=resultFormField.readonly
                 />
               </mat-form-field>
             </div>

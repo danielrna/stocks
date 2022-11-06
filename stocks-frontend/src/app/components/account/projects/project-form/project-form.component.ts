@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProjectService} from "../../../../domain/project.service";
-import {placeHolderProject, Project} from "../../../../domain/model/Project";
+import {dummyColocProject, dummyLcdProject, Project} from "../../../../domain/model/Project";
 import {AuthenticationService} from "../../../../domain/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {InputFieldBase} from "./form/InputFieldBase";
+import {FormFieldBase} from "./form/FormFieldBase";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ProjectInputs} from "../../../../domain/model/ProjectInputs";
+import {ColocInputs} from "../../../../domain/model/ColocInputs";
 import {ProjectOutputs} from "../../../../domain/model/ProjectOutputs";
 
 
@@ -17,17 +17,17 @@ import {ProjectOutputs} from "../../../../domain/model/ProjectOutputs";
 export class ProjectFormComponent implements OnInit {
   projectForm!: FormGroup;
   project: Project = <Project>{}
-  @Input() houseInputFields: InputFieldBase<number>[] = [];
-  @Input() loanInputFields: InputFieldBase<number>[] = [];
-  @Input() expensesInputFields: InputFieldBase<number>[] = [];
-  @Input() resultInputFields: InputFieldBase<number>[] = [];
+  @Input() houseFormFields: FormFieldBase<number>[] = [];
+  @Input() loanFormFields: FormFieldBase<number>[] = [];
+  @Input() expensesFormFields: FormFieldBase<number>[] = [];
+  @Input() resultFormFields: FormFieldBase<number>[] = [];
 
   ngOnInit(): void {
     this.projectForm = this.toFormGroup(
-      (this.houseInputFields as InputFieldBase<number>[])
-        .concat(this.loanInputFields as InputFieldBase<number>[])
-        .concat(this.expensesInputFields as InputFieldBase<number>[])
-        .concat(this.resultInputFields as InputFieldBase<number>[])
+      (this.houseFormFields as FormFieldBase<number>[])
+        .concat(this.loanFormFields as FormFieldBase<number>[])
+        .concat(this.expensesFormFields as FormFieldBase<number>[])
+        .concat(this.resultFormFields as FormFieldBase<number>[])
     )
 
     this.auth.getCurrentUser().subscribe(user => {
@@ -52,8 +52,14 @@ export class ProjectFormComponent implements OnInit {
 
   calculateResults() {
     if (this.projectForm) {
-      this.projectService.getProjectOutputs(this.toInputs(this.projectForm)).subscribe(outputs => {
-        if (outputs) this.updateForm(outputs)
+      let inputs: ColocInputs = this.toInputs(this.projectForm);
+      this.project.inputs = inputs
+
+      this.projectService.getProjectOutputs(inputs).subscribe(outputs => {
+        if (outputs) {
+          this.project.outputs = outputs
+          this.updateForm(outputs)
+        }
       })
     }
   }
@@ -61,18 +67,22 @@ export class ProjectFormComponent implements OnInit {
   refreshProject() {
     console.log(this.route.pathFromRoot)
     this.route.pathFromRoot[3].url.subscribe(segment => {
+      let type = segment[0].path
       let projectId = segment[1].path
-      this.loadProject(projectId);
+      this.loadProject(projectId, type);
     });
   }
 
 
-  loadProject(projectId: string) {
+  loadProject(projectId: string, type: string) {
     if (projectId && projectId != "new") {
       this.projectService.getProjectById(projectId).subscribe(value => {
         this.project = value
       })
-    } else this.project = placeHolderProject
+    } else {
+      if (type == 'lcd') this.project = dummyColocProject
+      if (type == 'coloc') this.project = dummyLcdProject
+    }
 
     this.calculateResults()
   }
@@ -91,7 +101,7 @@ export class ProjectFormComponent implements OnInit {
       this.router.navigate(["/account/projects"]))
   }
 
-  toFormGroup(inputFields: InputFieldBase<number> []) {
+  toFormGroup(inputFields: FormFieldBase<number> []) {
     const group: any = {
       name: new FormControl("New Project", [Validators.required, Validators.minLength(5)]),
     };
@@ -115,8 +125,8 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm.get("rendementBrut")?.setValue(outputs.rendementBrut)
   }
 
-  toInputs(form: FormGroup): ProjectInputs {
-    return <ProjectInputs>{
+  toInputs(form: FormGroup): ColocInputs {
+    return <ColocInputs>{
       nbChambre: +form.value.nbChambre,
       prixChambre: +form.value.prixChambre,
       prix: +form.value.prix,

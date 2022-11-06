@@ -1,4 +1,4 @@
-export class InputFieldBase<T> {
+export class FormFieldBase<T> {
   value: T | undefined;
   key: string;
   label: string;

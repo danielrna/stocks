@@ -5,7 +5,7 @@ import {IProjectRepository} from "./iproject.repository";
 import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "./utils/LoggingUtils";
-import {ProjectInputs} from "../domain/model/ProjectInputs";
+import {ColocInputs} from "../domain/model/ColocInputs";
 import {ProjectOutputs} from "../domain/model/ProjectOutputs";
 import {envUrl} from "./utils/GlobalConstants";
 
@@ -59,7 +59,7 @@ export class ProjectRepository implements IProjectRepository {
     );
   }
 
-  getProjectOutputs(inputs: ProjectInputs): Observable<ProjectOutputs> {
+  getProjectOutputs(inputs: ColocInputs): Observable<ProjectOutputs> {
 
     return this.http.post<ProjectOutputs>(`${this.envUrl}/project/calculate-outputs`, inputs).pipe(
       tap((newP: ProjectOutputs) => console.log(`Project outputs calculated`)),

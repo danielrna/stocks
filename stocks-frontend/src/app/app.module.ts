@@ -51,6 +51,7 @@ import {ProjectsListComponent} from "./components/account/projects/projects-list
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatStepperModule} from "@angular/material/stepper";
 import {ProjectFormComponent} from "./components/account/projects/project-form/project-form.component";
+import {LcdProjectFormComponent} from "./components/account/projects/lcd-project-form/lcd-project-form.component";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {ProjectFormComponent} from "./components/account/projects/project-form/p
     SignupPageComponent,
     ProjectsComponent,
     ColocationProjectFormComponent,
+    LcdProjectFormComponent,
     ProjectFormComponent,
     ConfirmDialogComponent,
     PersonalDataComponent,

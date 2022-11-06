@@ -1,6 +1,15 @@
-export interface ProjectInputs {
+export interface ColocInputs extends ProjectInputs {
   nbChambre: number
   prixChambre: number
+  vacance: number
+}
+
+export interface LcdInputs extends ProjectInputs {
+  prixNuit: number
+  occupation: number
+}
+
+export interface ProjectInputs {
   prix: number
   travaux: number
   apport: number
@@ -13,7 +22,6 @@ export interface ProjectInputs {
   pno: number
   autre: number
   cfe: number
-  entretien: number,
-  chasse: number,
-  vacance: number
+  entretien: number
+  chasse: number
 }

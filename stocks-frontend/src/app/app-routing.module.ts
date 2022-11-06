@@ -16,6 +16,7 @@ import {LoansComponent} from "./components/account/loans/loans.component";
 import {NewProjectPageComponent} from "./components/account/projects/new-project-page/new-project-page.component";
 import {HousesComponent} from "./components/account/houses/houses.component";
 import {ProjectsListComponent} from "./components/account/projects/projects-list/projects-list.component";
+import {LcdProjectFormComponent} from "./components/account/projects/lcd-project-form/lcd-project-form.component";
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
@@ -31,6 +32,7 @@ const routes: Routes = [
           {path: '', component: ProjectsListComponent},
           {path: 'new', component: NewProjectPageComponent},
           {path: 'colocation/:id', component: ColocationProjectFormComponent},
+          {path: 'lcd/:id', component: LcdProjectFormComponent},
         ]
       }, {
         path: 'dashboard',
