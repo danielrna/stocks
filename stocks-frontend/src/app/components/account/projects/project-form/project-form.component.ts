@@ -22,6 +22,18 @@ export class ProjectFormComponent implements OnInit {
   @Input() expensesFormFields: FormFieldBase<number>[] = [];
   @Input() resultFormFields: FormFieldBase<number>[] = [];
 
+  constructor(private projectService: ProjectService,
+              private auth: AuthenticationService,
+              private route: ActivatedRoute,
+              private router: Router) {
+
+    this.auth.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.project.userId = user.uid
+      }
+    })
+    this.refreshProject();
+  }
   ngOnInit(): void {
     this.projectForm = this.toFormGroup(
       (this.houseFormFields as FormFieldBase<number>[])
@@ -38,16 +50,7 @@ export class ProjectFormComponent implements OnInit {
     })
   }
 
-  constructor(private projectService: ProjectService,
-              private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {
 
-    this.auth.getCurrentUser().subscribe(user => {
-      if (user) {
-        this.project.userId = user.uid
-      }
-    })
-    this.refreshProject();
-  }
 
 
   calculateResults() {
@@ -72,7 +75,6 @@ export class ProjectFormComponent implements OnInit {
       this.loadProject(projectId, type);
     });
   }
-
 
   loadProject(projectId: string, type: string) {
     if (projectId && projectId != "new") {

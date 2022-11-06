@@ -30,6 +30,7 @@ dependencies {
 	// tests
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("io.mockk:mockk:1.13.2")
 
 	//springfox
 	implementation("io.springfox:springfox-swagger2:2.10.0")
