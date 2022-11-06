@@ -11,7 +11,6 @@ create TABLE IF NOT EXISTS public.projects
     userId     varchar,
     name varchar,
     type   varchar,
-    inputsId bigint,
     createdDate timestamp not null default current_date,
     updatedDate timestamp not null
 );
@@ -19,6 +18,8 @@ create TABLE IF NOT EXISTS public.projects
 create TABLE IF NOT EXISTS public.projectinputs
 (
     id       SERIAL NOT NULL PRIMARY KEY,
+    prixNuit smallint ,
+    occupation smallint ,
     nbChambre smallint ,
     prixChambre smallint ,
     prix bigint ,
@@ -36,7 +37,8 @@ create TABLE IF NOT EXISTS public.projectinputs
     entretien bigint ,
     chasse bigint ,
     vacance smallint ,
-    projectId bigint,
+    projectId bigint NOT NULL,
+    type varchar NOT NULL,
 
     updatedDate timestamp not null
 

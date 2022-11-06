@@ -27,14 +27,12 @@ class ProjectService(
     val loanService: LoanService,
     val financeService: FinanceService
 ) {
-    suspend fun createOrUpdate(
-        request: CreateOrUpdateProjectRequest
+    suspend fun createOrUpdateProject(
+        id: Long? = null, userId: String, name: String, inputs: ProjectInputs
     ): FullProject {
-        val existingProject: DBProject? = request.id?.let { projectRepository.findById(it).awaitFirst() }
+        val saved: DBProject = createOrUpdate(id, inputs, userId, name)
 
-        val saved: DBProject = projectRepository.save(request.toDB(existingProject)).awaitFirst()
-
-        val savedInputs = createOrUpdateLinkedInputs(saved, request.inputs)
+        val savedInputs = createOrUpdateLinkedInputs(saved, inputs)
         val project = saved.toFull(savedInputs)
 
         createOrUpdateLinkedIncome(project)
@@ -42,16 +40,31 @@ class ProjectService(
         return project
     }
 
-    private fun CreateOrUpdateProjectRequest.toDB(
-        existingProject: DBProject?
-    ) = DBProject(
-        id = id,
-        userId = userId,
-        name = name,
-        createdDate = existingProject?.createdDate ?: LocalDateTime.now(),
-        updatedDate = LocalDateTime.now(),
-        type = type,
-    )
+    private suspend fun createOrUpdate(
+        id: Long?,
+        inputs: ProjectInputs,
+        userId: String,
+        name: String
+    ): DBProject {
+        val existingProject: DBProject? = id?.let { projectRepository.findById(it).awaitFirst() }
+
+        val projectType = when (inputs) {
+            is ColocProjectInputs -> ProjectType.COLOC
+            is LcdProjectInputs -> ProjectType.LCD
+        }
+        val saved: DBProject = projectRepository.save(
+            DBProject(
+                id = id,
+                userId = userId,
+                name = name,
+                createdDate = existingProject?.createdDate ?: LocalDateTime.now(),
+                updatedDate = LocalDateTime.now(),
+                type = projectType,
+            )
+        ).awaitFirst()
+        return saved
+    }
+
 
     private suspend fun createOrUpdateLinkedInputs(
         project: DBProject, inputs: ProjectInputs
@@ -59,7 +72,7 @@ class ProjectService(
         val existingProjectInputs: ProjectInputs? = projectInputsService.findByProjectId(project.id!!)
 
         return projectInputsService.createOrUpdate(
-            id = existingProjectInputs?.id, inputs = inputs.copy(projectId = project.id)
+            id = existingProjectInputs?.id, inputs = inputs.apply { projectId = project.id }
         )
     }
 

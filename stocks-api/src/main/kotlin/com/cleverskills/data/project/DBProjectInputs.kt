@@ -1,5 +1,6 @@
 package com.cleverskills.data.project
 
+import com.cleverskills.domain.project.ProjectType
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient
 import org.springframework.data.domain.Persistable
@@ -11,41 +12,53 @@ import java.time.LocalDateTime
 data class DBProjectInputs(
     @Id @Column("id") private var id: Long? = null,
 
-    @Column("nbChambre") var nbChambre: Long,
+    @Column("type") val type: ProjectType,
 
-    @Column("prixChambre") var prixChambre: Long,
+    //for coloc
+    @Column("nbChambre") val nbChambre: Long?,
 
-    @Column("prix") var prix: Long,
+    @Column("prixChambre") val prixChambre: Long?,
 
-    @Column("travaux") var travaux: Long,
+    @Column("vacance") val vacance: Long?,
 
-    @Column("apport") var apport: Long,
+    //for lcd
+    @Column("prixNuit") val prixNuit: Long?,
 
-    @Column("loanRate") var loanRate: Double,
+    @Column("occupation") val occupation: Long?,
 
-    @Column("dureeCredit") var dureeCredit: Long,
+    /**
+     * Common fields
+     */
+    @Column("prix") val prix: Long,
 
-    @Column("meubles") var meubles: Long,
+    @Column("travaux") val travaux: Long,
 
-    @Column("copro") var copro: Long,
+    @Column("apport") val apport: Long,
 
-    @Column("impots") var impots: Long,
+    @Column("loanRate") val loanRate: Double,
 
-    @Column("tf") var tf: Long,
+    @Column("dureeCredit") val dureeCredit: Long,
 
-    @Column("pno") var pno: Long,
+    @Column("meubles") val meubles: Long,
 
-    @Column("autre") var autre: Long,
+    @Column("copro") val copro: Long,
 
-    @Column("cfe") var cfe: Long,
+    @Column("impots") val impots: Long,
 
-    @Column("entretien") var entretien: Long,
+    @Column("tf") val tf: Long,
 
-    @Column("chasse") var chasse: Long,
+    @Column("pno") val pno: Long,
 
-    @Column("vacance") var vacance: Long,
+    @Column("autre") val autre: Long,
 
-    @Column("projectId") var projectId: Long?,
+    @Column("cfe") val cfe: Long,
+
+    @Column("entretien") val entretien: Long,
+
+    @Column("chasse") val chasse: Long,
+
+
+    @Column("projectId") val projectId: Long?,
 
     @Column("updatedDate") var updatedDate: LocalDateTime = LocalDateTime.now()
 ) : Persistable<Long?> {

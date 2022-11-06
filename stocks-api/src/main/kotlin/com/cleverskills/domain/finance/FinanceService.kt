@@ -3,6 +3,8 @@ package com.cleverskills.domain.finance
 import com.cleverskills.domain.income.IncomeService
 import com.cleverskills.domain.income.IncomeType
 import com.cleverskills.domain.loan.LoanService
+import com.cleverskills.domain.project.ColocProjectInputs
+import com.cleverskills.domain.project.LcdProjectInputs
 import com.cleverskills.domain.project.ProjectInputs
 import com.cleverskills.domain.project.ProjectOutputs
 import org.springframework.stereotype.Service
@@ -23,7 +25,9 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
                 + inputs.chasse
                 - inputs.apport)
         val monthlyLoan = this.pmt(inputs.loanRate, inputs.dureeCredit, totalEmprunte)
-        val monthlyRent = (inputs.nbChambre * inputs.prixChambre) * (12 - inputs.vacance) / 12
+
+        val monthlyRent = calculateMonthlyRent(inputs)
+
         val gestion = (0.08 * monthlyRent).roundToLong()
         val monthlyExpenses = (inputs.copro
                 + inputs.impots
@@ -47,6 +51,13 @@ class FinanceService(val incomeService: IncomeService, val loanService: LoanServ
             rendementBrut = (monthlyRent * 12.0 / inputs.prix * 100.0).twoDecimals(),
             rendementNet = ((cashflow + monthlyLoan) * 12.0 / totalEmprunte * 100.0).twoDecimals()
         )
+    }
+
+    private fun calculateMonthlyRent(inputs: ProjectInputs): Long {
+        return when (inputs) {
+            is ColocProjectInputs -> (inputs.nbChambre * inputs.prixChambre) * (12 - inputs.vacance) / 12
+            is LcdProjectInputs -> (inputs.prixNuit * inputs.occupation / 100) * 365 / 12
+        }
     }
 
 

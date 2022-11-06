@@ -8,6 +8,7 @@ import com.cleverskills.domain.finance.FinanceService
 import com.cleverskills.domain.income.IncomeService
 import com.cleverskills.domain.loan.LoanService
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -64,14 +65,12 @@ internal class ProjectServiceTest {
 
         /* When */
         val res = runBlocking {
-            projectService.createOrUpdate(
-                request = CreateOrUpdateProjectRequest(
-                    id = null,
-                    type = ProjectType.COLOC,
-                    userId = "abcd",
-                    name = "Coloc de Daniel",
-                    inputs = defaultInputs
-                )
+            projectService.createOrUpdateProject(
+                id = null,
+                userId = "abcd",
+                name = "Coloc de Daniel",
+                inputs = defaultInputs
+
             )
         }
         /* Then */
@@ -79,6 +78,7 @@ internal class ProjectServiceTest {
         assertThat(res.type).isEqualTo(ProjectType.COLOC)
         assertThat(res.userId).isEqualTo("abcd")
 
+        coVerify { projectInputsService.createOrUpdate(null, any()) }
     }
 
 }

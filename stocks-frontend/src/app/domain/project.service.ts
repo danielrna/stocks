@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ProjectRepository} from "../data/project-repository.service";
 import {Project} from "./model/Project";
 import {Observable} from "rxjs";
-import {ColocInputs} from "./model/ColocInputs";
+import {ProjectInputs} from "./model/ColocInputs";
 import {ProjectOutputs} from "./model/ProjectOutputs";
 
 @Injectable({
@@ -39,7 +39,7 @@ export class ProjectService {
     return this.projectRespository.getProjectById(id)
   }
 
-  getProjectOutputs(inputs: ColocInputs): Observable<ProjectOutputs> {
+  getProjectOutputs(inputs: ProjectInputs): Observable<ProjectOutputs> {
     return this.projectRespository.getProjectOutputs(inputs)
   }
 

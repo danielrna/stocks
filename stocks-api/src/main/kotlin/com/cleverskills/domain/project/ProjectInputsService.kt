@@ -38,48 +38,85 @@ class ProjectInputsService(
     }
 
     internal fun DBProjectInputs.toDomain(): ProjectInputs {
-        return ProjectInputs(
-            id = checkNotNull(id),
-            nbChambre = nbChambre,
-            prixChambre = prixChambre,
-            prix = prix,
-            travaux = travaux,
-            apport = apport,
-            loanRate = loanRate,
-            dureeCredit = dureeCredit,
-            meubles = meubles,
-            copro = copro,
-            impots = impots,
-            tf = tf,
-            pno = pno,
-            autre = autre,
-            cfe = cfe,
-            entretien = entretien,
-            chasse = chasse,
-            vacance = vacance,
-            projectId = projectId
-        )
+        return when (this.type) {
+
+            ProjectType.COLOC -> ColocProjectInputs(
+                id = checkNotNull(id),
+                nbChambre = nbChambre!!,
+                prixChambre = prixChambre!!,
+                vacance = vacance!!,
+                prix = prix,
+                travaux = travaux,
+                apport = apport,
+                loanRate = loanRate,
+                dureeCredit = dureeCredit,
+                meubles = meubles,
+                copro = copro,
+                impots = impots,
+                tf = tf,
+                pno = pno,
+                autre = autre,
+                cfe = cfe,
+                entretien = entretien,
+                chasse = chasse,
+                projectId = projectId
+            )
+
+            ProjectType.LCD -> LcdProjectInputs(
+                id = checkNotNull(id),
+                prixNuit = prixNuit!!,
+                occupation = occupation!!,
+                prix = prix,
+                travaux = travaux,
+                apport = apport,
+                loanRate = loanRate,
+                dureeCredit = dureeCredit,
+                meubles = meubles,
+                copro = copro,
+                impots = impots,
+                tf = tf,
+                pno = pno,
+                autre = autre,
+                cfe = cfe,
+                entretien = entretien,
+                chasse = chasse,
+                projectId = projectId
+            )
+
+            ProjectType.IDR -> TODO()
+
+
+        }
+
     }
 
-    private fun ProjectInputs.toDB(id: Long? = null) = DBProjectInputs(
-        id = id,
-        projectId = checkNotNull(this.projectId),
-        nbChambre = this.nbChambre,
-        prixChambre = this.prixChambre,
-        prix = this.prix,
-        travaux = this.travaux,
-        apport = this.apport,
-        loanRate = this.loanRate,
-        dureeCredit = this.dureeCredit,
-        meubles = this.meubles,
-        copro = this.copro,
-        impots = this.impots,
-        tf = this.tf,
-        pno = this.pno,
-        autre = this.autre,
-        cfe = this.cfe,
-        entretien = this.entretien,
-        chasse = this.chasse,
-        vacance = this.vacance,
-    )
+    private fun ProjectInputs.toDB(id: Long? = null): DBProjectInputs {
+        return DBProjectInputs(
+            id = id,
+            projectId = checkNotNull(this.projectId),
+            prix = this.prix,
+            travaux = this.travaux,
+            apport = this.apport,
+            loanRate = this.loanRate,
+            dureeCredit = this.dureeCredit,
+            meubles = this.meubles,
+            copro = this.copro,
+            impots = this.impots,
+            tf = this.tf,
+            pno = this.pno,
+            autre = this.autre,
+            cfe = this.cfe,
+            entretien = this.entretien,
+            chasse = this.chasse,
+            vacance = if (this is ColocProjectInputs) this.vacance else null,
+            nbChambre = if (this is ColocProjectInputs) this.nbChambre else null,
+            prixChambre = if (this is ColocProjectInputs) this.prixChambre else null,
+            prixNuit = if (this is LcdProjectInputs) this.prixNuit else null,
+            occupation = if (this is LcdProjectInputs) this.occupation else null,
+            type = when (this) {
+                is ColocProjectInputs -> ProjectType.COLOC
+                is LcdProjectInputs -> ProjectType.LCD
+            },
+        )
+    }
 }

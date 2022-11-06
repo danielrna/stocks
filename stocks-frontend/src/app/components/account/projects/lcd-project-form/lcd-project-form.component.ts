@@ -11,8 +11,9 @@ export class LcdProjectFormComponent {
 
   constructor(private formFieldService: FormFieldService) {
   }
+  public type = ProjectType.LCD
 
-  lcdHouseFormFields = this.formFieldService.getHouseFormFields(ProjectType.LCD);
+  lcdHouseFormFields = this.formFieldService.getHouseFormFields(this.type);
   lcdLoanFormFields = this.formFieldService.getLoanFormFields();
   lcdExpensesFormFields = this.formFieldService.getExpensesFormFields();
   lcdResultFormFields = this.formFieldService.getResultFormFields();

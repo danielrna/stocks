@@ -1,12 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProjectService} from "../../../../domain/project.service";
-import {dummyColocProject, dummyLcdProject, Project} from "../../../../domain/model/Project";
+import {dummyColocProject, dummyLcdProject, Project, ProjectType} from "../../../../domain/model/Project";
 import {AuthenticationService} from "../../../../domain/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormFieldBase} from "./form/FormFieldBase";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ColocInputs} from "../../../../domain/model/ColocInputs";
+import {FormGroup} from "@angular/forms";
+import {ColocInputs, LcdInputs, ProjectInputs} from "../../../../domain/model/ColocInputs";
 import {ProjectOutputs} from "../../../../domain/model/ProjectOutputs";
+import {FormFieldService} from "../../../../domain/formfield.service";
 
 
 @Component({
@@ -17,30 +18,37 @@ import {ProjectOutputs} from "../../../../domain/model/ProjectOutputs";
 export class ProjectFormComponent implements OnInit {
   projectForm!: FormGroup;
   project: Project = <Project>{}
+  type: ProjectType | undefined
   @Input() houseFormFields: FormFieldBase<number>[] = [];
   @Input() loanFormFields: FormFieldBase<number>[] = [];
   @Input() expensesFormFields: FormFieldBase<number>[] = [];
   @Input() resultFormFields: FormFieldBase<number>[] = [];
+  @Input() projectType: ProjectType | undefined;
 
   constructor(private projectService: ProjectService,
               private auth: AuthenticationService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private formService: FormFieldService) {
 
     this.auth.getCurrentUser().subscribe(user => {
       if (user) {
         this.project.userId = user.uid
       }
     })
+    //init default values
+    if (this.projectType == ProjectType.COLOC) this.project = dummyColocProject
+    if (this.projectType == ProjectType.LCD) this.project = dummyLcdProject
+    //load if present
     this.refreshProject();
   }
+
   ngOnInit(): void {
-    this.projectForm = this.toFormGroup(
-      (this.houseFormFields as FormFieldBase<number>[])
-        .concat(this.loanFormFields as FormFieldBase<number>[])
-        .concat(this.expensesFormFields as FormFieldBase<number>[])
-        .concat(this.resultFormFields as FormFieldBase<number>[])
-    )
+    this.projectForm = this.formService.getFormGroup((this.houseFormFields as FormFieldBase<number>[])
+      .concat(this.loanFormFields as FormFieldBase<number>[])
+      .concat(this.expensesFormFields as FormFieldBase<number>[])
+      .concat(this.resultFormFields as FormFieldBase<number>[]))
+
 
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
@@ -51,39 +59,38 @@ export class ProjectFormComponent implements OnInit {
   }
 
 
-
-
   calculateResults() {
     if (this.projectForm) {
-      let inputs: ColocInputs = this.toInputs(this.projectForm);
-      this.project.inputs = inputs
-
+      let inputs = this.updateProject();
       this.projectService.getProjectOutputs(inputs).subscribe(outputs => {
         if (outputs) {
           this.project.outputs = outputs
-          this.updateForm(outputs)
+          this.updateOutputs(outputs)
         }
       })
     }
   }
 
+  private updateProject() {
+    let inputs: ProjectInputs = this.toInputs(this.projectForm);
+    this.project.inputs = inputs
+    this.project.name = this.projectForm.value.name
+    return inputs;
+  }
+
   refreshProject() {
     console.log(this.route.pathFromRoot)
     this.route.pathFromRoot[3].url.subscribe(segment => {
-      let type = segment[0].path
       let projectId = segment[1].path
-      this.loadProject(projectId, type);
+      this.loadProject(projectId);
     });
   }
 
-  loadProject(projectId: string, type: string) {
+  loadProject(projectId: string) {
     if (projectId && projectId != "new") {
       this.projectService.getProjectById(projectId).subscribe(value => {
         this.project = value
       })
-    } else {
-      if (type == 'lcd') this.project = dummyColocProject
-      if (type == 'coloc') this.project = dummyLcdProject
     }
 
     this.calculateResults()
@@ -103,18 +110,8 @@ export class ProjectFormComponent implements OnInit {
       this.router.navigate(["/account/projects"]))
   }
 
-  toFormGroup(inputFields: FormFieldBase<number> []) {
-    const group: any = {
-      name: new FormControl("New Project", [Validators.required, Validators.minLength(5)]),
-    };
-    inputFields.forEach(inputField => {
-      group[inputField.key] = inputField.required ? new FormControl(inputField.value || '', Validators.required)
-        : new FormControl(inputField.value || '');
-    });
-    return new FormGroup(group);
-  }
 
-  updateForm(outputs: ProjectOutputs) {
+  updateOutputs(outputs: ProjectOutputs) {
     this.projectForm.get("monthlyExpenses")?.setValue(outputs.monthlyExpenses)
     this.projectForm.get("notaire")?.setValue(outputs.notaire)
     this.projectForm.get("tfMensuelle")?.setValue(outputs.tfMensuelle)
@@ -127,10 +124,8 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm.get("rendementBrut")?.setValue(outputs.rendementBrut)
   }
 
-  toInputs(form: FormGroup): ColocInputs {
-    return <ColocInputs>{
-      nbChambre: +form.value.nbChambre,
-      prixChambre: +form.value.prixChambre,
+  toInputs(form: FormGroup): ProjectInputs {
+    const inputs = <ProjectInputs>{
       prix: +form.value.prix,
       travaux: +form.value.travaux,
       apport: +form.value.apport,
@@ -145,7 +140,19 @@ export class ProjectFormComponent implements OnInit {
       cfe: +form.value.cfe,
       entretien: +form.value.entretien,
       chasse: +form.value.chasse,
-      vacance: +form.value.vacance,
     }
+    switch (this.projectType) {
+      case ProjectType.COLOC : {
+        return new ColocInputs(+form.value.nbChambre, +form.value.prixChambre, +form.value.vacance, inputs)
+      }
+      case ProjectType.LCD : {
+        return new LcdInputs(+form.value.prixNuit, +form.value.occupation, inputs)
+      }
+      case ProjectType.IDR :
+        throw Error("TODO")
+    }
+    return inputs;
   }
+
+
 }

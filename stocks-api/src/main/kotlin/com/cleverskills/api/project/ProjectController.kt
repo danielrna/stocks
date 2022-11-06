@@ -13,24 +13,47 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("project")
 class ProjectController(val projectService: ProjectService) {
 
-    @ApiOperation(value = "Create project")
-    @PostMapping("")
-    suspend fun create(
-        @RequestBody request: ApiCreateOrUpdateProjectRequest
+    /**
+     * COLOC
+     */
+    @ApiOperation(value = "Create or update coloc project")
+    @PostMapping("coloc")
+    suspend fun createColoc(
+        @RequestBody request: ApiCreateOrUpdateColocProjectRequest
     ): ApiProject {
-        return projectService.createOrUpdate(
-            request.toDomain()
+        return projectService.createOrUpdateProject(
+            id = request.id,
+            userId = request.userId,
+            name = request.name,
+            inputs = request.inputs.toDomain(request.id),
         ).toApi()
     }
 
-    @ApiOperation(value = "Update project")
-    @PutMapping("")
-    suspend fun update(
-        @RequestBody request: ApiCreateOrUpdateProjectRequest
+    @PutMapping("coloc")
+    suspend fun update(@RequestBody request: ApiCreateOrUpdateColocProjectRequest) = createColoc(request)
+
+    /**
+     * LCD
+     */
+    @ApiOperation(value = "Create or update LCD project")
+    @PostMapping("lcd")
+    suspend fun createLcd(
+        @RequestBody request: ApiCreateOrUpdateLcdProjectRequest
     ): ApiProject {
-        return create(request)
+        return projectService.createOrUpdateProject(
+            id = request.id,
+            userId = request.userId,
+            name = request.name,
+            inputs = request.inputs.toDomain(request.id) as LcdProjectInputs,
+        ).toApi()
     }
 
+    @PutMapping("lcd")
+    suspend fun updateLcd(@RequestBody request: ApiCreateOrUpdateLcdProjectRequest) = createLcd(request)
+
+    /**
+     * otheer
+     */
     @ApiOperation(value = "Get project")
     @GetMapping("{id}")
     suspend fun get(
@@ -59,20 +82,11 @@ class ProjectController(val projectService: ProjectService) {
     @ApiOperation(value = "Calculate project outputs")
     @PostMapping("calculate-outputs")
     suspend fun calculateOutputs(
-        @RequestBody(required = true) req: ApiProjectInputs,
+        @RequestBody(required = true) req: ApiColocProjectInputs,
     ): ApiProjectOutputs {
         return projectService.calculateOutputs(req.toDomain()).toApi()
     }
 
-    private fun ApiCreateOrUpdateProjectRequest.toDomain():CreateOrUpdateProjectRequest{
-        return CreateOrUpdateProjectRequest(
-            id = id,
-            type = type,
-            userId = userId,
-            name = name,
-            inputs = inputs.toDomain(id),
-        )
-    }
     private fun FullProject.toApi(): ApiProject {
         return ApiProject(
             id = id,
@@ -87,49 +101,96 @@ class ProjectController(val projectService: ProjectService) {
     }
 
     internal fun ProjectInputs.toApi(): ApiProjectInputs {
-        return ApiProjectInputs(
-            nbChambre = nbChambre,
-            prixChambre = prixChambre,
-            prix = prix,
-            travaux = travaux,
-            apport = apport,
-            loanRate = loanRate,
-            dureeCredit = dureeCredit,
-            meubles = meubles,
-            copro = copro,
-            impots = impots,
-            tf = tf,
-            pno = pno,
-            autre = autre,
-            cfe = cfe,
-            entretien = entretien,
-            chasse = chasse,
-            vacance = vacance,
-        )
+        return when (this) {
+            is ColocProjectInputs -> ApiColocProjectInputs(
+                nbChambre = nbChambre,
+                prixChambre = prixChambre,
+                prix = prix,
+                travaux = travaux,
+                apport = apport,
+                loanRate = loanRate,
+                dureeCredit = dureeCredit,
+                meubles = meubles,
+                copro = copro,
+                impots = impots,
+                tf = tf,
+                pno = pno,
+                autre = autre,
+                cfe = cfe,
+                entretien = entretien,
+                chasse = chasse,
+                vacance = vacance,
+            )
+
+            is LcdProjectInputs -> ApiLcdProjectInputs(
+                prixNuit = prixNuit,
+                occupation = occupation,
+                prix = prix,
+                travaux = travaux,
+                apport = apport,
+                loanRate = loanRate,
+                dureeCredit = dureeCredit,
+                meubles = meubles,
+                copro = copro,
+                impots = impots,
+                tf = tf,
+                pno = pno,
+                autre = autre,
+                cfe = cfe,
+                entretien = entretien,
+                chasse = chasse,
+            )
+
+        }
     }
 
-    private fun ApiProjectInputs.toDomain(projectId: Long? =null): ProjectInputs {
-        return ProjectInputs(
-            nbChambre = nbChambre,
-            prixChambre = prixChambre,
-            prix = prix,
-            travaux = travaux,
-            apport = apport,
-            loanRate = loanRate,
-            dureeCredit = dureeCredit,
-            meubles = meubles,
-            copro = copro,
-            impots = impots,
-            tf = tf,
-            pno = pno,
-            autre = autre,
-            cfe = cfe,
-            entretien = entretien,
-            chasse = chasse,
-            vacance = vacance,
-            id = null,
-            projectId = projectId
-        )
+
+    private fun ApiProjectInputs.toDomain(projectId: Long? = null): ProjectInputs {
+        when (this) {
+            is ApiColocProjectInputs -> return ColocProjectInputs(
+                nbChambre = nbChambre,
+                prixChambre = prixChambre,
+                prix = prix,
+                travaux = travaux,
+                apport = apport,
+                loanRate = loanRate,
+                dureeCredit = dureeCredit,
+                meubles = meubles,
+                copro = copro,
+                impots = impots,
+                tf = tf,
+                pno = pno,
+                autre = autre,
+                cfe = cfe,
+                entretien = entretien,
+                chasse = chasse,
+                vacance = vacance,
+                id = null,
+                projectId = projectId
+            )
+
+            is ApiLcdProjectInputs -> return LcdProjectInputs(
+                prixNuit = prixNuit,
+                occupation = occupation,
+                prix = prix,
+                travaux = travaux,
+                apport = apport,
+                loanRate = loanRate,
+                dureeCredit = dureeCredit,
+                meubles = meubles,
+                copro = copro,
+                impots = impots,
+                tf = tf,
+                pno = pno,
+                autre = autre,
+                cfe = cfe,
+                entretien = entretien,
+                chasse = chasse,
+                id = null,
+                projectId = projectId
+            )
+        }
+
     }
 
     private fun ProjectOutputs.toApi(): ApiProjectOutputs {

@@ -5,7 +5,7 @@ import {IProjectRepository} from "./iproject.repository";
 import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "./utils/LoggingUtils";
-import {ColocInputs} from "../domain/model/ColocInputs";
+import {ColocInputs, LcdInputs, ProjectInputs} from "../domain/model/ColocInputs";
 import {ProjectOutputs} from "../domain/model/ProjectOutputs";
 import {envUrl} from "./utils/GlobalConstants";
 
@@ -22,7 +22,10 @@ export class ProjectRepository implements IProjectRepository {
 
 
   createProject(_project: Project): Observable<Project> {
-    return this.http.post<Project>(`${this.envUrl}/project`, _project).pipe(
+    let type = ''
+    if (_project.inputs instanceof ColocInputs) type = 'coloc'
+    if (_project.inputs instanceof LcdInputs) type = 'lcd'
+    return this.http.post<Project>(`${this.envUrl}/project/${type}`, _project).pipe(
       tap((newP: Project) => console.log(`Project created w/ id=${newP.id}`)),
       catchError(handleError<Project>('createProject'))
     );
@@ -33,7 +36,7 @@ export class ProjectRepository implements IProjectRepository {
     if (_project.id == null) {
       throw Error("Id cannot be null for update")
     } else {
-      return this.http.put<Project>(`${this.envUrl}/project`, _project).pipe(
+      return this.http.put<Project>(`${this.envUrl}/project/coloc`, _project).pipe(
       )
     }
   }
@@ -59,7 +62,7 @@ export class ProjectRepository implements IProjectRepository {
     );
   }
 
-  getProjectOutputs(inputs: ColocInputs): Observable<ProjectOutputs> {
+  getProjectOutputs(inputs: ProjectInputs): Observable<ProjectOutputs> {
 
     return this.http.post<ProjectOutputs>(`${this.envUrl}/project/calculate-outputs`, inputs).pipe(
       tap((newP: ProjectOutputs) => console.log(`Project outputs calculated`)),

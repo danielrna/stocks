@@ -10,8 +10,9 @@ import {ProjectType} from "../../../../domain/model/Project";
 export class ColocationProjectFormComponent {
   constructor(private formFieldService: FormFieldService) {
   }
+  public type = ProjectType.COLOC
 
-  colocHouseFormFields = this.formFieldService.getHouseFormFields(ProjectType.COLOC);
+  colocHouseFormFields = this.formFieldService.getHouseFormFields(this.type);
   colocLoanFormFields = this.formFieldService.getLoanFormFields();
   colocExpensesFormFields = this.formFieldService.getExpensesFormFields();
   colocResultFormFields = this.formFieldService.getResultFormFields();
