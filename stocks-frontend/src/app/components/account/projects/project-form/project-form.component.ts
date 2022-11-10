@@ -4,7 +4,7 @@ import {dummyColocProject, dummyLcdProject, Project, ProjectType} from "../../..
 import {AuthenticationService} from "../../../../domain/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormFieldBase} from "./form/FormFieldBase";
-import {FormGroup} from "@angular/forms";
+import {UntypedFormGroup} from "@angular/forms";
 import {ColocInputs, LcdInputs, ProjectInputs} from "../../../../domain/model/ColocInputs";
 import {ProjectOutputs} from "../../../../domain/model/ProjectOutputs";
 import {FormFieldService} from "../../../../domain/formfield.service";
@@ -16,7 +16,7 @@ import {FormFieldService} from "../../../../domain/formfield.service";
   styleUrls: ['./project-form.component.scss'],
 })
 export class ProjectFormComponent implements OnInit {
-  projectForm!: FormGroup;
+  projectForm!: UntypedFormGroup;
   project: Project = <Project>{}
   type: ProjectType | undefined
   @Input() houseFormFields: FormFieldBase<number>[] = [];
@@ -124,7 +124,7 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm.get("rendementBrut")?.setValue(outputs.rendementBrut)
   }
 
-  toInputs(form: FormGroup): ProjectInputs {
+  toInputs(form: UntypedFormGroup): ProjectInputs {
     const inputs = <ProjectInputs>{
       prix: +form.value.prix,
       travaux: +form.value.travaux,

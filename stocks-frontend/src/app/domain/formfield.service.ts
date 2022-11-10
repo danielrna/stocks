@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {FormFieldBase} from "../components/account/projects/project-form/form/FormFieldBase";
 import {NumberFormField} from "../components/account/projects/project-form/form/TextboxFormField";
 import {ProjectType} from "./model/Project";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 
 
 @Injectable({
@@ -129,13 +129,13 @@ export class FormFieldService {
 
   getFormGroup(concat: FormFieldBase<number>[]) {
     const group: any = {
-      name: new FormControl("New Project", [Validators.required, Validators.minLength(5)]),
+      name: new UntypedFormControl("New Project", [Validators.required, Validators.minLength(5)]),
     };
     concat.forEach(inputField => {
-      group[inputField.key] = inputField.required ? new FormControl(inputField.value || '', Validators.required)
-        : new FormControl(inputField.value || '');
+      group[inputField.key] = inputField.required ? new UntypedFormControl(inputField.value || '', Validators.required)
+        : new UntypedFormControl(inputField.value || '');
     });
-    return new FormGroup(group);
+    return new UntypedFormGroup(group);
 
   }
 }
