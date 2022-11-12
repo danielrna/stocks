@@ -20,7 +20,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {environment} from "src/environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {LoginPageComponent} from './components/login-page/login-page.component';
@@ -28,7 +27,9 @@ import {SnackbarComponent} from './components/snackbar/snackbar.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {SignupPageComponent} from './components/signup-page/signup-page.component';
 import {MatListModule} from "@angular/material/list";
-import {ColocationProjectFormComponent} from './components/account/projects/colocation-project-form/colocation-project-form.component';
+import {
+  ColocationProjectFormComponent
+} from './components/account/projects/colocation-project-form/colocation-project-form.component';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {DatePipe} from "@angular/common";
@@ -52,6 +53,12 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatStepperModule} from "@angular/material/stepper";
 import {ProjectFormComponent} from "./components/account/projects/project-form/project-form.component";
 import {LcdProjectFormComponent} from "./components/account/projects/lcd-project-form/lcd-project-form.component";
+import {StoreModule} from "@ngrx/store";
+import {projectReducer} from "./store/project/reducers/project.reducer";
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import {ProjectEffects} from "./store/project/effects/project.effects";
 
 @NgModule({
   declarations: [
@@ -79,37 +86,39 @@ import {LcdProjectFormComponent} from "./components/account/projects/lcd-project
     ProjectsListComponent,
     HousesComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatIconModule,
-        HttpClientModule,
-        MatCardModule,
-        MatSelectModule,
-        MatMenuModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatGridListModule,
-        FormsModule,
-        MatToolbarModule,
-        MatTableModule,
-        ReactiveFormsModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFirestoreModule,
-        MatSnackBarModule,
-        MatAutocompleteModule,
-        MatListModule,
-        MatDialogModule,
-        MatSidenavModule,
-        LayoutModule,
-        NgChartsModule,
-        MatProgressSpinnerModule,
-        MatTabsModule,
-        MatStepperModule
-
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatIconModule,
+    HttpClientModule,
+    MatCardModule,
+    MatSelectModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
+    FormsModule,
+    MatToolbarModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatListModule,
+    MatDialogModule,
+    MatSidenavModule,
+    LayoutModule,
+    NgChartsModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatStepperModule,
+    StoreModule.forRoot({root: projectReducer}),
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    EffectsModule.forRoot([ProjectEffects]),
+  ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

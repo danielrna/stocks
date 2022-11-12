@@ -1,11 +1,11 @@
-<div *ngIf="projects">
+<div *ngIf="this.projects | async as projects">
   <div class="dashboard-data-container">
     <mat-card-title>Vos projets</mat-card-title>
     <button mat-raised-button mat-button routerLink="/account/projects/new">
       <mat-icon>add</mat-icon>
       <span>Créer un projet</span>
     </button>
-    <table mat-table [dataSource]="this.projects" class="mat-elevation-z8">
+    <table mat-table [dataSource]="projects" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->

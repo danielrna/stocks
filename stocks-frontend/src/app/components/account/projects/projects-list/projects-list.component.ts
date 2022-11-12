@@ -1,12 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../../domain/authentication.service";
 import {Router} from "@angular/router";
-import {ProjectService} from "../../../../domain/project.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../../../confirm-dialog/confirm-dialog.component";
 import {DatePipe} from "@angular/common";
 import {Project, ProjectType} from "../../../../domain/model/Project";
-import {ToastService} from "../../../../domain/toast.service";
+import {deleteProject, getProjects} from "../../../../store/project/actions/project.actions";
+import {select, Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {State} from "../../../../store/project/rootState";
+import {selectProjects} from "../../../../store/project/selectors/project.selectors";
 
 @Component({
   selector: 'app-projects-list',
@@ -14,32 +17,34 @@ import {ToastService} from "../../../../domain/toast.service";
   styleUrls: ['./projects-list.component.scss']
 })
 export class ProjectsListComponent implements OnInit {
-  projects: Project[] = [];
+  projects: Observable<Project[]> = {} as Observable<Project[]>;
   displayedColumns: string[] = ['name', 'type', 'netprofit', 'updated', 'actions'];
   toApiProjectType = toApiProjectType
 
   constructor(
+    private store: Store<State>,
     public auth: AuthenticationService,
-    public projectService: ProjectService,
     private router: Router,
     public dialog: MatDialog,
     public datePipe: DatePipe,
-    private toast: ToastService,
   ) {
 
   }
 
   ngOnInit(): void {
-    this.refreshProjects();
+    this.fetchUserProjects();
+    this.projects = this.store.pipe(select(selectProjects))
+    // this.projects = this.store.pipe(select((state: State) => state.root.projects))
+
+    //.select((state: any) => state.projectState.projects)
   }
 
 
-  private refreshProjects() {
+  private fetchUserProjects() {
     this.auth.getCurrentUser().subscribe(user => {
       if (user !== null) {
-        this.projectService.getProjectsByOwnerId(user.uid).subscribe(projects => {
-          this.projects = projects
-        })
+        this.store.dispatch(getProjects({userId: user?.uid!!}));
+
       } else this.router.navigate(["login"]).then(r => {
         // TODO document why this arrow function is empty
 
@@ -51,10 +56,8 @@ export class ProjectsListComponent implements OnInit {
     let dialogref = this.dialog.open(ConfirmDialogComponent)
     dialogref.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        this.projectService.deleteProject(id).subscribe(() => {
-          this.toast.showToast("Project Deleted", ["success"])
-          this.refreshProjects()
-        })
+        this.store.dispatch(deleteProject({projectId: id}));
+        this.fetchUserProjects()
       }
     });
   }
