@@ -8,8 +8,11 @@ import {Project, ProjectType} from "../../../../domain/model/Project";
 import {deleteProject, getProjects} from "../../../../store/project/actions/project.actions";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {State} from "../../../../store/project/rootState";
+import {SelfProjectState} from "../../../../store/project/projectState";
 import {selectProjects} from "../../../../store/project/selectors/project.selectors";
+import {DomainUser} from "../../../../domain/model/DomainUser";
+import {selectUser} from "../../../../store/user/selectors/user.selectors";
+import {SelfRootState} from "../../../../store/user/rootState";
 
 @Component({
   selector: 'app-projects-list',
@@ -17,12 +20,16 @@ import {selectProjects} from "../../../../store/project/selectors/project.select
   styleUrls: ['./projects-list.component.scss']
 })
 export class ProjectsListComponent implements OnInit {
-  projects: Observable<Project[]> = {} as Observable<Project[]>;
+
+  projects: Observable<Project[]> = this.projectStore.pipe(select(selectProjects))
+  currentUser: Observable<DomainUser> = this.rootStore.pipe(select(selectUser))
+
   displayedColumns: string[] = ['name', 'type', 'netprofit', 'updated', 'actions'];
   toApiProjectType = toApiProjectType
 
   constructor(
-    private store: Store<State>,
+    private projectStore: Store<SelfProjectState>,
+    private rootStore: Store<SelfRootState>,
     public auth: AuthenticationService,
     private router: Router,
     public dialog: MatDialog,
@@ -33,17 +40,13 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUserProjects();
-    this.projects = this.store.pipe(select(selectProjects))
-    // this.projects = this.store.pipe(select((state: State) => state.root.projects))
-
-    //.select((state: any) => state.projectState.projects)
   }
 
 
   private fetchUserProjects() {
-    this.auth.getCurrentUser().subscribe(user => {
+    this.currentUser.subscribe(user => {
       if (user !== null) {
-        this.store.dispatch(getProjects({userId: user?.uid!!}));
+        this.projectStore.dispatch(getProjects({userId: user?.uid!!}));
 
       } else this.router.navigate(["login"]).then(r => {
         // TODO document why this arrow function is empty
@@ -56,7 +59,7 @@ export class ProjectsListComponent implements OnInit {
     let dialogref = this.dialog.open(ConfirmDialogComponent)
     dialogref.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        this.store.dispatch(deleteProject({projectId: id}));
+        this.projectStore.dispatch(deleteProject({projectId: id}));
         this.fetchUserProjects()
       }
     });

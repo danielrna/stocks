@@ -1,8 +1,6 @@
 import {createSelector} from '@ngrx/store';
-import {RootState, State} from "../rootState";
+import {ProjectState, SelfProjectState} from "../projectState";
 
-const selectRoot = (state: State) => state.root
+const selectSelf = (state: SelfProjectState) => state.projects
 
-export const isLoadingStateSelector = createSelector(selectRoot, (state: RootState) => state.isLoading);
-
-export const selectProjects = createSelector(selectRoot, (state: RootState) => state.projects);
+export const selectProjects = createSelector(selectSelf, (state: ProjectState) => state.projects);

@@ -33,7 +33,7 @@ export class ProjectEffects {
         return this.service.deleteProject(action["projectId"]).pipe(
           map(() => {
             this.toastService.showToast("Project Deleted", ["success"])
-            return deleteProjectSuccess()
+            return deleteProjectSuccess({projectId :action["projectId"]})
           }),
           catchError(() => EMPTY),
         )

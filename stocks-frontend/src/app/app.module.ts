@@ -54,11 +54,14 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {ProjectFormComponent} from "./components/account/projects/project-form/project-form.component";
 import {LcdProjectFormComponent} from "./components/account/projects/lcd-project-form/lcd-project-form.component";
 import {StoreModule} from "@ngrx/store";
-import {projectReducer} from "./store/project/reducers/project.reducer";
+import {PROJECT_FEATURE_KEY, projectReducer} from "./store/project/reducers/project.reducer";
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
-import { EffectsModule } from '@ngrx/effects';
+import {EffectsModule} from '@ngrx/effects';
 import {ProjectEffects} from "./store/project/effects/project.effects";
+import {UserEffects} from "./store/user/effects/user.effects";
+import {ROOT_FEATURE_KEY, userReducer} from "./store/user/reducers/user.reducer";
+import {metaReducers} from "./store/user/rootState";
 
 @NgModule({
   declarations: [
@@ -115,9 +118,13 @@ import {ProjectEffects} from "./store/project/effects/project.effects";
     MatProgressSpinnerModule,
     MatTabsModule,
     MatStepperModule,
-    StoreModule.forRoot({root: projectReducer}),
+    StoreModule.forRoot({
+        [ROOT_FEATURE_KEY]: userReducer,
+        [PROJECT_FEATURE_KEY]: projectReducer
+      }, {metaReducers: metaReducers}
+    ),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    EffectsModule.forRoot([ProjectEffects]),
+    EffectsModule.forRoot([ProjectEffects, UserEffects]),
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

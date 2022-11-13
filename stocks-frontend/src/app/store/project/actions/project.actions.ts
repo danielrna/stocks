@@ -5,4 +5,4 @@ export const getProjects = createAction('[Projects] Get Project list', props<{ u
 export const getProjectsSuccess = createAction('[Projects] Get Project list Success', props<{ projects: Project[] }>())
 
 export const deleteProject = createAction('[Projects] Delete Project', props<{ projectId: string }>(),)
-export const deleteProjectSuccess = createAction('[Projects] Delete Project Success')
+export const deleteProjectSuccess = createAction('[Projects] Delete Project Success',props<{ projectId: string }>())

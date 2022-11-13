@@ -1,35 +1,25 @@
-import {Action, ActionReducer, createReducer, on} from '@ngrx/store';
-import {getProjects, getProjectsSuccess} from "../actions/project.actions";
-import {initialState, RootState, State} from "../rootState";
+import {Action, createReducer, on} from '@ngrx/store';
+import {deleteProjectSuccess, getProjects, getProjectsSuccess} from "../actions/project.actions";
+import {initialProjectState, ProjectState} from "../projectState";
+export const PROJECT_FEATURE_KEY = "projects"
 
 
-const reducer = createReducer<RootState, Action>(
-  initialState,
-  on(getProjects, (state: RootState) => ({
+const reducer = createReducer<ProjectState, Action>(
+  initialProjectState,
+  on(getProjects, (state: ProjectState) => ({
     ...state,
     projects: state.projects,
   })),
-  on(getProjectsSuccess, (state: RootState, {projects}) => ({
+  on(getProjectsSuccess, (state: ProjectState, {projects}) => ({
     ...state,
     projects: projects,
+  })),
+  on(deleteProjectSuccess, (state: ProjectState, {projectId}) => ({
+    ...state,
+    projects: state.projects.filter(it => it.id!!.toString() !== projectId),
   })),
 );
 
 export function projectReducer(state: any, action: any) {
   return reducer(state, action);
-}
-
-function log(reducer: ActionReducer<State>): ActionReducer<any> {
-  return (state, action) => {
-    const currrentState = reducer(state, action)
-
-    console.groupCollapsed(action.type)
-    console.log('Etat precedent:', state)
-    console.log('Action:', action)
-    console.log('Etat suivant:', currrentState)
-    console.groupEnd()
-    return currrentState
-  }
-
-
 }
