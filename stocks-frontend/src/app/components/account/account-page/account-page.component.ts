@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../../domain/authentication.service";
-import {UserService} from "../../../domain/user.service";
-import {Router} from "@angular/router";
-import {FullUser} from "../../../domain/model/FullUser";
+import {RootState} from "../../../store/user/rootState";
+import {Store} from "@ngrx/store";
+import {getCurrentUser} from "../../../store/user/actions/user.actions";
 
 @Component({
   selector: 'app-account-page',
@@ -11,11 +10,11 @@ import {FullUser} from "../../../domain/model/FullUser";
 })
 export class AccountPageComponent implements OnInit {
 
-  constructor(private auth: AuthenticationService, private userService: UserService, private router: Router) {
+  constructor(private store: Store<RootState>) {
+    this.store.dispatch(getCurrentUser());
   }
 
   ngOnInit(): void {
-
 
   }
 
