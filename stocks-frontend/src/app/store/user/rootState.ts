@@ -7,7 +7,7 @@ export interface SelfRootState {
 }
 
 export interface RootState {
-  user: DomainUser;
+  user: DomainUser | null;
 }
 
 export const initialState: RootState = {

@@ -62,6 +62,7 @@ import {ProjectEffects} from "./store/project/effects/project.effects";
 import {UserEffects} from "./store/user/effects/user.effects";
 import {ROOT_FEATURE_KEY, userReducer} from "./store/user/reducers/user.reducer";
 import {metaReducers} from "./store/user/rootState";
+import {AuthGuard} from './shared/security/auth-guard';
 
 @NgModule({
   declarations: [
@@ -126,7 +127,7 @@ import {metaReducers} from "./store/user/rootState";
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     EffectsModule.forRoot([ProjectEffects, UserEffects]),
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

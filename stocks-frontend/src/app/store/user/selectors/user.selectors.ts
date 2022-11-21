@@ -7,3 +7,4 @@ const selectRoot = createFeatureSelector<RootState>(ROOT_FEATURE_KEY)
 
 
 export const selectUser = createSelector(selectRoot, (state: RootState) => state.user);
+export const isLoggedIn = createSelector(selectRoot, (state: RootState) => state.user != null);

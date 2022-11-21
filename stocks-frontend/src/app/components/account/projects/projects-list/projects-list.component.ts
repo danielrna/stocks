@@ -22,7 +22,7 @@ import {SelfRootState} from "../../../../store/user/rootState";
 export class ProjectsListComponent implements OnInit {
 
   projects: Observable<Project[]> = this.projectStore.pipe(select(selectProjects))
-  currentUser: Observable<DomainUser> = this.rootStore.pipe(select(selectUser))
+  currentUser: Observable<DomainUser | null> = this.rootStore.pipe(select(selectUser))
 
   displayedColumns: string[] = ['name', 'type', 'netprofit', 'updated', 'actions'];
   toApiProjectType = toApiProjectType
