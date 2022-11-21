@@ -45,13 +45,7 @@ export class ProjectsListComponent implements OnInit {
 
   private fetchUserProjects() {
     this.currentUser.subscribe(user => {
-      if (user !== null) {
-        this.projectStore.dispatch(getProjects({userId: user?.uid!!}));
-
-      } else this.router.navigate(["login"]).then(r => {
-        // TODO document why this arrow function is empty
-
-      })
+      this.projectStore.dispatch(getProjects({userId: user!!.uid!!}));
     })
   }
 

@@ -91,6 +91,9 @@ export class AuthenticationService {
       .then((result) => {
         console.log('You have been successfully logged in!')
         this.setUserData(result.user!!)
+        this.router.navigate(["/account/dashboard"])
+          .then(r => this.toastService.showToast("Login successful", ['success', 'notification'])
+          )
       }).catch((error) => {
         console.log(error)
       })

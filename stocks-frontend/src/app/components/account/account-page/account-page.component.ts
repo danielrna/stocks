@@ -10,9 +10,7 @@ import {getCurrentUser} from "../../../store/user/actions/user.actions";
 })
 export class AccountPageComponent implements OnInit {
 
-  constructor(private store: Store<RootState>) {
-    this.store.dispatch(getCurrentUser());
-  }
+
 
   ngOnInit(): void {
 
