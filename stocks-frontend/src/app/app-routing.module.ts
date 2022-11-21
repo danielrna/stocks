@@ -20,8 +20,8 @@ import {LcdProjectFormComponent} from "./components/account/projects/lcd-project
 
 const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginPageComponent},
+  // {path: 'home', component: HomeComponent},
+  {path: '', component: LoginPageComponent},
   {path: 'signup', component: SignupPageComponent},
   {
     path: 'account', component: AccountPageComponent, children: [
