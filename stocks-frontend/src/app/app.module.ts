@@ -15,7 +15,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatTableModule} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NavbarComponent} from './components/navbar/navbar.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -69,7 +68,6 @@ import {AuthGuard} from './shared/security/auth-guard';
     AppComponent,
     CryptoPageComponent,
     HomeComponent,
-    NavbarComponent,
     LoginPageComponent,
     SnackbarComponent,
     SignupPageComponent,
