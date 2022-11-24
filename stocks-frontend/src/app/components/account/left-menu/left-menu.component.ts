@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {disconnectCurrentUser, getCurrentUser} from "../../../store/user/actions/user.actions";
+import {disconnectCurrentUser} from "../../../store/user/actions/user.actions";
 import {SelfRootState} from "../../../store/user/rootState";
 import {Store} from "@ngrx/store";
 

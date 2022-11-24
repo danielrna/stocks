@@ -1,3 +1,84 @@
-.mat-card{
-  display: grid ;
+
+.wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+
+  .login {
+    display: flex;
+    flex-direction: column;;
+    justify-content: center;
+    width: 50%;
+
+    &__container {
+      width: 350px;
+      margin: auto;
+
+      &__logo {
+      }
+
+      &__title2 {
+        margin-bottom: 32px
+      }
+
+      &__socialbuttons {
+        margin-bottom: 24px;
+
+        &__button {
+          width: 100%;
+          height: 40px;
+          margin-bottom: 16px;
+        }
+      }
+
+      &__or-divider {
+        color: gray;
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+
+        &___or {
+          background: white;
+          padding: 0 10px;
+        }
+      }
+
+      &__form {
+        &___field {
+          display: block;
+          width: 100%;
+          margin-bottom: 4px;
+
+        }
+
+
+        &___bottom_container {
+          display: flex;
+          align-items: center;
+          margin-bottom: 32px;
+
+          &_forgot-pwd {
+            margin-left: 24px;
+          }
+
+        }
+
+        &___not-account-yet {
+          padding-top: 16px;
+        }
+
+
+      }
+    }
+
+  }
+
+  .image-hero {
+    width: 50%;
+    justify-content: center;
+    display: flex;
+    background-color: #efe9fe;
+  }
+
+
 }

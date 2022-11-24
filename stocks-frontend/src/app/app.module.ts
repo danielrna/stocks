@@ -62,6 +62,8 @@ import {UserEffects} from "./store/user/effects/user.effects";
 import {ROOT_FEATURE_KEY, userReducer} from "./store/user/reducers/user.reducer";
 import {metaReducers} from "./store/user/rootState";
 import {AuthGuard} from './shared/security/auth-guard';
+import { InvestButtonComponent } from './components/global/invest-button/invest-button.component';
+import {InvestFormFieldComponent} from "./components/global/invest-form-field/invest-form-field";
 
 @NgModule({
   declarations: [
@@ -87,6 +89,8 @@ import {AuthGuard} from './shared/security/auth-guard';
     NewProjectPageComponent,
     ProjectsListComponent,
     HousesComponent,
+    InvestButtonComponent,
+    InvestFormFieldComponent,
   ],
   imports: [
     BrowserModule,

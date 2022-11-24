@@ -22,6 +22,7 @@ const routes: Routes = [
   {path: 'crypto', component: CryptoPageComponent},
   // {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginPageComponent},
+  {path: '',  pathMatch: 'full',redirectTo: 'account/dashboard'},
   {path: 'signup', component: SignupPageComponent},
   {
     path: 'account',
